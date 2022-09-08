@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TowerDefense.Api", "src\TowerDefense.Api\TowerDefense.Api.csproj", "{906FFA8B-31DB-4A6C-B24D-44247496C54C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6D3F0C11-45AD-4185-965A-8E5118898543}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B6212C5E-8190-4E7E-A691-BC214B879BF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerDefense.Api.FunctionalTests", "tests\TowerDefense.Api.FunctionalTests\TowerDefense.Api.FunctionalTests.csproj", "{924907D6-A28C-4D11-B9D1-CDC5CBE5EDBA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{906FFA8B-31DB-4A6C-B24D-44247496C54C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{906FFA8B-31DB-4A6C-B24D-44247496C54C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{906FFA8B-31DB-4A6C-B24D-44247496C54C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{906FFA8B-31DB-4A6C-B24D-44247496C54C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{924907D6-A28C-4D11-B9D1-CDC5CBE5EDBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{924907D6-A28C-4D11-B9D1-CDC5CBE5EDBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{924907D6-A28C-4D11-B9D1-CDC5CBE5EDBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{924907D6-A28C-4D11-B9D1-CDC5CBE5EDBA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{906FFA8B-31DB-4A6C-B24D-44247496C54C} = {6D3F0C11-45AD-4185-965A-8E5118898543}
+		{924907D6-A28C-4D11-B9D1-CDC5CBE5EDBA} = {B6212C5E-8190-4E7E-A691-BC214B879BF2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72767D52-8A85-4E0A-9B04-1DDF7963353C}
+	EndGlobalSection
+EndGlobal
