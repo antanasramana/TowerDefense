@@ -8,9 +8,8 @@ namespace TowerDefense.Client
         public MainForm()
         {
             InitializeComponent();
-            // TODO: move url to settings
             connection = new HubConnectionBuilder()
-                .WithUrl("https://localhost:7042/gameHub")
+                .WithUrl(Properties.Settings.Default.ApiUrl)
                 .Build();
         }
 
@@ -20,6 +19,7 @@ namespace TowerDefense.Client
         }
 
         private async void MainForm_Load(object sender, EventArgs e)
+
         {
             await connection.StartAsync();
 
