@@ -41,7 +41,7 @@
             this.helloButton.TabIndex = 0;
             this.helloButton.Text = "Say hello";
             this.helloButton.UseVisualStyleBackColor = true;
-            this.helloButton.Click += new System.EventHandler(this.helloButton_Click);
+            this.helloButton.Click += new System.EventHandler(this.HelloButton_Click);
             // 
             // nameTextBox
             // 

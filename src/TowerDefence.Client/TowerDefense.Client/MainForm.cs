@@ -13,13 +13,12 @@ namespace TowerDefense.Client
                 .Build();
         }
 
-        private async void helloButton_Click(object sender, EventArgs e)
+        private async void HelloButton_Click(object sender, EventArgs e)
         {
             await connection.SendAsync("HelloServer", nameTextBox.Text);
         }
 
         private async void MainForm_Load(object sender, EventArgs e)
-
         {
             await connection.StartAsync();
 
