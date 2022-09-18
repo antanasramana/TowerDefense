@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TowerDefense.Api.Functional
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TowerDefense.Client", "src\TowerDefence.Client\TowerDefense.Client\TowerDefense.Client.csproj", "{101331DC-10B2-4EA3-9944-4BC998341224}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerDefense.Shared", "TowerDefense.Shared\TowerDefense.Shared.csproj", "{93A80719-2C81-4B56-B45D-D8D7BA1D2CB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerDefense.Shared", "src\TowerDefense.Shared\TowerDefense.Shared.csproj", "{93A80719-2C81-4B56-B45D-D8D7BA1D2CB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
