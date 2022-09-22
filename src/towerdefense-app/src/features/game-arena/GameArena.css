@@ -1,0 +1,35 @@
+.root-container{
+    background: url("../../assets/images/Arena.png") no-repeat center center fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 1024px;
+}
+
+.body{
+    display: flex;
+    flex-direction: row;
+}
+
+.tower-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 40px 0px 40px;
+}
+
+.grid{
+    display: grid;
+    width: 1024px;
+    height: 576px;
+}
