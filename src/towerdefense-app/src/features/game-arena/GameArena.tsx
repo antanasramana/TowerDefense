@@ -4,6 +4,8 @@ import Level from "../level/Level"
 import TowerHealth from "../tower/TowerHealth";
 import TowerArmor from "../tower/TowerArmor"
 import Tower from "../tower/Tower"
+import Shop from "../shop/Shop"
+import Inventory from "../inventory/Inventory"
 
 import './GameArena.css';
 
@@ -28,7 +30,10 @@ const GameArena: React.FC = () => {
                     <Tower/>
                 </div>
             </div>
-            <div className="footer"></div>
+            <div className="footer">
+                <Inventory/>
+                <Shop/>
+            </div>
         </div>
     );
 }

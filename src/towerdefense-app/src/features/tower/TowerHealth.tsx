@@ -10,7 +10,6 @@ const TowerHealth: React.FC = () => {
             <div className="tower-health-tile"/>
             <div className="tower-health-tile"/>
         </div>
-
     );
 }
 

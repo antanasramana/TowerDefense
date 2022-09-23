@@ -33,3 +33,11 @@
     width: 1024px;
     height: 576px;
 }
+
+.footer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 1024px;
+}
