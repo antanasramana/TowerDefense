@@ -1,0 +1,9 @@
+.grid{
+    display: inline-grid;
+    grid-template-columns: 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px;
+    grid-template-rows: 64px 64px 64px 64px 64px 64px 64px 64px 64px;
+    grid-row-gap: 0px;
+    grid-column-gap: 0px;
+    width: 1024px;
+    height: 576px;
+}

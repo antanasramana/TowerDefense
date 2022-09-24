@@ -1,0 +1,7 @@
+.tower-tile{
+    background: url("./assets/tower.png") no-repeat center center;
+    background-size: cover;
+    height: 200px;
+    width: 200px;
+    margin: 30px 0px 0px 0px;
+}

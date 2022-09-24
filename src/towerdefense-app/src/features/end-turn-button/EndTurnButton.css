@@ -1,0 +1,13 @@
+.button-end-turn{
+    font-family: Quadrit;
+    font-size: 35px;
+    color: white;
+    -webkit-text-stroke: 3px black;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+}
+
+.button-end-turn:hover{
+    color: rgb(205, 205, 205);
+}

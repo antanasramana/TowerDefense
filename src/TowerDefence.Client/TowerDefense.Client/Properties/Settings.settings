@@ -1,9 +1,0 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TowerDefense.Client.Properties" GeneratedClassName="Settings">
-  <Profiles />
-  <Settings>
-    <Setting Name="ApiUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://localhost:7042/gameHub</Value>
-    </Setting>
-  </Settings>
-</SettingsFile>
