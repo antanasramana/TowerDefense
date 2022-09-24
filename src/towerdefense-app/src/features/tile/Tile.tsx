@@ -1,8 +1,19 @@
 import React from "react";
+import "./Tile.css"
+import TileType from "./enums/TileType";
+import TileImage from "./mappings/TileImage"
 
-const Tile: React.FC = () => {
+interface Props{
+    tileType: TileType
+}
+
+const Tile: React.FC<Props> = (props) => {
+    const imageSource = TileImage.sourceMap.get(props.tileType)
+
     return (
-        <div></div>
+        <div className="tile" style={{
+            backgroundImage: `url(${imageSource})`
+        }}/>
     );
 }
 

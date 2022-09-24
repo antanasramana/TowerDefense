@@ -6,9 +6,10 @@ import TowerArmor from "../tower/TowerArmor"
 import Tower from "../tower/Tower"
 import Shop from "../shop/Shop"
 import Inventory from "../inventory/Inventory"
+import Grid from "../grid/Grid"
+import EndTurnButton from "../end-turn-button/EndTurnButton";
 
 import './GameArena.css';
-
 
 const GameArena: React.FC = () => {
     return (
@@ -23,7 +24,7 @@ const GameArena: React.FC = () => {
                     <TowerHealth/>
                     <Tower/>
                 </div>
-                <div className="grid"></div>
+                <Grid/>
                 <div className="tower-container">
                     <TowerArmor/>
                     <TowerHealth/>
@@ -32,6 +33,7 @@ const GameArena: React.FC = () => {
             </div>
             <div className="footer">
                 <Inventory/>
+                <EndTurnButton/>
                 <Shop/>
             </div>
         </div>
