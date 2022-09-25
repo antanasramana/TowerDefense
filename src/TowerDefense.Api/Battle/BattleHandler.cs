@@ -1,4 +1,7 @@
-﻿using TowerDefense.Shared.Models;
+﻿
+using Microsoft.AspNetCore.SignalR;
+using TowerDefense.Api.Hubs;
+using TowerDefense.Api.Player;
 
 namespace TowerDefense.Api.Battle
 {
@@ -7,32 +10,43 @@ namespace TowerDefense.Api.Battle
         private const int NumberOfPlayers = 2;
 
         private readonly GameStateSingleton gameState;
+        private readonly TurnHandler turnHandler;
 
-        public BattleHandler ()
+        public BattleHandler(GameHub gameContext)
+        {
+            turnHandler = new TurnHandler(gameContext);
+            gameState = GameStateSingleton.Instance;
+        }
+        public BattleHandler()
         {
             gameState = GameStateSingleton.Instance;
         }
 
-        public TurnResult HandleTurnEnd(TurnEnd  turnEnd)
+        public async Task SetConnectionIdForPlayer(string playerName, string connectionId)
         {
-            gameState.TurnEnds.Add(turnEnd);
+            var player = gameState.Players.Find(x => x.Name == playerName);
+            player.ConnectionId = connectionId;
 
-            if (gameState.TurnEnds.Count == NumberOfPlayers)
+            if (gameState.Players.Count == NumberOfPlayers)
             {
-                // TODO: Should be seperate component which takes list of turnEnds and calculates result
-                int turnResult = CalculateSum();
+                await turnHandler.SendEnemyInformation(gameState.Players[0], gameState.Players[1]);
+            }
+        }
+        public void HandleNewPlayer(AddPlayerRequest addPlayerRequest)
+        {
 
-                gameState.TurnEnds.Clear();
-
-                return new TurnResult { Sum = turnResult };
+            if (gameState.Players.Count == NumberOfPlayers)
+            {
+                throw new ArgumentException();
             }
 
-            return null;
+            var newPlayer = CreateNewPlayer(addPlayerRequest);
+            gameState.Players.Add(newPlayer);
         }
 
-        private int CalculateSum()
+        private Player CreateNewPlayer(AddPlayerRequest addPlayerRequest)
         {
-            return gameState.TurnEnds.Select(t => t.Number).Sum();
+            return new Player { Name = addPlayerRequest.Name, Health = 100, Money = 1000 };
         }
     }
 }

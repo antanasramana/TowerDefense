@@ -1,10 +1,8 @@
-﻿using TowerDefense.Shared.Models;
-
-namespace TowerDefense.Api.Battle
+﻿namespace TowerDefense.Api.Battle
 {
     public class GameStateSingleton
     {
-        public List<TurnEnd> TurnEnds = new List<TurnEnd>();
+        public List<Player> Players = new List<Player>();
 
         private GameStateSingleton() 
         {

@@ -1,3 +1,4 @@
+using TowerDefense.Api.Constants;
 using TowerDefense.Api.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(Policy.DevelopmentCors, builder =>
+    {
+        builder.WithOrigins("https://localhost:3000")
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .SetIsOriginAllowed((x) => true)
+               .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,6 +32,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseCors(Policy.DevelopmentCors);
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
