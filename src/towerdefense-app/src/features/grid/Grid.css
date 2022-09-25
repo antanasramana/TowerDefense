@@ -1,9 +1,26 @@
 .grid{
     display: inline-grid;
-    grid-template-columns: 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px 64px;
+    grid-template-columns: 64px 64px 64px 64px 64px 64px 64px 64px ;
     grid-template-rows: 64px 64px 64px 64px 64px 64px 64px 64px 64px;
     grid-row-gap: 0px;
     grid-column-gap: 0px;
-    width: 1024px;
+    width: 512px;
     height: 576px;
+}
+.grid.enemy{
+    transform: rotateY(180deg);
+    background-color: rgba(169, 169, 169, 0.34);
+}
+
+.grid-item{
+    background-color: transparent;
+    
+}
+.grid-item:hover{
+    background-color: rgba(94, 94, 94, 0.185);
+    border-radius: 20%;
+}
+
+.grid-item-enemy{
+    background-color: transparent;
 }

@@ -3,3 +3,9 @@
     height: 64px;
     background: url("./assets/placeholder.png") no-repeat center center;
 }
+.tile.selected{
+    width: 64px;
+    height: 64px;
+    background: url("./assets/placeholder.png") no-repeat center center;
+    color: red;
+}

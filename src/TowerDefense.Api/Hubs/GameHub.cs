@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using TowerDefense.Api.Battle;
-using TowerDefense.Shared.Models;
 
 namespace TowerDefense.Api.Hubs
 {
@@ -10,20 +9,12 @@ namespace TowerDefense.Api.Hubs
 
         public GameHub ()
         {
-            // Maybe we can use DI? Questions for "professors"
-            this.battleHandler = new BattleHandler ();
+            battleHandler = new BattleHandler(this);
         }
-
-        public async Task EndTurn( TurnEnd turnEnd)
-        {
-            TurnResult result = battleHandler.HandleTurnEnd(turnEnd);
-
-            if (result == null)
-            {
-                return;
-            }
-
-            await Clients.All.SendAsync("TurnResult", result);
+        
+        public async Task JoinGame( string playerName)
+        {       
+            await battleHandler.SetConnectionIdForPlayer(playerName, Context.ConnectionId);
         }
     }
 }

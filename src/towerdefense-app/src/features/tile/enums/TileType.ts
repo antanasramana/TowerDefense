@@ -1,7 +1,7 @@
 enum TileType{
-    Placeholder,
     Rockets,
     Shield,
+    Placeholder,
     Blank
 }
 
