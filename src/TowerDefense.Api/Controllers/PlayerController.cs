@@ -14,9 +14,9 @@ namespace TowerDefense.Api.Controllers
     {
         private readonly BattleHandler battleHandler;
 
-        public PlayerController ()
+        public PlayerController (IHubContext<GameHub> hubContext)
         {
-            this.battleHandler = new BattleHandler();
+            this.battleHandler = new BattleHandler(hubContext);
         }
 
         [HttpPost]
@@ -33,6 +33,14 @@ namespace TowerDefense.Api.Controllers
             var player = battleHandler.GetPlayer(getPlayerRequest.PlayerName);
 
             return Ok(player);
+        }
+
+        [HttpPost("endturn")]
+        public async Task<ActionResult> EndTurn(AddPlayerRequest player)
+        {
+            battleHandler.HandleEndTurn(player.Name);
+
+            return Ok();
         }
     }
 }

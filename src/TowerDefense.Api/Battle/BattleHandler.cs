@@ -12,12 +12,18 @@ namespace TowerDefense.Api.Battle
 
         private readonly GameStateSingleton gameState;
         private readonly TurnHandler turnHandler;
-        private readonly BattleShop battleShop; 
+        private readonly BattleShop battleShop;
 
         public BattleHandler(GameHub gameContext)
         {
             battleShop = new BattleShop(new SimpleItemRepository());
             turnHandler = new TurnHandler(gameContext);
+            gameState = GameStateSingleton.Instance;
+        }
+        public BattleHandler(IHubContext<GameHub> hubContext)
+        {
+            turnHandler = new TurnHandler(hubContext);
+            battleShop = new BattleShop(new SimpleItemRepository());
             gameState = GameStateSingleton.Instance;
         }
         public BattleHandler()
@@ -26,7 +32,7 @@ namespace TowerDefense.Api.Battle
             gameState = GameStateSingleton.Instance;
         }
 
-        public  Player GetPlayer(string playerName)
+        public Player GetPlayer(string playerName)
         {
             return gameState.Players.Find(x => x.Name == playerName);
         }
@@ -52,6 +58,12 @@ namespace TowerDefense.Api.Battle
             gameState.Players.Add(newPlayer);
         }
 
+        public void HandleEndTurn(string playerName)
+        {
+            turnHandler.EndTurn(playerName);
+        }
+
+
         public GetShopItemsResponse GetShopItems()
         {
             return new GetShopItemsResponse { Items = battleShop.GetItems() };
@@ -63,18 +75,53 @@ namespace TowerDefense.Api.Battle
             return new GetInventoryItemsResponse { Items = player.Inventory.Items };
         }
 
+        public GetGridResponse GetGridItems(GetGridRequest getGridRequest)
+        {
+            var player = gameState.Players.Find(x => x.Name == getGridRequest.PlayerName);
+            return new GetGridResponse { GridItems = player.ArenaGrid.GridItems };
+        }
+
         public void BuyShopItem(BuyShopItemRequest buyShopItemRequest)
         {
             var player = gameState.Players.Find(x => x.Name == buyShopItemRequest.PlayerName);
             battleShop.BuyItem(buyShopItemRequest.ItemId, player);
         }
 
+        public AddGridItemResponse AddGridItem(AddGridItemRequest addGridItemRequest)
+        {
+            var player = gameState.Players.Find(x => x.Name == addGridItemRequest.PlayerName);
+
+            var inventoryItem = player.Inventory.Items.Find(x => x.Id == addGridItemRequest.InventoryItemId);
+
+            if (inventoryItem == null)
+            {
+                return new AddGridItemResponse
+                {
+                    Items = player.Inventory.Items,
+                    GridItems = player.ArenaGrid.GridItems
+                };
+            }
+
+            player.ArenaGrid.GridItems[addGridItemRequest.GridItemId].ItemType = inventoryItem.ItemType;
+
+            player.Inventory.Items.Remove(inventoryItem);
+
+            return new AddGridItemResponse
+            {
+                Items = player.Inventory.Items,
+                GridItems = player.ArenaGrid.GridItems
+            };
+        }
+
         private Player CreateNewPlayer(AddPlayerRequest addPlayerRequest)
         {
-            return new Player { Name = addPlayerRequest.Name, 
-                Health = 100, 
-                Money = 1000, 
-                Inventory = new Inventory()
+            return new Player
+            {
+                Name = addPlayerRequest.Name,
+                Health = 100,
+                Money = 1000,
+                Inventory = new Inventory(),
+                ArenaGrid = new Grid.ArenaGrid()
             };
         }
     }

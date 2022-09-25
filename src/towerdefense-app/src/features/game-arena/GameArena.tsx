@@ -10,6 +10,7 @@ import Grid from "../grid/Grid"
 import EndTurnButton from "../end-turn-button/EndTurnButton";
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setName } from '../player/enemy-slice'
+import { setEnemyGridItems } from '../grid/grid-slice'
 import * as signalR from "@microsoft/signalr";
 
 
@@ -40,9 +41,12 @@ const GameArena: React.FC = () => {
                     connection.invoke("JoinGame", playerName);
     
                     connection.on("EnemyInfo", message => {
-                        console.log(message);
                         dispatch(setName(message.name));
-                      });     
+                      });
+                    connection.on("EndTurn", res => {
+                        console.log(res);
+                        dispatch(setEnemyGridItems(res.gridItems));
+                    });     
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
@@ -61,7 +65,8 @@ const GameArena: React.FC = () => {
                     <TowerHealth/>
                     <Tower/>
                 </div>
-                <Grid/>
+                <Grid isEnemy={false}/>
+                <Grid isEnemy={true}/>
                 <div className="tower-container">
                     <h1 className="name-header">{enemyName}</h1>
                     <TowerArmor/>

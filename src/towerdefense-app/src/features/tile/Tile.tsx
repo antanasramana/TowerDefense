@@ -9,10 +9,7 @@ interface Props{
 
 const Tile: React.FC<Props> = (props) => {
     const imageSource = TileImage.sourceMap.get(props.tileType)
-
-
-
-
+    
     return (
         <div className="tile" style={{
             backgroundImage: `url(${imageSource})`

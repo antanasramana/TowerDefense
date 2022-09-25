@@ -8,9 +8,8 @@ interface Inventory {
 }
 
 const initialState: Inventory = {
-    selectedItem: "ksdasda",
+    selectedItem: "",
     inventoryItems: []
-   // inventoryItems: [{id:"test", itemType:0 }]
 };
 
 const inventorySlice = createSlice({

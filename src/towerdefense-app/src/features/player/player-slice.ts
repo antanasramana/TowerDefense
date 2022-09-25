@@ -39,10 +39,20 @@ export const apiSlice = createApi({
           },
         }),
       }),
+      endTurn: builder.mutation({
+        query: (payload) => ({
+          url: '/players/endturn',
+          method: 'POST',
+          body: payload,
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        }),
+      }),
     };
   },
 });
 
-export const { useAddNewPlayerMutation } = apiSlice;
+export const { useAddNewPlayerMutation, useEndTurnMutation } = apiSlice;
 export const { setName } = playerSlice.actions;
 export default playerSlice.reducer;
