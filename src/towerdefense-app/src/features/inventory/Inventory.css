@@ -20,3 +20,16 @@
     grid-row-gap: 0px;
     grid-column-gap: 0px;
 }
+
+.inventory-item{
+    background-color: transparent;
+}
+.inventory-item:hover{
+    background-color: rgba(239, 239, 184, 0.214);
+    border-radius: 50%;
+}
+
+.inventory-item.selected{
+    background-color: rgba(239, 239, 184, 0.471);
+    border-radius: 50%;
+}

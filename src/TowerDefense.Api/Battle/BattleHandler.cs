@@ -1,7 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.SignalR;
 using TowerDefense.Api.Hubs;
-using TowerDefense.Api.Player;
+using TowerDefense.Api.Contracts;
+using TowerDefense.Api.Battle.Shop;
 
 namespace TowerDefense.Api.Battle
 {
@@ -11,15 +12,23 @@ namespace TowerDefense.Api.Battle
 
         private readonly GameStateSingleton gameState;
         private readonly TurnHandler turnHandler;
+        private readonly BattleShop battleShop; 
 
         public BattleHandler(GameHub gameContext)
         {
+            battleShop = new BattleShop(new SimpleItemRepository());
             turnHandler = new TurnHandler(gameContext);
             gameState = GameStateSingleton.Instance;
         }
         public BattleHandler()
         {
+            battleShop = new BattleShop(new SimpleItemRepository());
             gameState = GameStateSingleton.Instance;
+        }
+
+        public  Player GetPlayer(string playerName)
+        {
+            return gameState.Players.Find(x => x.Name == playerName);
         }
 
         public async Task SetConnectionIdForPlayer(string playerName, string connectionId)
@@ -29,12 +38,11 @@ namespace TowerDefense.Api.Battle
 
             if (gameState.Players.Count == NumberOfPlayers)
             {
-                await turnHandler.SendEnemyInformation(gameState.Players[0], gameState.Players[1]);
+                await turnHandler.StartFirstTurn(gameState.Players[0], gameState.Players[1]);
             }
         }
         public void HandleNewPlayer(AddPlayerRequest addPlayerRequest)
         {
-
             if (gameState.Players.Count == NumberOfPlayers)
             {
                 throw new ArgumentException();
@@ -44,9 +52,30 @@ namespace TowerDefense.Api.Battle
             gameState.Players.Add(newPlayer);
         }
 
+        public GetShopItemsResponse GetShopItems()
+        {
+            return new GetShopItemsResponse { Items = battleShop.GetItems() };
+        }
+
+        public GetInventoryItemsResponse GetInventoryItems(GetInventoryItemsRequest getInventoryItemsRequest)
+        {
+            var player = gameState.Players.Find(x => x.Name == getInventoryItemsRequest.PlayerName);
+            return new GetInventoryItemsResponse { Items = player.Inventory.Items };
+        }
+
+        public void BuyShopItem(BuyShopItemRequest buyShopItemRequest)
+        {
+            var player = gameState.Players.Find(x => x.Name == buyShopItemRequest.PlayerName);
+            battleShop.BuyItem(buyShopItemRequest.ItemId, player);
+        }
+
         private Player CreateNewPlayer(AddPlayerRequest addPlayerRequest)
         {
-            return new Player { Name = addPlayerRequest.Name, Health = 100, Money = 1000 };
+            return new Player { Name = addPlayerRequest.Name, 
+                Health = 100, 
+                Money = 1000, 
+                Inventory = new Inventory()
+            };
         }
     }
 }

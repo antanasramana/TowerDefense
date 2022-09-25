@@ -6,7 +6,7 @@ import "./Grid.css"
 
 const Grid: React.FC = () => {
     const tiles = [];
-    for(let i = 0; i < 144; i++){
+    for(let i = 0; i < 72; i++){
         tiles.push(<Tile tileType={TileType.Placeholder}/>)
     }
     return (

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 using System.Data;
 using TowerDefense.Api.Battle;
 using TowerDefense.Api.Hubs;
-using TowerDefense.Api.Player;
+using TowerDefense.Api.Contracts;
 
 namespace TowerDefense.Api.Controllers
 {
@@ -25,6 +25,14 @@ namespace TowerDefense.Api.Controllers
             battleHandler.HandleNewPlayer(player);
 
             return Ok(new AddPlayerResponse { Name = player.Name });
+        }
+        // this should be GET request...
+        [HttpPost("get")]
+        public async Task<ActionResult<Player>> GetPlayer(GetPlayerRequest getPlayerRequest)
+        {
+            var player = battleHandler.GetPlayer(getPlayerRequest.PlayerName);
+
+            return Ok(player);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace TowerDefense.Api.Player
+﻿namespace TowerDefense.Api.Contracts
 {
     public class AddPlayerRequest
     {
