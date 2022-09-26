@@ -1,24 +1,14 @@
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { setName, useEndTurnMutation} from '../player/player-slice'
 import './EndTurnButton.css';
 
-const EndTurnButton: React.FC = () => {
+interface Props{
+  text: string
+  onClick: () => void
+}
 
-  const playerName = useAppSelector((state) => state.player.name);
-  const [endTurn, response] = useEndTurnMutation()
-
-  function onEndTurnClick()
-  {
-    const payload = {
-      name:playerName
-    }
-    endTurn(payload)
-    .unwrap()
-  }
-
+const EndTurnButton: React.FC<Props> = (props) => {
   return (
-    <button onClick={onEndTurnClick} className="button-end-turn">End Turn</button>
+    <button onClick={props.onClick} className="button-end-turn">{props.text}</button>
   );
 }
 
