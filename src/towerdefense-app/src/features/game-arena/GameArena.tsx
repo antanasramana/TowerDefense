@@ -11,19 +11,27 @@ import EndTurnButton from "../end-turn-button/EndTurnButton";
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setName } from '../player/enemy-slice'
 import { setEnemyGridItems } from '../grid/grid-slice'
+import { useEndTurnMutation} from '../player/player-slice'
 import * as signalR from "@microsoft/signalr";
 
 
 import './GameArena.css';
 
 const GameArena: React.FC = () => {
-
-    const [ connection, setConnection ] = useState<signalR.HubConnection>();
     const dispatch = useAppDispatch();
+
+    // useState
+    const [ connection, setConnection ] = useState<signalR.HubConnection>();
+    const [ endTurnText, setEndTurnText ] = useState<string>("End turn");
+
+    // redux State
     const playerName = useAppSelector((state) => state.player.name);
     const enemyName = useAppSelector((state) => state.enemy.name);
 
+    // redux api
+    const [endTurn, response] = useEndTurnMutation()
 
+    // useEffect
     useEffect(() => {
         const hubConnection: signalR.HubConnection = new signalR.HubConnectionBuilder()
             .withUrl("https://localhost:7042/gameHub")
@@ -44,14 +52,28 @@ const GameArena: React.FC = () => {
                         dispatch(setName(message.name));
                       });
                     connection.on("EndTurn", res => {
-                        console.log(res);
+                        //console.log(res);
                         dispatch(setEnemyGridItems(res.gridItems));
+                        setEndTurnText("End Turn");
                     });     
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
     }, [connection]);
-
+  
+    // methods
+    function onEndTurnClick()
+    {
+      const payload = {
+        name:playerName
+      }
+      setEndTurnText("Waiting...");
+      endTurn(payload)
+      .unwrap()
+      .then(()=>{
+      })
+    }
+    
     return (
         <div className="root-container">
             <div className="header">
@@ -76,7 +98,7 @@ const GameArena: React.FC = () => {
             </div>
             <div className="footer">
                 <Inventory/>
-                <EndTurnButton/>
+                <EndTurnButton onClick={onEndTurnClick} text={endTurnText}/>
                 <Shop/>
             </div>
         </div>
