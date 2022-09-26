@@ -2,9 +2,13 @@ import React from "react";
 
 import "./Tower.css"
 
-const Tower: React.FC = () => {
+interface Props{
+    isEnemy: Boolean
+}
+
+const Tower: React.FC<Props> = (props) => {
     return (
-        <div className="tower-tile"/>
+        <div className={props.isEnemy ? "tower-tile-enemy" : "tower-tile"}/>
     );
 }
 
