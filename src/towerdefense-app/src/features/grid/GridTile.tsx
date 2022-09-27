@@ -1,7 +1,6 @@
 import React from "react";
 import TileType from "../tile/enums/TileType";
 import Tile from '../tile/Tile'
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 interface Props{
     id: number

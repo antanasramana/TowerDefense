@@ -14,8 +14,8 @@ import { setEnemyGridItems } from '../grid/grid-slice'
 import { useEndTurnMutation} from '../player/player-slice'
 import * as signalR from "@microsoft/signalr";
 
-
 import './GameArena.css';
+import { EndTurnRequest } from "../../contracts/EndTurnRequest";
 
 const GameArena: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ const GameArena: React.FC = () => {
     const enemyName = useAppSelector((state) => state.enemy.name);
 
     // redux api
-    const [endTurn, response] = useEndTurnMutation()
+    const [endTurn] = useEndTurnMutation()
 
     // useEffect
     useEffect(() => {
@@ -44,7 +44,7 @@ const GameArena: React.FC = () => {
     useEffect(() => {
         if (connection) {
             connection.start()
-                .then(result => {
+                .then(_ => {
                     console.log('Connected!');
                     connection.invoke("JoinGame", playerName);
     
@@ -52,26 +52,22 @@ const GameArena: React.FC = () => {
                         dispatch(setName(message.name));
                       });
                     connection.on("EndTurn", res => {
-                        //console.log(res);
                         dispatch(setEnemyGridItems(res.gridItems));
                         setEndTurnText("End Turn");
                     });     
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
-    }, [connection]);
+    }, [connection, dispatch, playerName]);
   
     // methods
     function onEndTurnClick()
     {
-      const payload = {
-        name:playerName
+      const endTurnRequest: EndTurnRequest = {
+        playerName: playerName
       }
       setEndTurnText("Waiting...");
-      endTurn(payload)
-      .unwrap()
-      .then(()=>{
-      })
+      endTurn(endTurnRequest);
     }
     
     return (

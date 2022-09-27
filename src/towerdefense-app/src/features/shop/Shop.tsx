@@ -1,9 +1,7 @@
 import React, {useEffect} from 'react';
-import Tile from '../tile/Tile'
-import TileType from '../tile/enums/TileType'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useGetShopItemsMutation, useBuyShopItemMutation, setShopItems } from './shop-slice'
-import { useGetInventoryItemsMutation, setInventoryItems } from '../inventory/inventory-slice'
+import { useBuyShopItemMutation, getShopItems } from './shop-slice'
+import { getInventoryItems } from '../inventory/inventory-slice'
 import { setSelectedItem } from './shop-slice'
 
 import './Shop.css';
@@ -16,9 +14,7 @@ const Shop: React.FC = () => {
   const playerName = useAppSelector((state) => state.player.name);
   const selectedShopItem = useAppSelector((state) => state.shop.selectedItem);
 
-  const [getShopItems, response] = useGetShopItemsMutation();
-  const [buyShopItem, res] = useBuyShopItemMutation()
-  const [getInventoryItems, r] = useGetInventoryItemsMutation()
+  const [buyShopItem] = useBuyShopItemMutation();
 
   function onShopItemClick(id:string)
   {
@@ -35,26 +31,13 @@ const Shop: React.FC = () => {
     buyShopItem(formData)
     .unwrap()
     .then(()=>{
-      const getInventoryRequest ={
-        playerName:playerName
-      }
-      getInventoryItems(getInventoryRequest)
-      .unwrap()
-      .then((res)=> {
-        dispatch(setInventoryItems(res.items));
-      });
+      dispatch(getInventoryItems());      
     })
   }
 
   useEffect(() => {
-    getShopItems("")
-    .unwrap()
-    .then((res) => {
-        dispatch(setShopItems(res.items));
-    }).catch((error) => {
-      console.log(error)
-    })
-  }, []);
+    dispatch(getShopItems());
+  }, [dispatch]);
 
   return (
     <div>

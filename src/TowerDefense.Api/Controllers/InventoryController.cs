@@ -16,18 +16,13 @@ namespace TowerDefense.Api.Controllers
             this.battleHandler = new BattleHandler();
         }
 
-        [HttpPost]
-        public async Task<ActionResult<GetInventoryItemsResponse>> GetItems(GetInventoryItemsRequest getInventoryItemsRequest)
+        [HttpGet("{playerName}")]
+        public async Task<ActionResult<GetInventoryItemsResponse>> GetItems(string playerName)
         {
-            try
-            {
-                 var getInventoryItemsResponse = battleHandler.GetInventoryItems(getInventoryItemsRequest);
-                 return Ok(getInventoryItemsResponse);
-            }
-            catch (Exception e)
-            { }
+            var getInventoryItemsRequest = new GetInventoryItemsRequest { PlayerName = playerName };
 
-            return Ok();
+            var getInventoryItemsResponse = battleHandler.GetInventoryItems(getInventoryItemsRequest);
+            return Ok(getInventoryItemsResponse);
         }
     }
 }

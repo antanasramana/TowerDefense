@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { setName, useAddNewPlayerMutation} from '../player/player-slice'
+import { useAppDispatch } from '../../app/hooks';
+import { setName, useAddNewPlayerMutation } from '../player/player-slice'
 import { useNavigate } from "react-router-dom";
 import './Home.css';
+import { AddNewPlayerRequest } from '../../contracts/AddNewPlayerRequest';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [addNewPlayer, response] = useAddNewPlayerMutation()
+  const [addNewPlayer] = useAddNewPlayerMutation()
 
-  const [playerName,setPlayerName] = useState("");
+  const [playerName,setPlayerName] = useState<string>("");
 
   function handleNameChange(name: string) {
     setPlayerName(name);
   }
+
   function startGame()
   {
-    let formData = {
-      name: playerName,
+    const addNewPlayerRequest: AddNewPlayerRequest = {
+      playerName: playerName,
     };
 
-    addNewPlayer(formData)
+    addNewPlayer(addNewPlayerRequest)
       .unwrap()
       .then(() => {
         dispatch(setName(playerName));

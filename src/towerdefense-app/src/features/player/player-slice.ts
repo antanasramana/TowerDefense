@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { AddNewPlayerRequest } from '../../contracts/AddNewPlayerRequest';
 
 interface Player {
     name:string
@@ -30,7 +31,7 @@ export const apiSlice = createApi({
   endpoints(builder) {
     return {
       addNewPlayer: builder.mutation({
-        query: (payload) => ({
+        query: (payload: AddNewPlayerRequest) => ({
           url: '/players',
           method: 'POST',
           body: payload,

@@ -9,7 +9,7 @@ import {shopApiSlice} from '../features/shop/shop-slice';
 import {gridApiSlice} from '../features/grid/grid-slice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
-import thunk from 'redux-thunk';
+import thunkMiddleware from 'redux-thunk';
 
 const persistConfig = {
     key: 'root',
@@ -30,10 +30,10 @@ export const store = configureStore({
         [gridApiSlice.reducerPath]: gridApiSlice.reducer,
     },
     devTools: process.env.NODE_ENV !== 'production',
-    middleware: [thunk]
 })
 
 export const persistor = persistStore(store)
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
+

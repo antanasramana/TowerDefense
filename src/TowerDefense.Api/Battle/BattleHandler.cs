@@ -117,7 +117,7 @@ namespace TowerDefense.Api.Battle
         {
             return new Player
             {
-                Name = addPlayerRequest.Name,
+                Name = addPlayerRequest.PlayerName,
                 Health = 100,
                 Money = 1000,
                 Inventory = new Inventory(),

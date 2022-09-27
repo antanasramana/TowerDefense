@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {GridItem} from "../../types/GridItem";
+import { AddGridItemRequest } from '../../contracts/AddGridItemRequest';
+import {GridItem} from "../../models/GridItem";
+const API_URL = process.env.REACT_APP_BACKEND;
 
 interface Grid {
     playerGridItems: GridItem[],
@@ -29,25 +31,15 @@ const gridSlice = createSlice({
 export const gridApiSlice = createApi({
     reducerPath: 'gridApi',
     baseQuery: fetchBaseQuery({
-      baseUrl: 'https://localhost:7042/api/',
+      baseUrl: API_URL,
       prepareHeaders(headers) {
         return headers;
       },
     }),
     endpoints(builder) {
       return {
-        getGridItems: builder.mutation({
-          query: (payload) => ({
-            url: '/grid',
-            method: 'POST',
-            body: payload,
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8',
-            },
-          }),
-        }),
         addGridItem: builder.mutation({
-            query: (payload) => ({
+            query: (payload: AddGridItemRequest) => ({
               url: '/grid/add',
               method: 'POST',
               body: payload,
@@ -61,6 +53,6 @@ export const gridApiSlice = createApi({
   });
 
 
-export const { useGetGridItemsMutation, useAddGridItemMutation } = gridApiSlice;
+export const { useAddGridItemMutation } = gridApiSlice;
 export const { setEnemyGridItems, setPlayerGridItems } = gridSlice.actions;
 export default gridSlice.reducer;

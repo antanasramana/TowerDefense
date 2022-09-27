@@ -24,21 +24,13 @@ namespace TowerDefense.Api.Controllers
         {
             battleHandler.HandleNewPlayer(player);
 
-            return Ok(new AddPlayerResponse { Name = player.Name });
-        }
-        // this should be GET request...
-        [HttpPost("get")]
-        public async Task<ActionResult<Player>> GetPlayer(GetPlayerRequest getPlayerRequest)
-        {
-            var player = battleHandler.GetPlayer(getPlayerRequest.PlayerName);
-
-            return Ok(player);
+            return Ok(new AddPlayerResponse { Name = player.PlayerName });
         }
 
         [HttpPost("endturn")]
-        public async Task<ActionResult> EndTurn(AddPlayerRequest player)
+        public async Task<ActionResult> EndTurn(EndTurnRequest player)
         {
-            battleHandler.HandleEndTurn(player.Name);
+            battleHandler.HandleEndTurn(player.PlayerName);
 
             return Ok();
         }
