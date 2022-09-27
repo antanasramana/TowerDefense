@@ -69,9 +69,9 @@ namespace TowerDefense.Api.Battle
             return new GetShopItemsResponse { Items = battleShop.GetItems() };
         }
 
-        public GetInventoryItemsResponse GetInventoryItems(GetInventoryItemsRequest getInventoryItemsRequest)
+        public GetInventoryItemsResponse GetInventoryItems(string playerName)
         {
-            var player = gameState.Players.Find(x => x.Name == getInventoryItemsRequest.PlayerName);
+            var player = gameState.Players.Find(x => x.Name == playerName);
             return new GetInventoryItemsResponse { Items = player.Inventory.Items };
         }
 

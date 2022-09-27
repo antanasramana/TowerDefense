@@ -19,9 +19,7 @@ namespace TowerDefense.Api.Controllers
         [HttpGet("{playerName}")]
         public async Task<ActionResult<GetInventoryItemsResponse>> GetItems(string playerName)
         {
-            var getInventoryItemsRequest = new GetInventoryItemsRequest { PlayerName = playerName };
-
-            var getInventoryItemsResponse = battleHandler.GetInventoryItems(getInventoryItemsRequest);
+            var getInventoryItemsResponse = battleHandler.GetInventoryItems(playerName);
             return Ok(getInventoryItemsResponse);
         }
     }
