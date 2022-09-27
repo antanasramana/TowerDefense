@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { AddNewPlayerRequest } from '../../contracts/AddNewPlayerRequest';
+const API_URL = process.env.REACT_APP_BACKEND;
 
 interface Player {
     name:string
@@ -23,7 +24,7 @@ const playerSlice = createSlice({
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://localhost:7042/api/',
+    baseUrl: API_URL,
     prepareHeaders(headers) {
       return headers;
     },
