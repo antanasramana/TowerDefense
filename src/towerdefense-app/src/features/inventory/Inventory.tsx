@@ -18,7 +18,7 @@ const Inventory: React.FC = () => {
     <div className="inventory-container">
         <div className="inventory-header">INVENTORY</div>
         <div className="inventory-item-container">
-           {inventoryItems.map((i)=> <InventoryTile id ={i.id} onTileClick={onShopItemClick} tileType={i.itemType}/>)}     
+           {inventoryItems.map((item, index)=> <InventoryTile key={index} id ={item.id} onTileClick={onShopItemClick} tileType={item.itemType}/>)}     
         </div>
     </div>
   );

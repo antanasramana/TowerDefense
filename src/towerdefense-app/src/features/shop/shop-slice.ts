@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {ShopItem} from "../../models/ShopItem";
+import { ShopItem } from "../../models/ShopItem";
 const API_URL = process.env.REACT_APP_BACKEND;
 
 interface Shop {
@@ -18,7 +18,6 @@ export const getShopItems = createAsyncThunk(
   'shop/getShop',  
   async () => {
     const response = await axios.get(`${API_URL}/shop`);
-    console.log(response.data);
     return response.data.items;
 })
 

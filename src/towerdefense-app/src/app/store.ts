@@ -9,7 +9,6 @@ import {shopApiSlice} from '../features/shop/shop-slice';
 import {gridApiSlice} from '../features/grid/grid-slice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
-import thunkMiddleware from 'redux-thunk';
 
 const persistConfig = {
     key: 'root',

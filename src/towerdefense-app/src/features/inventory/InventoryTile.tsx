@@ -13,7 +13,7 @@ const InventoryTile: React.FC<Props> = (props) => {
     const selectedItem = useAppSelector((state) => state.inventory.selectedItem);
 
     return (
-        <div className={selectedItem==props.id ? "inventory-item selected" : "inventory-item"} key={props.id.toString()} onClick={()=>props.onTileClick(props.id)}>
+        <div className={ selectedItem === props.id ? "inventory-item selected" : "inventory-item"} key={props.id.toString()} onClick={()=>props.onTileClick(props.id) }>
             <Tile tileType={props.tileType}></Tile>
         </div>
     );

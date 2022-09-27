@@ -44,7 +44,7 @@ const Shop: React.FC = () => {
         <h3 className="shop-header">SHOP</h3>
         <div className="shop-container">
           <div className="shop-item-container">
-            {shopItems.map((i)=> <ShopItem id ={i.id} onTileClick={onShopItemClick} tileType={i.itemType}/>)}
+            {shopItems.map((item, index)=> <ShopItem key={index} id ={item.id} onTileClick={onShopItemClick} tileType={item.itemType}/>)}
           </div>
           <div>
             <button className="shop-button" onClick={onBuyItem}>Buy</button>

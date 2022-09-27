@@ -38,7 +38,7 @@ const Home: React.FC = () => {
         <h1 className="Home-header">Tower Defense</h1>
         <input  className="Home-name-input" onChange={(e) => handleNameChange(e.target.value)}></input>
         <br/>
-        <a className="Home-start-button" onClick={startGame}>Start game</a>
+        <button className="Home-start-button" onClick={startGame}>Start game</button>
       </div>
     </div>
   );

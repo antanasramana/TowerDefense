@@ -45,9 +45,9 @@ const Grid: React.FC<Props> = (props) => {
     return (
         <div className={props.isEnemy ? "grid enemy" : "grid"}>
             {props.isEnemy?
-             enemyGrid.map( i => <GridTile id={i.id} selectable={!props.isEnemy} onTileClick={()=>{}} tileType={i.itemType}/>)
+             enemyGrid.map((item, index) => <GridTile key={index} id={item.id} selectable={!props.isEnemy} onTileClick={()=>{}} tileType={item.itemType}/>)
              :
-             playerGrid.map( i => <GridTile id={i.id} selectable={!props.isEnemy} onTileClick={onGridTileClick } tileType={i.itemType}/>)
+             playerGrid.map((item, index) => <GridTile key={index} id={item.id} selectable={!props.isEnemy} onTileClick={onGridTileClick } tileType={item.itemType}/>)
             }       
         </div>
     );
