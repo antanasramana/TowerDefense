@@ -75,9 +75,9 @@ namespace TowerDefense.Api.Battle
             return new GetInventoryItemsResponse { Items = player.Inventory.Items };
         }
 
-        public GetGridResponse GetGridItems(GetGridRequest getGridRequest)
+        public GetGridResponse GetGridItems(string playerName)
         {
-            var player = gameState.Players.Find(x => x.Name == getGridRequest.PlayerName);
+            var player = gameState.Players.Find(x => x.Name == playerName);
             return new GetGridResponse { GridItems = player.ArenaGrid.GridItems };
         }
 
