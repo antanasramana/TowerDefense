@@ -1,6 +1,6 @@
 ﻿namespace TowerDefense.Api.Contracts
 {
-    public class AddPlayerRequest
+    public class AddNewPlayerRequest
     {
         public string PlayerName { get; set; }
     }
