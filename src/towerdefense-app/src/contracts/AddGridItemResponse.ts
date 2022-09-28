@@ -1,5 +1,5 @@
-import { GridItem } from "../models/GridItem";
-import { InventoryItem } from "../models/InventoryItem";
+import { GridItem } from '../models/GridItem';
+import { InventoryItem } from '../models/InventoryItem';
 
 export type AddGridItemResponse = {
     inventoryItems: InventoryItem [];
