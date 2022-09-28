@@ -1,11 +1,11 @@
 @font-face {
-    font-family: Quadrit;
-    src: url("../../assets/fonts/Quadrit.ttf");
+  font-family: Quadrit;
+  src: url("../../assets/fonts/Quadrit.ttf");
 }
 
-.level-text{
-    font-family: Quadrit;
-    font-size: 32px;
-    color: white;
-    -webkit-text-stroke: 3px black;
+.level-text {
+  font-family: Quadrit;
+  font-size: 32px;
+  color: white;
+  -webkit-text-stroke: 3px black;
 }

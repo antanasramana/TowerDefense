@@ -1,60 +1,70 @@
-import React from "react";
-import Tile from "../tile/Tile"
-import TileType from "../tile/enums/TileType";
+import React from 'react';
+import GridTile from './GridTile';
+import './Grid.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useAddGridItemMutation, setEnemyGridItems, setPlayerGridItems } from './grid-slice'
-import { setInventoryItems } from '../inventory/inventory-slice'
-import "./Grid.css"
-import GridTile from "./GridTile";
+import { useAddGridItemMutation, setPlayerGridItems } from './GridSlice';
+import { setInventoryItems } from '../inventory/InventorySlice';
+import { AddGridItemRequest } from '../../contracts/AddGridItemRequest';
 
-interface Props{
-    isEnemy: boolean
+interface Props {
+  isEnemy: boolean;
 }
 
 const Grid: React.FC<Props> = (props) => {
+	const dispatch = useAppDispatch();
 
-    const dispatch = useAppDispatch();
+	// redux State
+	const selectedInventoryItem = useAppSelector((state) => state.inventory.selectedItem);
+	const playerName = useAppSelector((state) => state.player.name);
+	const playerGrid = useAppSelector((state) => state.grid.playerGridItems);
+	const enemyGrid = useAppSelector((state) => state.grid.enemyGridItems);
 
-    const selectedInventoryItem = useAppSelector((state) => state.inventory.selectedItem);
-    const playerName = useAppSelector((state) => state.player.name);
-    const playerGrid = useAppSelector((state) => state.grid.playerGridItems);
-    const enemyGrid = useAppSelector((state) => state.grid.enemyGridItems);
+	// redux api
+	const [addGridItem] = useAddGridItemMutation();
 
-    const [addGridItem, response] = useAddGridItemMutation();
+	// methods
+	function onGridTileClick(id: number) {
+		if (!selectedInventoryItem) {
+			return;
+		}
 
-    function onGridTileClick(id: number)
-    {
-        if (!selectedInventoryItem)
-        {
-            console.log("No selected item!");
-            return;
-        }
-        // TODO: add to contracts
-        const addGridItemRequest = {
-            playerName: playerName,
-            inventoryItemId: selectedInventoryItem,
-            gridItemId: id
-        }
+		const addGridItemRequest: AddGridItemRequest = {
+			playerName: playerName,
+			inventoryItemId: selectedInventoryItem,
+			gridItemId: id,
+		};
 
-        addGridItem(addGridItemRequest)
-        .unwrap()
-        .then( res => {
-            console.log(res);
-            dispatch(setInventoryItems(res.items));
-            dispatch(setPlayerGridItems(res.gridItems));
-        });
-    }
+		addGridItem(addGridItemRequest)
+			.unwrap()
+			.then((res) => {
+				dispatch(setInventoryItems(res.inventoryItems));
+				dispatch(setPlayerGridItems(res.gridItems));
+			});
+	}
 
-    return (
-        <div className={props.isEnemy ? "grid enemy" : "grid"}>
-            {props.isEnemy?
-             enemyGrid.map( i => <GridTile id={i.id} selectable={!props.isEnemy} onTileClick={()=>{}} tileType={i.itemType}/>)
-             :
-             playerGrid.map( i => <GridTile id={i.id} selectable={!props.isEnemy} onTileClick={onGridTileClick } tileType={i.itemType}/>)
-            }       
-        </div>
-    );
-}
+	return (
+		<div className={props.isEnemy ? 'grid enemy' : 'grid'}>
+			{props.isEnemy
+				? enemyGrid.map((item, index) => (
+					<GridTile
+						key={index}
+						id={item.id}
+						selectable={!props.isEnemy}
+						onTileClick={() => {0;}}
+						tileType={item.itemType}
+					/>
+				))
+				: playerGrid.map((item, index) => (
+					<GridTile
+						key={index}
+						id={item.id}
+						selectable={!props.isEnemy}
+						onTileClick={onGridTileClick}
+						tileType={item.itemType}
+					/>
+				))}
+		</div>
+	);
+};
 
 export default Grid;
-

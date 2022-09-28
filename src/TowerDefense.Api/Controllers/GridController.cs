@@ -15,10 +15,10 @@ namespace TowerDefense.Api.Controllers
             this.battleHandler = new BattleHandler();
         }
 
-        [HttpPost]
-        public async Task<ActionResult<GetGridResponse>> GetGrid(GetGridRequest getGridRequest)
+        [HttpGet("{playerName}")]
+        public async Task<ActionResult<GetGridResponse>> GetGrid(string playerName)
         {
-            var getInventoryItemsResponse = battleHandler.GetGridItems(getGridRequest);
+            var getInventoryItemsResponse = battleHandler.GetGridItems(playerName);
             return Ok(getInventoryItemsResponse);
         }
         [HttpPost("add")]

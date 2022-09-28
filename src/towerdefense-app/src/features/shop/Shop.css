@@ -1,60 +1,60 @@
-.shop-header{
-    font-family: Quadrit;
-    font-size: 32px;
-    color: white;
-    -webkit-text-stroke: 2px black;
-    margin-bottom: 0;
-    margin-top: 0;
-    text-align: center;
+.shop-header {
+  font-family: Quadrit;
+  font-size: 32px;
+  color: white;
+  -webkit-text-stroke: 2px black;
+  margin-bottom: 0;
+  margin-top: 0;
+  text-align: center;
 }
-.shop-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.shop-item-container{
-    width: 192px;
-    height: 128px;
-    background: url("./assets/shop.png") no-repeat center center;
-    display: inline-grid;
-    grid-template-columns: 64px 64px 64px;
-    grid-template-rows: 64px 64px;
-    grid-row-gap: 0px;
-    grid-column-gap: 0px;
+.shop-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.shop-button{
-    width: 100px;
-    height: 100px;
-    font-family: Quadrit;
-    font-size: 2em;
-    color: white;
-    -webkit-text-stroke: 3px black;
-    text-decoration: none;
-    background-color: transparent;
-    padding: 0.3em;
-    border: 2px solid white;
-    outline: 2px solid black;
-    outline-offset: 0px;
-}
-.shop-button:hover{
-    background-color: rgba(128, 128, 128, 0.381);
-}
-.shop-button.disabled{
-    color: gray;
+.shop-item-container {
+  width: 192px;
+  height: 128px;
+  background: url("./assets/shop.png") no-repeat center center;
+  display: inline-grid;
+  grid-template-columns: 64px 64px 64px;
+  grid-template-rows: 64px 64px;
+  grid-row-gap: 0px;
+  grid-column-gap: 0px;
 }
 
-.shop-item{
-    background-color: transparent;
+.shop-button {
+  width: 100px;
+  height: 100px;
+  font-family: Quadrit;
+  font-size: 2em;
+  color: white;
+  -webkit-text-stroke: 3px black;
+  text-decoration: none;
+  background-color: transparent;
+  padding: 0.3em;
+  border: 2px solid white;
+  outline: 2px solid black;
+  outline-offset: 0px;
 }
-.shop-item:hover{
-    background-color: rgba(239, 239, 184, 0.214);
-    border-radius: 50%;
+.shop-button:hover {
+  background-color: rgba(128, 128, 128, 0.381);
+}
+.shop-button.disabled {
+  color: gray;
 }
 
-.shop-item.selected{
-    background-color: rgba(239, 239, 184, 0.471);
-    border-radius: 50%;
+.shop-item {
+  background-color: transparent;
+}
+.shop-item:hover {
+  background-color: rgba(239, 239, 184, 0.214);
+  border-radius: 50%;
+}
+
+.shop-item.selected {
+  background-color: rgba(239, 239, 184, 0.471);
+  border-radius: 50%;
 }

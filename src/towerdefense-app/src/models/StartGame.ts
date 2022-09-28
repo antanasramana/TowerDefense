@@ -1,3 +1,3 @@
 export type StartConnection = {
-    name: string;
+  name: string;
 };

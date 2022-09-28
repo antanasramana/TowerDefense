@@ -1,35 +1,35 @@
-.inventory-header{
-    font-family: Quadrit;
-    font-size: 32px;
-    color: white;
-    -webkit-text-stroke: 3px black;
+.inventory-header {
+  font-family: Quadrit;
+  font-size: 32px;
+  color: white;
+  -webkit-text-stroke: 3px black;
 }
-.inventory-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.inventory-item-container{
-    width: 320px;
-    height: 128px;
-    background: url("./assets/inventory.png") no-repeat center center;
-    display: inline-grid;
-    grid-template-columns: 64px 64px 64px 64px 64px;
-    grid-template-rows: 64px 64px;
-    grid-row-gap: 0px;
-    grid-column-gap: 0px;
+.inventory-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.inventory-item{
-    background-color: transparent;
-}
-.inventory-item:hover{
-    background-color: rgba(239, 239, 184, 0.214);
-    border-radius: 50%;
+.inventory-item-container {
+  width: 320px;
+  height: 128px;
+  background: url("./assets/inventory.png") no-repeat center center;
+  display: inline-grid;
+  grid-template-columns: 64px 64px 64px 64px 64px;
+  grid-template-rows: 64px 64px;
+  grid-row-gap: 0px;
+  grid-column-gap: 0px;
 }
 
-.inventory-item.selected{
-    background-color: rgba(239, 239, 184, 0.471);
-    border-radius: 50%;
+.inventory-item {
+  background-color: transparent;
+}
+.inventory-item:hover {
+  background-color: rgba(239, 239, 184, 0.214);
+  border-radius: 50%;
+}
+
+.inventory-item.selected {
+  background-color: rgba(239, 239, 184, 0.471);
+  border-radius: 50%;
 }

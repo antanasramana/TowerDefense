@@ -6,6 +6,6 @@ namespace TowerDefense.Api.Contracts
     public class AddGridItemResponse
     {
         public GridItem[] GridItems { get; set; }
-        public List<InventoryItem> Items { get; set; }
+        public List<InventoryItem> InventoryItems { get; set; }
     }
 }

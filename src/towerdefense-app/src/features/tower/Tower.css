@@ -1,15 +1,15 @@
-.tower-tile{
-    background: url("./assets/tower.png") no-repeat center center;
-    background-size: cover;
-    height: 220px;
-    width: 260px;
-    margin: 30px 0px 0px 0px;
+.tower-tile {
+  background: url("./assets/tower.png") no-repeat center center;
+  background-size: cover;
+  height: 220px;
+  width: 260px;
+  margin: 30px 0px 0px 0px;
 }
 
-.tower-tile-enemy{
-    background: url("./assets/tower-enemy.png") no-repeat center center;
-    background-size: cover;
-    height: 220px;
-    width: 260px;
-    margin: 30px 0px 0px 0px;
+.tower-tile-enemy {
+  background: url("./assets/tower-enemy.png") no-repeat center center;
+  background-size: cover;
+  height: 220px;
+  width: 260px;
+  margin: 30px 0px 0px 0px;
 }
