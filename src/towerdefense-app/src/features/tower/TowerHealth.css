@@ -1,15 +1,15 @@
-.tower-health-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 0px 5px 0px;
+.tower-health-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0px 5px 0px;
 }
 
-.tower-health-tile{
-    background: url("./assets/health.png") no-repeat center center;
-    background-size: cover;
-    height: 40px;
-    width: 40px;
-    margin: 0px 5px 0px 5px;
+.tower-health-tile {
+  background: url("./assets/health.png") no-repeat center center;
+  background-size: cover;
+  height: 40px;
+  width: 40px;
+  margin: 0px 5px 0px 5px;
 }

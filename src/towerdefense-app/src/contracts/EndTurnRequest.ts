@@ -1,3 +1,3 @@
 export type EndTurnRequest = {
-    playerName: string,
-}
+  playerName: string;
+};

@@ -1,47 +1,47 @@
-.root-container{
-    background: url("../../assets/images/arena-populated.png") no-repeat center center fixed;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.root-container {
+  background: url("../../assets/images/arena-populated.png") no-repeat center center fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.header{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 1024px;
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 1024px;
 }
 
-.body{
-    display: flex;
-    flex-direction: row;
+.body {
+  display: flex;
+  flex-direction: row;
 }
 
-.tower-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0px 40px 60px 40px;
+.tower-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 40px 60px 40px;
 }
 
-.footer{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 1024px;
-    margin-top: 20px;
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 1024px;
+  margin-top: 20px;
 }
 
-.name-header{
-    font-family: Quadrit;
-    font-size: 3em;
-    color: white;
-    -webkit-text-stroke: 2px black;
-    text-decoration: none;
-    margin: 0px 0px 20px 0px;
+.name-header {
+  font-family: Quadrit;
+  font-size: 3em;
+  color: white;
+  -webkit-text-stroke: 2px black;
+  text-decoration: none;
+  margin: 0px 0px 20px 0px;
 }

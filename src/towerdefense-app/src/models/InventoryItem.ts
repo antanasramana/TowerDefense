@@ -1,6 +1,6 @@
-import TileType from "../features/tile/enums/TileType";
+import TileType from '../features/tile/enums/TileType';
 
 export type InventoryItem = {
-    id: string,
-    itemType: TileType
-}
+  id: string;
+  itemType: TileType;
+};

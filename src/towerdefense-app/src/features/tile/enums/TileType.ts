@@ -1,8 +1,8 @@
-enum TileType{
-    Rockets,
-    Shield,
-    Placeholder,
-    Blank
+enum TileType {
+  Rockets,
+  Shield,
+  Placeholder,
+  Blank,
 }
 
 export default TileType;

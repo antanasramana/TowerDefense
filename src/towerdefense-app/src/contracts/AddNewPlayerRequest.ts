@@ -1,3 +1,3 @@
 export type AddNewPlayerRequest = {
-    playerName: string,
-}
+  playerName: string;
+};
