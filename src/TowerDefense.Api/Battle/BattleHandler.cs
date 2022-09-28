@@ -47,7 +47,7 @@ namespace TowerDefense.Api.Battle
                 await turnHandler.StartFirstTurn(gameState.Players[0], gameState.Players[1]);
             }
         }
-        public void HandleNewPlayer(AddPlayerRequest addPlayerRequest)
+        public void HandleNewPlayer(AddNewPlayerRequest addPlayerRequest)
         {
             if (gameState.Players.Count == NumberOfPlayers)
             {
@@ -113,7 +113,7 @@ namespace TowerDefense.Api.Battle
             };
         }
 
-        private Player CreateNewPlayer(AddPlayerRequest addPlayerRequest)
+        private Player CreateNewPlayer(AddNewPlayerRequest addPlayerRequest)
         {
             return new Player
             {
