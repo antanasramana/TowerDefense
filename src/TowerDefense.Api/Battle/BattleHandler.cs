@@ -47,7 +47,7 @@ namespace TowerDefense.Api.Battle
                 await turnHandler.StartFirstTurn(gameState.Players[0], gameState.Players[1]);
             }
         }
-        public void HandleNewPlayer(AddPlayerRequest addPlayerRequest)
+        public void HandleNewPlayer(AddNewPlayerRequest addPlayerRequest)
         {
             if (gameState.Players.Count == NumberOfPlayers)
             {
@@ -69,15 +69,15 @@ namespace TowerDefense.Api.Battle
             return new GetShopItemsResponse { Items = battleShop.GetItems() };
         }
 
-        public GetInventoryItemsResponse GetInventoryItems(GetInventoryItemsRequest getInventoryItemsRequest)
+        public GetInventoryItemsResponse GetInventoryItems(string playerName)
         {
-            var player = gameState.Players.Find(x => x.Name == getInventoryItemsRequest.PlayerName);
+            var player = gameState.Players.Find(x => x.Name == playerName);
             return new GetInventoryItemsResponse { Items = player.Inventory.Items };
         }
 
-        public GetGridResponse GetGridItems(GetGridRequest getGridRequest)
+        public GetGridResponse GetGridItems(string playerName)
         {
-            var player = gameState.Players.Find(x => x.Name == getGridRequest.PlayerName);
+            var player = gameState.Players.Find(x => x.Name == playerName);
             return new GetGridResponse { GridItems = player.ArenaGrid.GridItems };
         }
 
@@ -97,7 +97,7 @@ namespace TowerDefense.Api.Battle
             {
                 return new AddGridItemResponse
                 {
-                    Items = player.Inventory.Items,
+                    InventoryItems = player.Inventory.Items,
                     GridItems = player.ArenaGrid.GridItems
                 };
             }
@@ -108,16 +108,16 @@ namespace TowerDefense.Api.Battle
 
             return new AddGridItemResponse
             {
-                Items = player.Inventory.Items,
+                InventoryItems = player.Inventory.Items,
                 GridItems = player.ArenaGrid.GridItems
             };
         }
 
-        private Player CreateNewPlayer(AddPlayerRequest addPlayerRequest)
+        private Player CreateNewPlayer(AddNewPlayerRequest addPlayerRequest)
         {
             return new Player
             {
-                Name = addPlayerRequest.Name,
+                Name = addPlayerRequest.PlayerName,
                 Health = 100,
                 Money = 1000,
                 Inventory = new Inventory(),
