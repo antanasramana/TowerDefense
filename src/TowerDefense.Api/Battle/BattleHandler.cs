@@ -97,7 +97,7 @@ namespace TowerDefense.Api.Battle
             {
                 return new AddGridItemResponse
                 {
-                    Items = player.Inventory.Items,
+                    InventoryItems = player.Inventory.Items,
                     GridItems = player.ArenaGrid.GridItems
                 };
             }
@@ -108,7 +108,7 @@ namespace TowerDefense.Api.Battle
 
             return new AddGridItemResponse
             {
-                Items = player.Inventory.Items,
+                InventoryItems = player.Inventory.Items,
                 GridItems = player.ArenaGrid.GridItems
             };
         }

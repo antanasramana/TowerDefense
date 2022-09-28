@@ -37,7 +37,7 @@ const Grid: React.FC<Props> = (props) => {
 		addGridItem(addGridItemRequest)
 			.unwrap()
 			.then((res) => {
-				dispatch(setInventoryItems(res.items));
+				dispatch(setInventoryItems(res.inventoryItems));
 				dispatch(setPlayerGridItems(res.gridItems));
 			});
 	}

@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { AddNewPlayerRequest } from '../../contracts/AddNewPlayerRequest';
+import { AddNewPlayerResponse } from '../../contracts/AddNewPlayerResponse';
+import { EndTurnRequest } from '../../contracts/EndTurnRequest';
+import { EndTurnResponse } from '../../contracts/EndTurnResponse';
 const API_URL = process.env.REACT_APP_BACKEND;
 
 interface Player {
@@ -31,7 +34,7 @@ export const apiSlice = createApi({
 	}),
 	endpoints(builder) {
 		return {
-			addNewPlayer: builder.mutation({
+			addNewPlayer: builder.mutation<AddNewPlayerResponse, AddNewPlayerRequest>({
 				query: (payload: AddNewPlayerRequest) => ({
 					url: '/players',
 					method: 'POST',
@@ -41,8 +44,8 @@ export const apiSlice = createApi({
 					},
 				}),
 			}),
-			endTurn: builder.mutation({
-				query: (payload) => ({
+			endTurn: builder.mutation<EndTurnResponse, EndTurnRequest>({
+				query: (payload: EndTurnRequest) => ({
 					url: '/players/endturn',
 					method: 'POST',
 					body: payload,

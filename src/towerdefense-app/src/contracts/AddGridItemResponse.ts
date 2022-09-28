@@ -1,6 +1,8 @@
 import { GridItem } from "../models/GridItem";
 import { InventoryItem } from "../models/InventoryItem";
 
-export type EndTurnRequest = {
-  playerName: string;
+export type AddGridItemResponse = {
+    inventoryItems: InventoryItem [];
+    gridItems: GridItem[]
 };
+  

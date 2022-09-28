@@ -20,11 +20,11 @@ namespace TowerDefense.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AddPlayerResponse>> Register([FromBody] AddPlayerRequest addPlayerRequest)
+        public async Task<ActionResult<AddNewPlayerResponse>> Register([FromBody] AddNewPlayerRequest addPlayerRequest)
         {
             battleHandler.HandleNewPlayer(addPlayerRequest);
 
-            return Ok(new AddPlayerResponse { Name = addPlayerRequest.PlayerName });
+            return Ok(new AddNewPlayerResponse { PlayerName = addPlayerRequest.PlayerName });
         }
 
         [HttpPost("endturn")]

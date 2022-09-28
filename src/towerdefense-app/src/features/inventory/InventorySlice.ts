@@ -14,7 +14,7 @@ const initialState: Inventory = {
 	inventoryItems: [],
 };
 
-export const getInventoryItems = createAsyncThunk('inventory/getInventory', async () => {
+export const getInventoryItems = createAsyncThunk<InventoryItem[]>('inventory/getInventory', async () => {
 	const reduxStore = store.getState();
 	const response = await axios.get(`${API_URL}/inventory/${reduxStore.player.name}`);
 	return response.data.items;

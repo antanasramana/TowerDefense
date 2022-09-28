@@ -2,6 +2,7 @@ import axios from 'axios';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ShopItem } from '../../models/ShopItem';
+import { BuyShopItemRequest } from '../../contracts/BuyShopItemRequest';
 const API_URL = process.env.REACT_APP_BACKEND;
 
 interface Shop {
@@ -11,10 +12,10 @@ interface Shop {
 
 const initialState: Shop = {
 	selectedItem: '',
-	shopItems: [{ id: 'test', price: 69, itemType: 0 }],
+	shopItems: [],
 };
 
-export const getShopItems = createAsyncThunk('shop/getShop', async () => {
+export const getShopItems = createAsyncThunk<ShopItem[]>('shop/getShop', async () => {
 	const response = await axios.get(`${API_URL}/shop`);
 	return response.data.items;
 });
@@ -43,15 +44,15 @@ const shopSlice = createSlice({
 export const shopApiSlice = createApi({
 	reducerPath: 'shopApi',
 	baseQuery: fetchBaseQuery({
-		baseUrl: 'https://localhost:7042/api/',
+		baseUrl: API_URL,
 		prepareHeaders(headers) {
 			return headers;
 		},
 	}),
 	endpoints(builder) {
 		return {
-			buyShopItem: builder.mutation({
-				query: (payload) => ({
+			buyShopItem: builder.mutation<string, BuyShopItemRequest>({
+				query: (payload: BuyShopItemRequest) => ({
 					url: '/shop',
 					method: 'POST',
 					body: payload,

@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { AddGridItemRequest } from '../../contracts/AddGridItemRequest';
+import { AddGridItemResponse } from '../../contracts/AddGridItemResponse';
 import { GridItem } from '../../models/GridItem';
+import TileType from '../tile/enums/TileType';
 const API_URL = process.env.REACT_APP_BACKEND;
 
 interface Grid {
@@ -10,8 +12,8 @@ interface Grid {
 }
 
 const initialState: Grid = {
-	playerGridItems: Array.from(Array(72).keys()).map<GridItem>((i) => ({ id: i, itemType: 3 })),
-	enemyGridItems: Array.from(Array(72).keys()).map<GridItem>((i) => ({ id: i, itemType: 2 })),
+	playerGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Placeholder })),
+	enemyGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Blank })),
 };
 
 const gridSlice = createSlice({
@@ -37,7 +39,7 @@ export const gridApiSlice = createApi({
 	}),
 	endpoints(builder) {
 		return {
-			addGridItem: builder.mutation({
+			addGridItem: builder.mutation<AddGridItemResponse, AddGridItemRequest>({
 				query: (payload: AddGridItemRequest) => ({
 					url: '/grid/add',
 					method: 'POST',
