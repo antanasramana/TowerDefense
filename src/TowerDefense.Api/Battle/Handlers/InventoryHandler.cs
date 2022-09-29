@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using TowerDefense.Api.Models;
+﻿using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Battle.Handlers
 {

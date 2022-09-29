@@ -1,10 +1,11 @@
-﻿using TowerDefense.Api.Models;
+﻿using TowerDefense.Api.Constants;
+using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Battle.Grid
 {
     public class ArenaGrid
     {
-        public GridItem[] GridItems = new GridItem[72];
+        public GridItem[] GridItems = new GridItem[Game.MaxGridTilesForPlayer];
 
         public ArenaGrid()
         {

@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using TowerDefense.Api.Constants;
-using TowerDefense.Api.Contracts;
-using TowerDefense.Api.Hubs;
-using TowerDefense.Api.Models;
+﻿using TowerDefense.Api.Constants;
 
 namespace TowerDefense.Api.Battle.Handlers
 {
