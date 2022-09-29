@@ -5,10 +5,7 @@ namespace TowerDefense.Api.Battle.Handlers
     public interface IBattleOrchestrator
     {
         void HandleEndTurn(string playerName);
-        GetShopItemsResponse GetShopItems();
-        GetInventoryItemsResponse GetInventoryItems(string playerName);
         GetGridResponse GetGridItems(string playerName);
-        void BuyShopItem(BuyShopItemRequest buyShopItemRequest);
         AddGridItemResponse AddGridItem(AddGridItemRequest addGridItemRequest);
     }
 
@@ -16,12 +13,10 @@ namespace TowerDefense.Api.Battle.Handlers
     {
         private readonly GameState _gameState;
         private readonly ITurnHandler _turnHandler;
-        private readonly IShop _shop;
 
-        public BattleOrchestrator(ITurnHandler turnHandler, IShop shop)
+        public BattleOrchestrator(ITurnHandler turnHandler)
         {
             _turnHandler = turnHandler;
-            _shop = shop;
             _gameState = GameState.Instance;
         }
 
@@ -30,27 +25,10 @@ namespace TowerDefense.Api.Battle.Handlers
             _turnHandler.EndTurn(playerName);
         }
 
-        public GetShopItemsResponse GetShopItems()
-        {
-            return new GetShopItemsResponse { Items = _shop.AllItems };
-        }
-
-        public GetInventoryItemsResponse GetInventoryItems(string playerName)
-        {
-            var player = _gameState.Players.First(x => x.Name == playerName);
-            return new GetInventoryItemsResponse { Items = player.Inventory.Items };
-        }
-
         public GetGridResponse GetGridItems(string playerName)
         {
             var player = _gameState.Players.First(x => x.Name == playerName);
             return new GetGridResponse { GridItems = player.ArenaGrid.GridItems };
-        }
-
-        public void BuyShopItem(BuyShopItemRequest buyShopItemRequest)
-        {
-            var player = _gameState.Players.First(x => x.Name == buyShopItemRequest.PlayerName);
-            _shop.BuyItem(buyShopItemRequest.ItemId, player);
         }
 
         public AddGridItemResponse AddGridItem(AddGridItemRequest addGridItemRequest)

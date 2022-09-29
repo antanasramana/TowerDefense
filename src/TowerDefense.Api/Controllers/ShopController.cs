@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using TowerDefense.Api.Battle;
 using TowerDefense.Api.Battle.Handlers;
 using TowerDefense.Api.Contracts;
 using TowerDefense.Api.Hubs;
@@ -11,25 +11,29 @@ namespace TowerDefense.Api.Controllers
     [ApiController]
     public class ShopController : ControllerBase
     {
-        private readonly IBattleOrchestrator _battleOrchestrator;
+        private readonly IShopHandler _shopHandler;
+        private readonly IMapper _mapper;
 
-        public ShopController(IBattleOrchestrator battleOrchestrator)
+        public ShopController(IShopHandler shopHandler, IMapper mapper)
         {
-            _battleOrchestrator = battleOrchestrator;
+            _shopHandler = shopHandler;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<GetShopItemsResponse>> GetItems()
+        public ActionResult<GetShopItemsResponse> GetItems()
         {
-            var getItemsResponse = _battleOrchestrator.GetShopItems();
+            var shop = _shopHandler.Shop;
 
-            return Ok(getItemsResponse);
+            var getShopItemsResponse = _mapper.Map<GetShopItemsResponse>(shop);
+
+            return Ok(getShopItemsResponse);
         }
 
         [HttpPost]
-        public async Task<ActionResult> BuyItem(BuyShopItemRequest buyShopItemRequest)
+        public IActionResult BuyItem(BuyShopItemRequest buyShopItemRequest)
         {
-            _battleOrchestrator.BuyShopItem(buyShopItemRequest);
+            _shopHandler.BuyItem(buyShopItemRequest.ItemId, buyShopItemRequest.PlayerName);
 
             return Ok();
         }

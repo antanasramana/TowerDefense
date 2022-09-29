@@ -1,10 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using System.Data;
-using TowerDefense.Api.Battle;
+﻿using Microsoft.AspNetCore.Mvc;
 using TowerDefense.Api.Battle.Handlers;
-using TowerDefense.Api.Hubs;
 using TowerDefense.Api.Contracts;
 
 namespace TowerDefense.Api.Controllers
@@ -23,15 +18,15 @@ namespace TowerDefense.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AddNewPlayerResponse>> Register([FromBody] AddNewPlayerRequest addPlayerRequest)
+        public ActionResult<AddNewPlayerResponse> Register([FromBody] AddNewPlayerRequest addPlayerRequest)
         {
-            _initialGameSetupHandler.AddNewPlayerToGame(addPlayerRequest);
+            _initialGameSetupHandler.AddNewPlayerToGame(addPlayerRequest.PlayerName);
 
             return Ok(new AddNewPlayerResponse { PlayerName = addPlayerRequest.PlayerName });
         }
 
         [HttpPost("endturn")]
-        public async Task<ActionResult> EndTurn(EndTurnRequest endTurnRequest)
+        public ActionResult EndTurn(EndTurnRequest endTurnRequest)
         {
             _battleOrchestrator.HandleEndTurn(endTurnRequest.PlayerName);
 

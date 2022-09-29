@@ -1,5 +1,4 @@
 ﻿using TowerDefense.Api.Constants;
-using TowerDefense.Api.Contracts;
 using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Battle.Handlers
@@ -7,7 +6,7 @@ namespace TowerDefense.Api.Battle.Handlers
     public interface IInitialGameSetupHandler
     {
         Task SetConnectionIdForPlayer(string playerName, string connectionId);
-        void AddNewPlayerToGame(AddNewPlayerRequest addPlayerRequest);
+        void AddNewPlayerToGame(string playerName);
     }
 
     public class InitialGameSetupHandler : IInitialGameSetupHandler
@@ -20,6 +19,7 @@ namespace TowerDefense.Api.Battle.Handlers
             _gameState = GameState.Instance;
             _turnHandler = turnHandler;
         }
+
         public async Task SetConnectionIdForPlayer(string playerName, string connectionId)
         {
             var player = _gameState.Players.First(x => x.Name == playerName);
@@ -30,22 +30,22 @@ namespace TowerDefense.Api.Battle.Handlers
             await _turnHandler.StartFirstTurn(_gameState.Players[0], _gameState.Players[1]);
         }
 
-        public void AddNewPlayerToGame(AddNewPlayerRequest addPlayerRequest)
+        public void AddNewPlayerToGame(string playerName)
         {
             if (_gameState.ActivePlayers == Game.MaxNumberOfPlayers)
             {
                 throw new ArgumentException();
             }
 
-            var newPlayer = CreateNewPlayer(addPlayerRequest);
+            var newPlayer = CreateNewPlayer(playerName);
             _gameState.Players[_gameState.ActivePlayers] = newPlayer;
         }
 
-        private Player CreateNewPlayer(AddNewPlayerRequest addPlayerRequest)
+        private Player CreateNewPlayer(string playerName)
         {
             return new Player
             {
-                Name = addPlayerRequest.PlayerName,
+                Name = playerName,
                 Health = 100,
                 Money = 1000,
                 Inventory = new Inventory(),

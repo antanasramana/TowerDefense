@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using TowerDefense.Api.Battle;
@@ -13,16 +14,21 @@ namespace TowerDefense.Api.Controllers
     [ApiController]
     public class InventoryController : ControllerBase
     {
-        private readonly IBattleOrchestrator _battleOrchestrator;
-        public InventoryController(IBattleOrchestrator battleOrchestrator)
+        private readonly IInventoryHandler _inventoryHandler;
+        private readonly IMapper _mapper;
+        public InventoryController(IInventoryHandler inventoryHandler, IMapper mapper)
         {
-            _battleOrchestrator = battleOrchestrator;
+            _inventoryHandler = inventoryHandler;
+            _mapper = mapper;
         }
 
         [HttpGet("{playerName}")]
-        public async Task<ActionResult<GetInventoryItemsResponse>> GetItems(string playerName)
+        public ActionResult<GetInventoryItemsResponse> GetItems(string playerName)
         {
-            var getInventoryItemsResponse = _battleOrchestrator.GetInventoryItems(playerName);
+            var inventory = _inventoryHandler.GetPlayerInventory(playerName);
+
+            var getInventoryItemsResponse = _mapper.Map<GetInventoryItemsResponse>(inventory);
+
             return Ok(getInventoryItemsResponse);
         }
     }
