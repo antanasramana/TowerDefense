@@ -19,14 +19,14 @@ namespace TowerDefense.Api.Controllers
         }
 
         [HttpGet("{playerName}")]
-        public async Task<ActionResult<GetGridResponse>> GetGrid(string playerName)
+        public ActionResult<GetGridResponse> GetGrid(string playerName)
         {
             var getInventoryItemsResponse = _gridHandler.GetGridItems(playerName);
             return Ok(getInventoryItemsResponse);
         }
 
         [HttpPost("add")]
-        public async Task<ActionResult<AddGridItemResponse>> AddGridItem(AddGridItemRequest addGridItemRequest)
+        public ActionResult<AddGridItemResponse> AddGridItem(AddGridItemRequest addGridItemRequest)
         {
             var arenaGrid = _gridHandler.AddGridItem(addGridItemRequest.PlayerName, addGridItemRequest.InventoryItemId, addGridItemRequest.GridItemId);
 
