@@ -1,9 +1,9 @@
-﻿using TowerDefense.Api.Battle.Shop;
+﻿using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Contracts
 {
     public class GetShopItemsResponse
     {
-        public List<Item> Items { get; set; }
+        public IEnumerable<Item> Items { get; set; }
     }
 }

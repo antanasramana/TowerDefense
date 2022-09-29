@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using TowerDefense.Api.Battle;
+using TowerDefense.Api.Battle.Handlers;
 using TowerDefense.Api.Contracts;
+using TowerDefense.Api.Hubs;
 
 namespace TowerDefense.Api.Controllers
 {
@@ -10,16 +13,16 @@ namespace TowerDefense.Api.Controllers
     [ApiController]
     public class InventoryController : ControllerBase
     {
-        private readonly BattleHandler battleHandler;
-        public InventoryController()
+        private readonly IBattleOrchestrator _battleOrchestrator;
+        public InventoryController(IBattleOrchestrator battleOrchestrator)
         {
-            this.battleHandler = new BattleHandler();
+            _battleOrchestrator = battleOrchestrator;
         }
 
         [HttpGet("{playerName}")]
         public async Task<ActionResult<GetInventoryItemsResponse>> GetItems(string playerName)
         {
-            var getInventoryItemsResponse = battleHandler.GetInventoryItems(playerName);
+            var getInventoryItemsResponse = _battleOrchestrator.GetInventoryItems(playerName);
             return Ok(getInventoryItemsResponse);
         }
     }

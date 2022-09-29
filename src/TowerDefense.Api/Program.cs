@@ -1,3 +1,4 @@
+using TowerDefense.Api.Bootstrap;
 using TowerDefense.Api.Constants;
 using TowerDefense.Api.Hubs;
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
+builder.Services.AddDependencies();
 
 builder.Services.AddCors(options =>
 {

@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using TowerDefense.Api.Battle;
+using TowerDefense.Api.Battle.Handlers;
 using TowerDefense.Api.Contracts;
+using TowerDefense.Api.Hubs;
 
 namespace TowerDefense.Api.Controllers
 {
@@ -8,17 +11,17 @@ namespace TowerDefense.Api.Controllers
     [ApiController]
     public class ShopController : ControllerBase
     {
-        private readonly BattleHandler battleHandler;
+        private readonly IBattleOrchestrator _battleOrchestrator;
 
-        public ShopController()
+        public ShopController(IBattleOrchestrator battleOrchestrator)
         {
-            this.battleHandler = new BattleHandler();
+            _battleOrchestrator = battleOrchestrator;
         }
 
         [HttpGet]
         public async Task<ActionResult<GetShopItemsResponse>> GetItems()
         {
-            var getItemsResponse = battleHandler.GetShopItems();
+            var getItemsResponse = _battleOrchestrator.GetShopItems();
 
             return Ok(getItemsResponse);
         }
@@ -26,7 +29,7 @@ namespace TowerDefense.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> BuyItem(BuyShopItemRequest buyShopItemRequest)
         {
-            battleHandler.BuyShopItem(buyShopItemRequest);
+            _battleOrchestrator.BuyShopItem(buyShopItemRequest);
 
             return Ok();
         }

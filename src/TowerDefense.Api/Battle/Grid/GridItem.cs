@@ -1,4 +1,4 @@
-﻿using TowerDefense.Api.Battle.Shop;
+﻿using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Battle.Grid
 {

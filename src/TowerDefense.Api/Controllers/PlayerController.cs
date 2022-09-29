@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Data;
 using TowerDefense.Api.Battle;
+using TowerDefense.Api.Battle.Handlers;
 using TowerDefense.Api.Hubs;
 using TowerDefense.Api.Contracts;
 
@@ -12,17 +13,19 @@ namespace TowerDefense.Api.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
-        private readonly BattleHandler battleHandler;
+        private readonly IBattleOrchestrator _battleOrchestrator;
+        private readonly IInitialGameSetupHandler _initialGameSetupHandler;
 
-        public PlayerController (IHubContext<GameHub> hubContext)
+        public PlayerController (IBattleOrchestrator battleOrchestrator, IInitialGameSetupHandler initialGameSetupHandler)
         {
-            this.battleHandler = new BattleHandler(hubContext);
+            _battleOrchestrator = battleOrchestrator;
+            _initialGameSetupHandler = initialGameSetupHandler;
         }
 
         [HttpPost]
         public async Task<ActionResult<AddNewPlayerResponse>> Register([FromBody] AddNewPlayerRequest addPlayerRequest)
         {
-            battleHandler.HandleNewPlayer(addPlayerRequest);
+            _initialGameSetupHandler.AddNewPlayerToGame(addPlayerRequest);
 
             return Ok(new AddNewPlayerResponse { PlayerName = addPlayerRequest.PlayerName });
         }
@@ -30,7 +33,7 @@ namespace TowerDefense.Api.Controllers
         [HttpPost("endturn")]
         public async Task<ActionResult> EndTurn(EndTurnRequest endTurnRequest)
         {
-            battleHandler.HandleEndTurn(endTurnRequest.PlayerName);
+            _battleOrchestrator.HandleEndTurn(endTurnRequest.PlayerName);
 
             return Ok();
         }

@@ -1,5 +1,6 @@
 ﻿using TowerDefense.Api.Battle;
 using TowerDefense.Api.Battle.Grid;
+using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Contracts
 {

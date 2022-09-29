@@ -1,4 +1,4 @@
-﻿namespace TowerDefense.Api.Battle.Shop
+﻿namespace TowerDefense.Api.Models
 {
     public enum ItemType
     {

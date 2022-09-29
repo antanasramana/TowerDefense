@@ -1,4 +1,6 @@
-﻿namespace TowerDefense.Api.Battle.Grid
+﻿using TowerDefense.Api.Models;
+
+namespace TowerDefense.Api.Battle.Grid
 {
     public class ArenaGrid
     {
@@ -8,10 +10,10 @@
         {
             for (int i = 0; i < GridItems.Length; i++)
             {
-                GridItems[i] = new GridItem()
+                GridItems[i] = new GridItem
                 {
                     Id = i,
-                    ItemType= Shop.ItemType.Blank
+                    ItemType= ItemType.Blank
                 };
             }
         }
