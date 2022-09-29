@@ -8,12 +8,12 @@ namespace TowerDefense.Api.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
-        private readonly IBattleOrchestrator _battleOrchestrator;
+        private readonly IBattleHandler _battleHandler;
         private readonly IInitialGameSetupHandler _initialGameSetupHandler;
 
-        public PlayerController (IBattleOrchestrator battleOrchestrator, IInitialGameSetupHandler initialGameSetupHandler)
+        public PlayerController (IBattleHandler battleHandler, IInitialGameSetupHandler initialGameSetupHandler)
         {
-            _battleOrchestrator = battleOrchestrator;
+            _battleHandler = battleHandler;
             _initialGameSetupHandler = initialGameSetupHandler;
         }
 
@@ -28,7 +28,7 @@ namespace TowerDefense.Api.Controllers
         [HttpPost("endturn")]
         public ActionResult EndTurn(EndTurnRequest endTurnRequest)
         {
-            _battleOrchestrator.HandleEndTurn(endTurnRequest.PlayerName);
+            _battleHandler.HandleEndTurn(endTurnRequest.PlayerName);
 
             return Ok();
         }

@@ -3,7 +3,7 @@ import GridTile from './GridTile';
 import './Grid.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useAddGridItemMutation, setPlayerGridItems } from './GridSlice';
-import { setInventoryItems } from '../inventory/InventorySlice';
+import { getInventoryItems } from '../inventory/InventorySlice';
 import { AddGridItemRequest } from '../../contracts/AddGridItemRequest';
 
 interface Props {
@@ -37,8 +37,8 @@ const Grid: React.FC<Props> = (props) => {
 		addGridItem(addGridItemRequest)
 			.unwrap()
 			.then((res) => {
-				dispatch(setInventoryItems(res.inventoryItems));
 				dispatch(setPlayerGridItems(res.gridItems));
+				dispatch(getInventoryItems());
 			});
 	}
 

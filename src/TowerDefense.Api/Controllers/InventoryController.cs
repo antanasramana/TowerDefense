@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using TowerDefense.Api.Battle;
 using TowerDefense.Api.Battle.Handlers;
 using TowerDefense.Api.Contracts;
-using TowerDefense.Api.Hubs;
 
 namespace TowerDefense.Api.Controllers
 {

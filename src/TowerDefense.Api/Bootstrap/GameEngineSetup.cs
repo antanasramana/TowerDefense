@@ -1,4 +1,5 @@
 ﻿using TowerDefense.Api.Battle.Handlers;
+using TowerDefense.Api.Hubs;
 using TowerDefense.Api.Repositories;
 
 namespace TowerDefense.Api.Bootstrap
@@ -10,9 +11,11 @@ namespace TowerDefense.Api.Bootstrap
             serviceCollection.AddTransient<IShopHandler, ShopHandler>();
             serviceCollection.AddTransient<IItemRepository, ItemRepository>();
             serviceCollection.AddTransient<ITurnHandler, TurnHandler>();
-            serviceCollection.AddTransient<IBattleOrchestrator, BattleOrchestrator>();
+            serviceCollection.AddTransient<IBattleHandler, BattleHandler>();
             serviceCollection.AddTransient<IInitialGameSetupHandler, InitialGameSetupHandler>();
             serviceCollection.AddTransient<IInventoryHandler, InventoryHandler>();
+            serviceCollection.AddTransient<INotificationHub, NotificationHub>();
+            serviceCollection.AddTransient<IGridHandler, GridHandler>();
         }
     }
 }

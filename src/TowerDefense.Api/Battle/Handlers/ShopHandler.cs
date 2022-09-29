@@ -20,7 +20,7 @@ namespace TowerDefense.Api.Battle.Handlers
             _gameState = GameState.Instance;
         }
 
-        public Shop Shop => new() { Items = _itemRepository.Items};
+        public Shop Shop => new() { Items = _itemRepository.Items };
 
         public void BuyItem(string identifier, string playerName)
         {

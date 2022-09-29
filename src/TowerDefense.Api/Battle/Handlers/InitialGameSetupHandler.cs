@@ -1,33 +1,38 @@
 ﻿using TowerDefense.Api.Constants;
+using TowerDefense.Api.Hubs;
 using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Battle.Handlers
 {
     public interface IInitialGameSetupHandler
     {
-        Task SetConnectionIdForPlayer(string playerName, string connectionId);
+        void SetConnectionIdForPlayer(string playerName, string connectionId);
         void AddNewPlayerToGame(string playerName);
+        Task TryStartGame();
     }
 
     public class InitialGameSetupHandler : IInitialGameSetupHandler
     {
         private readonly GameState _gameState;
-        private readonly ITurnHandler _turnHandler;
+        private readonly INotificationHub _notificationHub;
 
-        public InitialGameSetupHandler(ITurnHandler turnHandler)
+        public InitialGameSetupHandler(INotificationHub notificationHub)
         {
             _gameState = GameState.Instance;
-            _turnHandler = turnHandler;
+            _notificationHub = notificationHub;
         }
 
-        public async Task SetConnectionIdForPlayer(string playerName, string connectionId)
+        public void SetConnectionIdForPlayer(string playerName, string connectionId)
         {
             var player = _gameState.Players.First(x => x.Name == playerName);
             player.ConnectionId = connectionId;
+        }
 
+        public async Task TryStartGame()
+        {
             if (_gameState.ActivePlayers != Game.MaxNumberOfPlayers) return;
 
-            await _turnHandler.StartFirstTurn(_gameState.Players[0], _gameState.Players[1]);
+            await _notificationHub.NotifyGameStart(_gameState.Players[0], _gameState.Players[1]);
         }
 
         public void AddNewPlayerToGame(string playerName)
@@ -41,7 +46,7 @@ namespace TowerDefense.Api.Battle.Handlers
             _gameState.Players[_gameState.ActivePlayers] = newPlayer;
         }
 
-        private Player CreateNewPlayer(string playerName)
+        private static Player CreateNewPlayer(string playerName)
         {
             return new Player
             {

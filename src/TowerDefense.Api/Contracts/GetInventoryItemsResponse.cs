@@ -1,5 +1,4 @@
-﻿using TowerDefense.Api.Battle;
-using TowerDefense.Api.Models;
+﻿using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Contracts
 {

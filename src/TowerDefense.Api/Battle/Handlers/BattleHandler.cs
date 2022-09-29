@@ -1,62 +1,33 @@
-﻿using TowerDefense.Api.Contracts;
+﻿using TowerDefense.Api.Hubs;
 
 namespace TowerDefense.Api.Battle.Handlers
 {
-    public interface IBattleOrchestrator
+    public interface IBattleHandler
     {
         void HandleEndTurn(string playerName);
-        GetGridResponse GetGridItems(string playerName);
-        AddGridItemResponse AddGridItem(AddGridItemRequest addGridItemRequest);
     }
 
-    public class BattleOrchestrator : IBattleOrchestrator
+    public class BattleHandler : IBattleHandler
     {
         private readonly GameState _gameState;
         private readonly ITurnHandler _turnHandler;
+        private readonly INotificationHub _notificationHub;
 
-        public BattleOrchestrator(ITurnHandler turnHandler)
+        public BattleHandler(ITurnHandler turnHandler, INotificationHub notificationHub)
         {
             _turnHandler = turnHandler;
             _gameState = GameState.Instance;
+            _notificationHub = notificationHub;
         }
 
         public void HandleEndTurn(string playerName)
         {
-            _turnHandler.EndTurn(playerName);
+            var areTurnsEnded = _turnHandler.TryEndTurn(playerName);
+            if (!areTurnsEnded) return;
+
+            //CALCULATE HEALTH AND OTHER STUFF
+
+            _notificationHub.SendEndTurnInfo(_gameState.Players[0], _gameState.Players[1]);
         }
-
-        public GetGridResponse GetGridItems(string playerName)
-        {
-            var player = _gameState.Players.First(x => x.Name == playerName);
-            return new GetGridResponse { GridItems = player.ArenaGrid.GridItems };
-        }
-
-        public AddGridItemResponse AddGridItem(AddGridItemRequest addGridItemRequest)
-        {
-            var player = _gameState.Players.First(x => x.Name == addGridItemRequest.PlayerName);
-
-            var inventoryItem = player.Inventory.Items.Find(x => x.Id == addGridItemRequest.InventoryItemId);
-
-            if (inventoryItem == null)
-            {
-                return new AddGridItemResponse
-                {
-                    InventoryItems = player.Inventory.Items,
-                    GridItems = player.ArenaGrid.GridItems
-                };
-            }
-
-            player.ArenaGrid.GridItems[addGridItemRequest.GridItemId].ItemType = inventoryItem.ItemType;
-
-            player.Inventory.Items.Remove(inventoryItem);
-
-            return new AddGridItemResponse
-            {
-                InventoryItems = player.Inventory.Items,
-                GridItems = player.ArenaGrid.GridItems
-            };
-        }
-
-
     }
 }
