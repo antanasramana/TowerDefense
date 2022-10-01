@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using TowerDefense.Api.Battle;
+using TowerDefense.Api.Battle.Handlers;
 
 namespace TowerDefense.Api.Hubs
 {
     public class GameHub : Hub
     {
-        private readonly BattleHandler battleHandler;
+        private readonly IInitialGameSetupHandler _initialGameSetup;
 
-        public GameHub ()
+        public GameHub(IInitialGameSetupHandler initialGameSetup)
         {
-            battleHandler = new BattleHandler(this);
+            _initialGameSetup = initialGameSetup;
         }
         
-        public async Task JoinGame( string playerName)
+        public async Task JoinGame(string playerName)
         {       
-            await battleHandler.SetConnectionIdForPlayer(playerName, Context.ConnectionId);
+            _initialGameSetup.SetConnectionIdForPlayer(playerName, Context.ConnectionId);
+            await _initialGameSetup.TryStartGame();
         }
     }
 }

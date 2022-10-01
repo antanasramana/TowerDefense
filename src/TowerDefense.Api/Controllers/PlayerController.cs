@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using System.Data;
-using TowerDefense.Api.Battle;
-using TowerDefense.Api.Hubs;
+﻿using Microsoft.AspNetCore.Mvc;
+using TowerDefense.Api.Battle.Handlers;
 using TowerDefense.Api.Contracts;
 
 namespace TowerDefense.Api.Controllers
@@ -12,25 +8,27 @@ namespace TowerDefense.Api.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
-        private readonly BattleHandler battleHandler;
+        private readonly IBattleHandler _battleHandler;
+        private readonly IInitialGameSetupHandler _initialGameSetupHandler;
 
-        public PlayerController (IHubContext<GameHub> hubContext)
+        public PlayerController (IBattleHandler battleHandler, IInitialGameSetupHandler initialGameSetupHandler)
         {
-            this.battleHandler = new BattleHandler(hubContext);
+            _battleHandler = battleHandler;
+            _initialGameSetupHandler = initialGameSetupHandler;
         }
 
         [HttpPost]
-        public async Task<ActionResult<AddNewPlayerResponse>> Register([FromBody] AddNewPlayerRequest addPlayerRequest)
+        public ActionResult<AddNewPlayerResponse> Register([FromBody] AddNewPlayerRequest addPlayerRequest)
         {
-            battleHandler.HandleNewPlayer(addPlayerRequest);
+            _initialGameSetupHandler.AddNewPlayerToGame(addPlayerRequest.PlayerName);
 
             return Ok(new AddNewPlayerResponse { PlayerName = addPlayerRequest.PlayerName });
         }
 
         [HttpPost("endturn")]
-        public async Task<ActionResult> EndTurn(EndTurnRequest endTurnRequest)
+        public ActionResult EndTurn(EndTurnRequest endTurnRequest)
         {
-            battleHandler.HandleEndTurn(endTurnRequest.PlayerName);
+            _battleHandler.HandleEndTurn(endTurnRequest.PlayerName);
 
             return Ok();
         }

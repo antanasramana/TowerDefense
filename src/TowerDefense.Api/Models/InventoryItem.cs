@@ -1,6 +1,4 @@
-﻿using TowerDefense.Api.Battle.Shop;
-
-namespace TowerDefense.Api.Battle
+﻿namespace TowerDefense.Api.Models
 {
     public class InventoryItem
     {

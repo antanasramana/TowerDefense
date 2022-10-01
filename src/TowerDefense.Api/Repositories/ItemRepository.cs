@@ -1,8 +1,10 @@
-﻿namespace TowerDefense.Api.Battle.Shop
+﻿using TowerDefense.Api.Models;
+
+namespace TowerDefense.Api.Repositories
 {
-    public class SimpleItemRepository : IItemRepository
+    public class ItemRepository : IItemRepository
     {
-        private readonly List<Item> items = new List<Item>
+        private readonly List<Item> _items = new()
         {
             new Item
             {
@@ -18,9 +20,6 @@
             },
         };
 
-        public List<Item> GetItems()
-        {
-            return items;
-        }
+        public IEnumerable<Item> Items => _items;
     }
 }

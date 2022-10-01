@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TowerDefense.Api.Battle;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using TowerDefense.Api.Battle.Handlers;
 using TowerDefense.Api.Contracts;
 
 namespace TowerDefense.Api.Controllers
@@ -9,23 +10,29 @@ namespace TowerDefense.Api.Controllers
     [ApiController]
     public class GridController : ControllerBase
     {
-        private readonly BattleHandler battleHandler;
-        public GridController()
+        private readonly IGridHandler _gridHandler;
+        private readonly IMapper _mapper;
+        public GridController(IGridHandler gridHandler, IMapper mapper)
         {
-            this.battleHandler = new BattleHandler();
+            _gridHandler = gridHandler;
+            _mapper = mapper;
         }
 
         [HttpGet("{playerName}")]
-        public async Task<ActionResult<GetGridResponse>> GetGrid(string playerName)
+        public ActionResult<GetGridResponse> GetGrid(string playerName)
         {
-            var getInventoryItemsResponse = battleHandler.GetGridItems(playerName);
+            var getInventoryItemsResponse = _gridHandler.GetGridItems(playerName);
             return Ok(getInventoryItemsResponse);
         }
+
         [HttpPost("add")]
-        public async Task<ActionResult<AddGridItemResponse>> AddGridItem(AddGridItemRequest addGridItemRequest)
+        public ActionResult<AddGridItemResponse> AddGridItem(AddGridItemRequest addGridItemRequest)
         {
-            var AddGridItemResponse = battleHandler.AddGridItem(addGridItemRequest);
-            return Ok(AddGridItemResponse);
+            var arenaGrid = _gridHandler.AddGridItem(addGridItemRequest.PlayerName, addGridItemRequest.InventoryItemId, addGridItemRequest.GridItemId);
+
+            var arenaGridItemResponse = _mapper.Map<AddGridItemResponse>(arenaGrid);
+
+            return Ok(arenaGridItemResponse);
         }
     }
 }
