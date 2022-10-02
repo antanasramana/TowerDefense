@@ -29,7 +29,7 @@ namespace TowerDefense.Api.Battle.Handlers
 
             if (item == null) return;
 
-            var isAbleToAfford = item.Price > player.Money;
+            var isAbleToAfford = item.Price < player.Money;
             if (!isAbleToAfford) return;
 
             player.Money -= item.Price;
