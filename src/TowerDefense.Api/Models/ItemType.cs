@@ -5,6 +5,11 @@
         Rockets,
         Shield,
         Placeholder,
-        Blank
+        Blank,
+        Machinegun,
+        Plane,
+        Soldier,
+        Bomb,
+        Rock
     }
 }

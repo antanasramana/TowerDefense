@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.Battle.Handlers;
+using TowerDefense.Api.Battle.Shop;
 using TowerDefense.Api.Hubs;
-using TowerDefense.Api.Repositories;
 
 namespace TowerDefense.Api.Bootstrap
 {
@@ -9,7 +9,7 @@ namespace TowerDefense.Api.Bootstrap
         public static void SetupGameEngine(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IShopHandler, ShopHandler>();
-            serviceCollection.AddTransient<IItemRepository, ItemRepository>();
+            serviceCollection.AddTransient<IShop, FirstLevelShop>();
             serviceCollection.AddTransient<ITurnHandler, TurnHandler>();
             serviceCollection.AddTransient<IBattleHandler, BattleHandler>();
             serviceCollection.AddTransient<IInitialGameSetupHandler, InitialGameSetupHandler>();

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TowerDefense.Api.Battle.Handlers;
-using TowerDefense.Api.Contracts;
+using TowerDefense.Api.Contracts.Shop;
 
 namespace TowerDefense.Api.Controllers
 {
@@ -19,9 +19,10 @@ namespace TowerDefense.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<GetShopItemsResponse> GetItems()
+        [HttpGet("{playerName}")]
+        public ActionResult<GetShopItemsResponse> GetItems(string playerName)
         {
-            var shop = _shopHandler.Shop;
+            var shop = _shopHandler.GetPlayerShop(playerName);
 
             var getShopItemsResponse = _mapper.Map<GetShopItemsResponse>(shop);
 
@@ -31,7 +32,7 @@ namespace TowerDefense.Api.Controllers
         [HttpPost]
         public IActionResult BuyItem(BuyShopItemRequest buyShopItemRequest)
         {
-            _shopHandler.BuyItem(buyShopItemRequest.ItemId, buyShopItemRequest.PlayerName);
+            _shopHandler.BuyItem(buyShopItemRequest.PlayerName, buyShopItemRequest.ItemId);
 
             return Ok();
         }

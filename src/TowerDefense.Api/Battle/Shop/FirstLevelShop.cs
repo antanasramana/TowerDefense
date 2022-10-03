@@ -1,8 +1,8 @@
 ﻿using TowerDefense.Api.Models;
 
-namespace TowerDefense.Api.Repositories
+namespace TowerDefense.Api.Battle.Shop
 {
-    public class ItemRepository : IItemRepository
+    public class FirstLevelShop : IShop
     {
         private readonly List<Item> _items = new()
         {
@@ -17,7 +17,7 @@ namespace TowerDefense.Api.Repositories
                 Id="Shield",
                 ItemType=ItemType.Shield,
                 Price=20,
-            },
+            }
         };
 
         public IEnumerable<Item> Items => _items;

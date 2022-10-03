@@ -2,6 +2,7 @@ import axios from 'axios';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ShopItem } from '../../models/ShopItem';
+import { store } from '../../app/store';
 import { BuyShopItemRequest } from '../../contracts/BuyShopItemRequest';
 const API_URL = process.env.REACT_APP_BACKEND;
 
@@ -16,7 +17,8 @@ const initialState: Shop = {
 };
 
 export const getShopItems = createAsyncThunk<ShopItem[]>('shop/getShop', async () => {
-	const response = await axios.get(`${API_URL}/shop`);
+	const reduxStore = store.getState();
+	const response = await axios.get(`${API_URL}/shop/${reduxStore.player.name}`);
 	return response.data.items;
 });
 

@@ -1,8 +1,8 @@
 ﻿using TowerDefense.Api.Models;
 
-namespace TowerDefense.Api.Repositories
+namespace TowerDefense.Api.Battle.Shop
 {
-    public interface IItemRepository
+    public interface IShop
     {
         public IEnumerable<Item> Items { get; }
     }

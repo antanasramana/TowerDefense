@@ -1,13 +1,18 @@
-﻿using TowerDefense.Api.Constants;
+﻿using TowerDefense.Api.Battle.Factories;
+using TowerDefense.Api.Constants;
+using TowerDefense.Api.Enums;
 using TowerDefense.Api.Hubs;
-using TowerDefense.Api.Models;
+using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.Battle.Handlers
 {
     public interface IInitialGameSetupHandler
     {
         void SetConnectionIdForPlayer(string playerName, string connectionId);
-        void AddNewPlayerToGame(string playerName);
+        IPlayer AddNewPlayerToGame(string playerName, IAbstractLevelFactory abstractLevelFactory);
+        void SetArenaGridForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory);
+        void SetShopForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory);
+        void SetLevel(Level level);
         Task TryStartGame();
     }
 
@@ -35,27 +40,36 @@ namespace TowerDefense.Api.Battle.Handlers
             await _notificationHub.NotifyGameStart(_gameState.Players[0], _gameState.Players[1]);
         }
 
-        public void AddNewPlayerToGame(string playerName)
+        public void SetArenaGridForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory)
+        {
+            var player = _gameState.Players.First(x => x.Name == playerName);
+            var arenaGrid = abstractLevelFactory.CreateArenaGrid();
+            player.ArenaGrid = arenaGrid;
+        }
+
+        public void SetShopForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory)
+        {
+            var player = _gameState.Players.First(x => x.Name == playerName);
+            var shop = abstractLevelFactory.CreateShop();
+            player.Shop = shop;
+        }
+
+        public void SetLevel(Level level)
+        {
+            _gameState.Level = level;
+        }
+
+        public IPlayer AddNewPlayerToGame(string playerName, IAbstractLevelFactory abstractLevelFactory)
         {
             if (_gameState.ActivePlayers == Game.MaxNumberOfPlayers)
             {
                 throw new ArgumentException();
             }
 
-            var newPlayer = CreateNewPlayer(playerName);
+            var newPlayer = abstractLevelFactory.CreatePlayer(playerName);
             _gameState.Players[_gameState.ActivePlayers] = newPlayer;
-        }
 
-        private static Player CreateNewPlayer(string playerName)
-        {
-            return new Player
-            {
-                Name = playerName,
-                Health = 100,
-                Money = 1000,
-                Inventory = new Inventory(),
-                ArenaGrid = new Grid.ArenaGrid()
-            };
+            return newPlayer;
         }
     }
 }

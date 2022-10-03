@@ -1,4 +1,4 @@
-﻿namespace TowerDefense.Api.Contracts
+﻿namespace TowerDefense.Api.Contracts.Grid
 {
     public class AddGridItemRequest
     {

@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.Models;
 
-namespace TowerDefense.Api.Contracts
+namespace TowerDefense.Api.Contracts.Shop
 {
     public class GetShopItemsResponse
     {

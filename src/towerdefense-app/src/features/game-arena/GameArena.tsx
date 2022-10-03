@@ -81,16 +81,16 @@ const GameArena: React.FC = () => {
 			<div className='body'>
 				<div className='tower-container'>
 					<h1 className='name-header'>{playerName}</h1>
-					<TowerArmor />
-					<TowerHealth />
+					<TowerArmor isEnemy={false}/>
+					<TowerHealth isEnemy={false}/>
 					<Tower isEnemy={false} />
 				</div>
 				<Grid isEnemy={false} />
 				<Grid isEnemy={true} />
 				<div className='tower-container'>
 					<h1 className='name-header'>{enemyName}</h1>
-					<TowerArmor />
-					<TowerHealth />
+					<TowerArmor isEnemy={true}/>
+					<TowerHealth isEnemy={true}/>
 					<Tower isEnemy={true} />
 				</div>
 			</div>

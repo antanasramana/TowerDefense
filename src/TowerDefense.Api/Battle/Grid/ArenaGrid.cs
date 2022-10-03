@@ -3,9 +3,9 @@ using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Battle.Grid
 {
-    public class ArenaGrid
+    public class ArenaGrid : IArenaGrid
     {
-        public GridItem[] GridItems = new GridItem[Game.MaxGridTilesForPlayer];
+        public GridItem[] GridItems { get; init; } = new GridItem[Game.MaxGridTilesForPlayer];
 
         public ArenaGrid()
         {

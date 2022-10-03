@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.Battle.Grid;
 
-namespace TowerDefense.Api.Contracts
+namespace TowerDefense.Api.Contracts.Turn
 {
     public class EndTurnResponse
     {

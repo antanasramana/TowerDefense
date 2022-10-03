@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TowerDefense.Api.Battle.Handlers;
 using TowerDefense.Api.Contracts;
+using TowerDefense.Api.Contracts.Grid;
 
 namespace TowerDefense.Api.Controllers
 {
@@ -21,8 +22,11 @@ namespace TowerDefense.Api.Controllers
         [HttpGet("{playerName}")]
         public ActionResult<GetGridResponse> GetGrid(string playerName)
         {
-            var getInventoryItemsResponse = _gridHandler.GetGridItems(playerName);
-            return Ok(getInventoryItemsResponse);
+            var arenaGrid = _gridHandler.GetGridItems(playerName);
+
+            var getGridResponse = _mapper.Map<GetGridResponse>(arenaGrid);
+
+            return Ok(getGridResponse);
         }
 
         [HttpPost("add")]

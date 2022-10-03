@@ -3,6 +3,11 @@ enum TileType {
   Shield,
   Placeholder,
   Blank,
+  Machinegun,
+  Plane,
+  Soldier,
+  Bomb,
+  Rock
 }
 
 export default TileType;

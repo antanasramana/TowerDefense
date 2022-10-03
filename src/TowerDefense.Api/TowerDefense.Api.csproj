@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Battle\Shop\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>
