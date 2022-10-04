@@ -6,6 +6,8 @@ import { setSelectedItem } from './ShopSlice';
 
 import './Shop.css';
 import ShopItem from './ShopItem';
+import { BuyShopItemRequest } from '../../contracts/BuyShopItemRequest';
+import { getPlayerInfo } from '../player/PlayerSlice';
 
 const Shop: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -21,15 +23,16 @@ const Shop: React.FC = () => {
 	}
 
 	function onBuyItem() {
-		const formData = {
+		const buyShopItemRequest : BuyShopItemRequest = {
 			itemId: selectedShopItem,
 			playerName: playerName,
 		};
 
-		buyShopItem(formData)
+		buyShopItem(buyShopItemRequest)
 			.unwrap()
 			.then(() => {
 				dispatch(getInventoryItems());
+				dispatch(getPlayerInfo());
 			});
 	}
 

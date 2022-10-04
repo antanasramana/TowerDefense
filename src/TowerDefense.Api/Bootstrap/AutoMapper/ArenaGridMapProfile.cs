@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using TowerDefense.Api.Battle.Grid;
-using TowerDefense.Api.Contracts;
+using TowerDefense.Api.Contracts.Grid;
 
 namespace TowerDefense.Api.Bootstrap.AutoMapper
 {
@@ -8,7 +8,10 @@ namespace TowerDefense.Api.Bootstrap.AutoMapper
     {
         public ArenaGridMapProfile()
         {
-            CreateMap<ArenaGrid, AddGridItemResponse>()
+            CreateMap<IArenaGrid, AddGridItemResponse>()
+                .ForMember(dest => dest.GridItems, opt => opt.MapFrom(src => src.GridItems));
+            
+            CreateMap<IArenaGrid, GetGridResponse>()
                 .ForMember(dest => dest.GridItems, opt => opt.MapFrom(src => src.GridItems));
         }
     }

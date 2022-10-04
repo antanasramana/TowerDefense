@@ -10,7 +10,7 @@ import Grid from '../grid/Grid';
 import EndTurnButton from '../end-turn-button/EndTurnButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setName } from '../player/EnemySlice';
-import { setEnemyGridItems } from '../grid/GridSlice';
+import { getEnemyGridItems, getPlayerGridItems } from '../grid/GridSlice';
 import { useEndTurnMutation } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
 
@@ -53,15 +53,21 @@ const GameArena: React.FC = () => {
 
 					connection.on('EnemyInfo', (message) => {
 						dispatch(setName(message.name));
+						dispatch(getEnemyGridItems());
 					});
-					connection.on('EndTurn', (res) => {
-						dispatch(setEnemyGridItems(res.gridItems));
+					connection.on('EndTurn', () => {
+						dispatch(getEnemyGridItems());
+						dispatch(getPlayerGridItems());
 						setEndTurnText('End Turn');
 					});
 				})
 				.catch((e) => console.log('Connection failed: ', e));
 		}
 	}, [connection, dispatch, playerName]);
+
+	useEffect(() => {
+		dispatch(getPlayerGridItems());
+	}, []);
 
 	// methods
 	function onEndTurnClick() {
@@ -81,16 +87,16 @@ const GameArena: React.FC = () => {
 			<div className='body'>
 				<div className='tower-container'>
 					<h1 className='name-header'>{playerName}</h1>
-					<TowerArmor />
-					<TowerHealth />
+					<TowerArmor isEnemy={false}/>
+					<TowerHealth isEnemy={false}/>
 					<Tower isEnemy={false} />
 				</div>
 				<Grid isEnemy={false} />
 				<Grid isEnemy={true} />
 				<div className='tower-container'>
 					<h1 className='name-header'>{enemyName}</h1>
-					<TowerArmor />
-					<TowerHealth />
+					<TowerArmor isEnemy={true}/>
+					<TowerHealth isEnemy={true}/>
 					<Tower isEnemy={true} />
 				</div>
 			</div>

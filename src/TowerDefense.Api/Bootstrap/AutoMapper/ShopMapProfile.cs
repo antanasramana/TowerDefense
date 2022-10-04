@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using TowerDefense.Api.Contracts;
-using TowerDefense.Api.Models;
+using TowerDefense.Api.Battle.Shop;
+using TowerDefense.Api.Contracts.Shop;
 
 namespace TowerDefense.Api.Bootstrap.AutoMapper
 {
@@ -8,7 +8,7 @@ namespace TowerDefense.Api.Bootstrap.AutoMapper
     {
         public ShopMapProfile()
         {
-            CreateMap<Shop, GetShopItemsResponse>()
+            CreateMap<IShop, GetShopItemsResponse>()
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
         }
     }

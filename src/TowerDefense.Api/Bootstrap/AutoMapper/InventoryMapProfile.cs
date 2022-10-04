@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TowerDefense.Api.Contracts;
+using TowerDefense.Api.Contracts.Inventory;
 using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Bootstrap.AutoMapper

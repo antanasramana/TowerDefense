@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using TowerDefense.Api.Battle.Factories;
 using TowerDefense.Api.Battle.Handlers;
-using TowerDefense.Api.Contracts;
+using TowerDefense.Api.Contracts.Inventory;
+using TowerDefense.Api.Contracts.Player;
+using TowerDefense.Api.Contracts.Turn;
+using TowerDefense.Api.Enums;
 
 namespace TowerDefense.Api.Controllers
 {
@@ -10,19 +15,49 @@ namespace TowerDefense.Api.Controllers
     {
         private readonly IBattleHandler _battleHandler;
         private readonly IInitialGameSetupHandler _initialGameSetupHandler;
+        private readonly IPlayerHandler _playerHandler;
+        private readonly IMapper _mapper;
 
-        public PlayerController (IBattleHandler battleHandler, IInitialGameSetupHandler initialGameSetupHandler)
+        public PlayerController (IBattleHandler battleHandler, 
+            IInitialGameSetupHandler initialGameSetupHandler, 
+            IPlayerHandler playerHandler, 
+            IMapper mapper)
         {
             _battleHandler = battleHandler;
             _initialGameSetupHandler = initialGameSetupHandler;
+            _playerHandler = playerHandler;
+            _mapper = mapper;
         }
 
         [HttpPost]
         public ActionResult<AddNewPlayerResponse> Register([FromBody] AddNewPlayerRequest addPlayerRequest)
         {
-            _initialGameSetupHandler.AddNewPlayerToGame(addPlayerRequest.PlayerName);
+            IAbstractLevelFactory abstractLevelFactory = addPlayerRequest.Level switch
+            {
+                Level.First => new FirstLevelFactory(),
+                Level.Second => new SecondLevelFactory(),
+                Level.Third => new ThirdLevelFactory(),
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
-            return Ok(new AddNewPlayerResponse { PlayerName = addPlayerRequest.PlayerName });
+            var player = _initialGameSetupHandler.AddNewPlayerToGame(addPlayerRequest.PlayerName, abstractLevelFactory);
+            _initialGameSetupHandler.SetArenaGridForPlayer(addPlayerRequest.PlayerName, abstractLevelFactory);
+            _initialGameSetupHandler.SetShopForPlayer(addPlayerRequest.PlayerName, abstractLevelFactory);
+            _initialGameSetupHandler.SetLevel(addPlayerRequest.Level);
+
+            var addNewPlayerResponse = _mapper.Map<AddNewPlayerResponse>(player);
+
+            return Ok(addNewPlayerResponse);
+        }
+
+        [HttpGet("{playerName}")]
+        public ActionResult<GetPlayerInfoResponse> GetInfo(string playerName)
+        {
+            var player = _playerHandler.GetPlayer(playerName);
+
+            var getPlayerInfoResponse = _mapper.Map<GetPlayerInfoResponse>(player);
+
+            return Ok(getPlayerInfoResponse);
         }
 
         [HttpPost("endturn")]

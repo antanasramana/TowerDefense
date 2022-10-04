@@ -1,7 +1,9 @@
-﻿namespace TowerDefense.Api.Models
+﻿using TowerDefense.Api.Models.Items;
+
+namespace TowerDefense.Api.Models
 {
     public class Inventory
     {
-        public List<InventoryItem> Items = new();
+        public List<IItem> Items = new();
     }
 }

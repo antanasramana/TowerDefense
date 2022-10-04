@@ -3,6 +3,11 @@ import PlaceholderSource from '../assets/placeholder.png';
 import RocketsSource from '../assets/rockets.png';
 import ShieldSource from '../assets/shield.png';
 import BlankSource from '../assets/blank.png';
+import MachinegunSource from '../assets/machinegun.png';
+import PlaneSource from '../assets/plane.png';
+import SoldierSource from '../assets/soldier.png';
+import BombSource from '../assets/bomb.png';
+import RockSource from '../assets/rock.png';
 
 class TileImage {
 	static sourceMap = new Map<TileType, string>([
@@ -10,6 +15,11 @@ class TileImage {
 		[TileType.Rockets, RocketsSource],
 		[TileType.Shield, ShieldSource],
 		[TileType.Blank, BlankSource],
+		[TileType.Machinegun, MachinegunSource],
+		[TileType.Plane, PlaneSource],
+		[TileType.Soldier, SoldierSource],
+		[TileType.Bomb, BombSource],
+		[TileType.Rock, RockSource],
 	]);
 }
 

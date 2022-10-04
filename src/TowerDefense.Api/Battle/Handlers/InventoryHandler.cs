@@ -1,11 +1,12 @@
 ﻿using TowerDefense.Api.Models;
+using TowerDefense.Api.Models.Items;
 
 namespace TowerDefense.Api.Battle.Handlers
 {
     public interface IInventoryHandler
     {
         Inventory GetPlayerInventory(string playerName);
-        InventoryItem GetItemFromPlayerInventory(string playerName, string inventoryItemId);
+        IItem GetItemFromPlayerInventory(string playerName, string inventoryItemId);
         public void RemoveItemFromPlayerInventory(string playerName, string inventoryItemId);
     }
 
@@ -22,7 +23,7 @@ namespace TowerDefense.Api.Battle.Handlers
             return player.Inventory;
         }
 
-        public InventoryItem GetItemFromPlayerInventory(string playerName, string inventoryItemId)
+        public IItem GetItemFromPlayerInventory(string playerName, string inventoryItemId)
         {
             var player = _gameState.Players.First(x => x.Name == playerName);
 

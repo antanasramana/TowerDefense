@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TowerDefense.Api.Battle.Handlers;
-using TowerDefense.Api.Contracts;
+using TowerDefense.Api.Contracts.Inventory;
 
 namespace TowerDefense.Api.Controllers
 {

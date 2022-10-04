@@ -4,8 +4,8 @@ namespace TowerDefense.Api.Battle.Handlers
 {
     public interface IGridHandler
     {
-        ArenaGrid GetGridItems(string playerName);
-        ArenaGrid AddGridItem(string playerName, string inventoryItemId, int gridItemId);
+        IArenaGrid GetGridItems(string playerName);
+        IArenaGrid AddGridItem(string playerName, string inventoryItemId, int gridItemId);
     }
 
     public class GridHandler : IGridHandler
@@ -17,13 +17,13 @@ namespace TowerDefense.Api.Battle.Handlers
             _gameState = GameState.Instance;
             _inventoryHandler = inventoryHandler;
         }
-        public ArenaGrid GetGridItems(string playerName)
+        public IArenaGrid GetGridItems(string playerName)
         {
             var player = _gameState.Players.First(x => x.Name == playerName);
             return player.ArenaGrid;
         }
 
-        public ArenaGrid AddGridItem(string playerName, string inventoryItemId, int gridItemId)
+        public IArenaGrid AddGridItem(string playerName, string inventoryItemId, int gridItemId)
         {
             var player = _gameState.Players.First(x => x.Name == playerName);
 
