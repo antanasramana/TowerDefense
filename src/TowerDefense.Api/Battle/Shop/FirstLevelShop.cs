@@ -1,25 +1,16 @@
-﻿using TowerDefense.Api.Models;
+﻿using TowerDefense.Api.Battle.Factories.ItemFactories;
+using TowerDefense.Api.Models.Items;
 
 namespace TowerDefense.Api.Battle.Shop
 {
     public class FirstLevelShop : IShop
     {
-        private readonly List<Item> _items = new()
+        private readonly IEnumerable<IItemFactory> _itemFactories = new List<IItemFactory>
         {
-            new Item
-            {
-                Id="Rockets",
-                ItemType=ItemType.Rockets,
-                Price=50,
-            },
-             new Item
-            {
-                Id="Shield",
-                ItemType=ItemType.Shield,
-                Price=20,
-            }
+            new RocketsItemFactory(),
+            new ShieldItemFactory()
         };
 
-        public IEnumerable<Item> Items => _items;
+        public IEnumerable<IItem> Items => _itemFactories.Select(x => x.CreateItem()).ToList();
     }
 }

@@ -4,7 +4,7 @@ import Tile from '../tile/Tile';
 
 interface Props {
   id: number;
-  onTileClick: (id: number) => void;
+  onTileClick: (id: number, tileType: TileType) => void;
   tileType: TileType;
   selectable: boolean;
 }
@@ -14,7 +14,7 @@ const GridTile: React.FC<Props> = (props) => {
 		<div
 			className={props.selectable ? 'grid-item' : 'grid-item-enemy'}
 			key={props.id.toString()}
-			onClick={() => props.onTileClick(props.id)}
+			onClick={() => props.onTileClick(props.id, props.tileType)}
 		>
 			<Tile tileType={props.tileType}></Tile>
 		</div>

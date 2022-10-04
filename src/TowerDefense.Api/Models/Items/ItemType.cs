@@ -1,4 +1,4 @@
-﻿namespace TowerDefense.Api.Models
+﻿namespace TowerDefense.Api.Models.Items
 {
     public enum ItemType
     {

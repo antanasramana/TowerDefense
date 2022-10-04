@@ -1,5 +1,6 @@
 ﻿using TowerDefense.Api.Battle.Shop;
 using TowerDefense.Api.Models;
+using TowerDefense.Api.Models.Items;
 
 namespace TowerDefense.Api.Battle.Handlers
 {
@@ -37,11 +38,9 @@ namespace TowerDefense.Api.Battle.Handlers
 
             player.Money -= item.Price;
 
-            player.Inventory.Items.Add(new InventoryItem
-            {
-                Id = Guid.NewGuid().ToString(),
-                ItemType = item.ItemType
-            });
+            //PROTOTYPE DESIGN PATTERN!!!!!! WE DONT WANT TO EXPOSE EXACT ITEM ONLY ITS PROPERTIES
+            var inventoryItem = item.Clone();
+            player.Inventory.Items.Add(inventoryItem);
         }
     }
 }

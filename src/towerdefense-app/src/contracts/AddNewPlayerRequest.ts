@@ -1,4 +1,4 @@
-import Level from "../features/player/enums/Levels";
+import Level from '../features/player/enums/Levels';
 
 export type AddNewPlayerRequest = {
   playerName: string;

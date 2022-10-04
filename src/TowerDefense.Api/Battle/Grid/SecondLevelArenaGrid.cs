@@ -1,11 +1,12 @@
 ﻿using TowerDefense.Api.Constants;
 using TowerDefense.Api.Models;
+using TowerDefense.Api.Models.Items;
 
 namespace TowerDefense.Api.Battle.Grid
 {
     public class SecondLevelArenaGrid : IArenaGrid
     {
-        public GridItem[] GridItems { get; init; } = new GridItem[Game.MaxGridTilesForPlayer];
+        public GridItem[] GridItems { get; init; } = new GridItem[Game.MaxGridGridItemsForPlayer];
 
         public SecondLevelArenaGrid()
         {
@@ -20,10 +21,10 @@ namespace TowerDefense.Api.Battle.Grid
             AddBlankItemsAndFillRowWithPlaceholder(1, 8);
         }
 
-        private void AddBlankItemsAndFillRowWithPlaceholder(int countOfBlankTiles, int rowNumber)
+        private void AddBlankItemsAndFillRowWithPlaceholder(int countOfBlankGridItems, int rowNumber)
         {
-            var startingPointOfBlankTiles = rowNumber * Game.MaxGridTilesInRow;
-            for (int i = startingPointOfBlankTiles; i < startingPointOfBlankTiles + countOfBlankTiles; i++)
+            var startingPointOfBlankGridItems = rowNumber * Game.MaxGridGridItemsInRow;
+            for (int i = startingPointOfBlankGridItems; i < startingPointOfBlankGridItems + countOfBlankGridItems; i++)
             {
                 GridItems[i] = new GridItem
                 {
@@ -32,8 +33,8 @@ namespace TowerDefense.Api.Battle.Grid
                 };
             }
 
-            var fillInCount = Game.MaxGridTilesInRow - countOfBlankTiles;
-            var startingPointOfFillIn = startingPointOfBlankTiles + countOfBlankTiles;
+            var fillInCount = Game.MaxGridGridItemsInRow - countOfBlankGridItems;
+            var startingPointOfFillIn = startingPointOfBlankGridItems + countOfBlankGridItems;
 
             for (int i = startingPointOfFillIn; i < startingPointOfFillIn + fillInCount; i++)
             {

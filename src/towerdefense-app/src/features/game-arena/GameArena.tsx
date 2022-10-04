@@ -10,7 +10,7 @@ import Grid from '../grid/Grid';
 import EndTurnButton from '../end-turn-button/EndTurnButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setName } from '../player/EnemySlice';
-import { setEnemyGridItems } from '../grid/GridSlice';
+import { getEnemyGridItems, getPlayerGridItems } from '../grid/GridSlice';
 import { useEndTurnMutation } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
 
@@ -53,15 +53,21 @@ const GameArena: React.FC = () => {
 
 					connection.on('EnemyInfo', (message) => {
 						dispatch(setName(message.name));
+						dispatch(getEnemyGridItems());
 					});
-					connection.on('EndTurn', (res) => {
-						dispatch(setEnemyGridItems(res.gridItems));
+					connection.on('EndTurn', () => {
+						dispatch(getEnemyGridItems());
+						dispatch(getPlayerGridItems());
 						setEndTurnText('End Turn');
 					});
 				})
 				.catch((e) => console.log('Connection failed: ', e));
 		}
 	}, [connection, dispatch, playerName]);
+
+	useEffect(() => {
+		dispatch(getPlayerGridItems());
+	}, []);
 
 	// methods
 	function onEndTurnClick() {

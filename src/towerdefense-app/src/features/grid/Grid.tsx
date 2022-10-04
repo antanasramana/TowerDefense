@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import GridTile from './GridTile';
 import './Grid.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useAddGridItemMutation, setPlayerGridItems } from './GridSlice';
 import { getInventoryItems } from '../inventory/InventorySlice';
 import { AddGridItemRequest } from '../../contracts/AddGridItemRequest';
+import TileType from '../tile/enums/TileType';
 
 interface Props {
   isEnemy: boolean;
@@ -23,7 +24,11 @@ const Grid: React.FC<Props> = (props) => {
 	const [addGridItem] = useAddGridItemMutation();
 
 	// methods
-	function onGridTileClick(id: number) {
+	function onGridTileClick(id: number, tileType: TileType) {
+		if(tileType == TileType.Placeholder){
+			return;
+		} 
+
 		if (!selectedInventoryItem) {
 			return;
 		}
@@ -58,7 +63,9 @@ const Grid: React.FC<Props> = (props) => {
 					<GridTile
 						key={index}
 						id={item.id}
-						selectable={!props.isEnemy}
+						selectable={
+							item.itemType != TileType.Placeholder
+						}
 						onTileClick={onGridTileClick}
 						tileType={item.itemType}
 					/>
