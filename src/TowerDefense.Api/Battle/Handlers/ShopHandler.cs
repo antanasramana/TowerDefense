@@ -7,7 +7,7 @@ namespace TowerDefense.Api.Battle.Handlers
     public interface IShopHandler
     {
         public IShop GetPlayerShop(string playerName);
-        void BuyItem(string playerName, string identifier);
+        bool TryBuyItem(string playerName, string identifier);
     }
 
     public class ShopHandler : IShopHandler
@@ -26,21 +26,23 @@ namespace TowerDefense.Api.Battle.Handlers
             return player.Shop;
         }
 
-        public void BuyItem(string playerName, string identifier)
+        public bool TryBuyItem(string playerName, string identifier)
         {
             var player = _gameState.Players.First(player => player.Name == playerName);
             var item = player.Shop.Items.First(item => item.Id == identifier);
 
-            if (item == null) return;
+            if (item == null) return false;
 
             var isAbleToAfford = item.Price < player.Money;
-            if (!isAbleToAfford) return;
+            if (!isAbleToAfford) return false;
 
             player.Money -= item.Price;
 
             //PROTOTYPE DESIGN PATTERN!!!!!! WE DONT WANT TO EXPOSE EXACT ITEM ONLY ITS PROPERTIES
             var inventoryItem = item.Clone();
             player.Inventory.Items.Add(inventoryItem);
+
+            return true;
         }
     }
 }

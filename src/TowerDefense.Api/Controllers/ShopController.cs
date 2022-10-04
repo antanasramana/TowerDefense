@@ -30,11 +30,11 @@ namespace TowerDefense.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult BuyItem(BuyShopItemRequest buyShopItemRequest)
+        public ActionResult<BuyShopItemResponse> BuyItem(BuyShopItemRequest buyShopItemRequest)
         {
-            _shopHandler.BuyItem(buyShopItemRequest.PlayerName, buyShopItemRequest.ItemId);
+            var wasItemBought = _shopHandler.TryBuyItem(buyShopItemRequest.PlayerName, buyShopItemRequest.ItemId);
 
-            return Ok();
+            return Ok(new BuyShopItemResponse{ WasBought = wasItemBought });
         }
     }
 }

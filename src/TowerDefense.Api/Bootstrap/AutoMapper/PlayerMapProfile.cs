@@ -8,7 +8,10 @@ namespace TowerDefense.Api.Bootstrap.AutoMapper
     {
         public PlayerMapProfile()
         {
-            CreateMap<IPlayer, AddNewPlayerResponse>();
+            CreateMap<IPlayer, AddNewPlayerResponse>()
+                .ForMember(dest => dest.PlayerName, opt => opt.MapFrom(src => src.Name));
+            CreateMap<IPlayer, GetPlayerInfoResponse>()
+                .ForMember(dest => dest.PlayerName, opt => opt.MapFrom(src => src.Name));
         }
     }
 }

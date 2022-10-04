@@ -1,6 +1,4 @@
 ﻿using TowerDefense.Api.Constants;
-using TowerDefense.Api.Models;
-using TowerDefense.Api.Models.Items;
 
 namespace TowerDefense.Api.Battle.Grid
 {
@@ -10,14 +8,17 @@ namespace TowerDefense.Api.Battle.Grid
 
         public ThirdLevelArenaGrid()
         {
-            for (int i = 0; i < GridItems.Length; i++)
-            {
-                GridItems[i] = new GridItem
-                {
-                    Id = i,
-                    ItemType = ItemType.Blank
-                };
-            }
+            const string gridLayout = @"33322333
+                                        33322333
+                                        33322333
+                                        22333322
+                                        22333322
+                                        22333322
+                                        22333322
+                                        22333322
+                                        22233222";
+
+            GridItems.CreateGrid(gridLayout);
         }
     }
 }

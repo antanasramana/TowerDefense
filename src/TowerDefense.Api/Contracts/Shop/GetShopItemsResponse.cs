@@ -1,5 +1,4 @@
-﻿using TowerDefense.Api.Models;
-using TowerDefense.Api.Models.Items;
+﻿using TowerDefense.Api.Models.Items;
 
 namespace TowerDefense.Api.Contracts.Shop
 {

@@ -1,9 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import axios from 'axios';
+import { store } from '../../app/store';
 import { AddNewPlayerRequest } from '../../contracts/AddNewPlayerRequest';
 import { AddNewPlayerResponse } from '../../contracts/AddNewPlayerResponse';
 import { EndTurnRequest } from '../../contracts/EndTurnRequest';
 import { EndTurnResponse } from '../../contracts/EndTurnResponse';
+import { GetPlayerInfoResponse } from '../../contracts/GetPlayerInfoResponse';
 import Level from './enums/Levels';
 
 const API_URL = process.env.REACT_APP_BACKEND;
@@ -24,6 +27,12 @@ const initialState: Player = {
 	money: 1000
 };
 
+export const getPlayerInfo = createAsyncThunk<GetPlayerInfoResponse>('player/getPlayerInfo', async () => {
+	const reduxStore = store.getState();
+	const response = await axios.get<GetPlayerInfoResponse>(`${API_URL}/players/${reduxStore.player.name}`);
+	return response.data;
+});
+
 const playerSlice = createSlice({
 	name: 'player',
 	initialState,
@@ -43,6 +52,17 @@ const playerSlice = createSlice({
 		setMoney(state, action: PayloadAction<number>){
 			state.money = action.payload;
 		}
+	},
+	extraReducers: (builder) => {
+		builder.addCase(getPlayerInfo.fulfilled, (state, action: PayloadAction<GetPlayerInfoResponse>) => {
+			state.name = action.payload.playerName;
+			state.armor = action.payload.armor;
+			state.health = action.payload.health;
+			state.money = action.payload.money;
+		});
+		builder.addCase(getPlayerInfo.rejected, () => {
+			console.error('Failed to get player info from api!');
+		});
 	},
 });
 
@@ -77,7 +97,7 @@ export const apiSlice = createApi({
 				}),
 			}),
 		};
-	},
+	}
 });
 
 export const { useAddNewPlayerMutation, useEndTurnMutation } = apiSlice;

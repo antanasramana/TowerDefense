@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TowerDefense.Api.Battle.Factories;
 using TowerDefense.Api.Battle.Handlers;
+using TowerDefense.Api.Contracts.Inventory;
 using TowerDefense.Api.Contracts.Player;
 using TowerDefense.Api.Contracts.Turn;
 using TowerDefense.Api.Enums;
@@ -14,12 +15,17 @@ namespace TowerDefense.Api.Controllers
     {
         private readonly IBattleHandler _battleHandler;
         private readonly IInitialGameSetupHandler _initialGameSetupHandler;
+        private readonly IPlayerHandler _playerHandler;
         private readonly IMapper _mapper;
 
-        public PlayerController (IBattleHandler battleHandler, IInitialGameSetupHandler initialGameSetupHandler, IMapper mapper)
+        public PlayerController (IBattleHandler battleHandler, 
+            IInitialGameSetupHandler initialGameSetupHandler, 
+            IPlayerHandler playerHandler, 
+            IMapper mapper)
         {
             _battleHandler = battleHandler;
             _initialGameSetupHandler = initialGameSetupHandler;
+            _playerHandler = playerHandler;
             _mapper = mapper;
         }
 
@@ -42,6 +48,16 @@ namespace TowerDefense.Api.Controllers
             var addNewPlayerResponse = _mapper.Map<AddNewPlayerResponse>(player);
 
             return Ok(addNewPlayerResponse);
+        }
+
+        [HttpGet("{playerName}")]
+        public ActionResult<GetPlayerInfoResponse> GetInfo(string playerName)
+        {
+            var player = _playerHandler.GetPlayer(playerName);
+
+            var getPlayerInfoResponse = _mapper.Map<GetPlayerInfoResponse>(player);
+
+            return Ok(getPlayerInfoResponse);
         }
 
         [HttpPost("endturn")]
