@@ -23,6 +23,7 @@ namespace TowerDefense.Api.Battle.Handlers
 
             if (_gameState.PlayersFinishedTurn.Count != Game.MaxNumberOfPlayers) return false;
 
+
             _gameState.PlayersFinishedTurn.Clear();
             return true;
         }

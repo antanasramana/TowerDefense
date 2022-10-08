@@ -1,5 +1,4 @@
-﻿using TowerDefense.Api.Constants;
-using TowerDefense.Api.Models.Items;
+﻿using TowerDefense.Api.Models.Items;
 
 namespace TowerDefense.Api.Battle.Grid
 {
@@ -17,7 +16,8 @@ namespace TowerDefense.Api.Battle.Grid
                 gridItems[i] = new GridItem
                 {
                     Id = i,
-                    ItemType = type
+                    ItemType = type,
+                    Item = ItemHandler.CreateItem(type)
                 };
             }
         }
