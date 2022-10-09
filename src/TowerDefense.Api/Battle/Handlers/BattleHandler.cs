@@ -1,4 +1,7 @@
-﻿using TowerDefense.Api.Hubs;
+﻿using TowerDefense.Api.Battle.Grid;
+using TowerDefense.Api.Hubs;
+using TowerDefense.Api.Models;
+using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.Battle.Handlers
 {
@@ -27,7 +30,23 @@ namespace TowerDefense.Api.Battle.Handlers
 
             //CALCULATE HEALTH AND OTHER STUFF
 
+            var player1ArenaGrid = _gameState.Players[0].ArenaGrid;
+            var player2ArenaGrid = _gameState.Players[1].ArenaGrid;
+            var player1AttackResult = HandlePlayerAttacks(player1ArenaGrid, player2ArenaGrid);
+            var player2AttackResult = HandlePlayerAttacks(player2ArenaGrid, player1ArenaGrid);
+            //Observer notifies player2 grid with player1AttackResult
+            //Observer notifies player1 grid with player2AttackResult
+
             _notificationHub.SendEndTurnInfo(_gameState.Players[0], _gameState.Players[1]);
+        }
+        private IEnumerable<AttackResult> HandlePlayerAttacks(IArenaGrid playerArenaGrid, IArenaGrid opponentArenaGrid)
+        {
+            var result = new List<AttackResult>();
+            foreach (GridItem gridItem in playerArenaGrid.GridItems)
+            {
+                result.AddRange(gridItem.Item.Attack(opponentArenaGrid.GridItems, gridItem.Id));
+            }
+            return result;
         }
     }
 }

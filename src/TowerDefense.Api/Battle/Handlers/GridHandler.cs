@@ -1,4 +1,5 @@
 ﻿using TowerDefense.Api.Battle.Grid;
+using TowerDefense.Api.Models.Items;
 
 namespace TowerDefense.Api.Battle.Handlers
 {
@@ -31,6 +32,7 @@ namespace TowerDefense.Api.Battle.Handlers
             if (inventoryItem == null) return player.ArenaGrid;
 
             player.ArenaGrid.GridItems[gridItemId].ItemType = inventoryItem.ItemType;
+            player.ArenaGrid.GridItems[gridItemId].Item = inventoryItem;
 
             _inventoryHandler.RemoveItemFromPlayerInventory(playerName, inventoryItemId);
 
