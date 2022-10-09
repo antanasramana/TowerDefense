@@ -34,8 +34,10 @@ namespace TowerDefense.Api.Battle.Handlers
             var player2ArenaGrid = _gameState.Players[1].ArenaGrid;
             var player1AttackResult = HandlePlayerAttacks(player1ArenaGrid, player2ArenaGrid);
             var player2AttackResult = HandlePlayerAttacks(player2ArenaGrid, player1ArenaGrid);
-            //Observer notifies player2 grid with player1AttackResult
-            //Observer notifies player1 grid with player2AttackResult
+
+            // Observer magic
+            _gameState.gridObservers[0].Notify(player1AttackResult);
+            _gameState.gridObservers[1].Notify(player2AttackResult);
 
             _notificationHub.SendEndTurnInfo(_gameState.Players[0], _gameState.Players[1]);
         }

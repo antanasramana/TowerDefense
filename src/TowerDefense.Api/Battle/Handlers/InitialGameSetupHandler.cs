@@ -1,4 +1,5 @@
 ﻿using TowerDefense.Api.Battle.Factories;
+using TowerDefense.Api.Battle.Observer;
 using TowerDefense.Api.Constants;
 using TowerDefense.Api.Enums;
 using TowerDefense.Api.Hubs;
@@ -66,8 +67,10 @@ namespace TowerDefense.Api.Battle.Handlers
                 throw new ArgumentException();
             }
 
+            var currentNewPlayerId = _gameState.ActivePlayers;
             var newPlayer = abstractLevelFactory.CreatePlayer(playerName);
-            _gameState.Players[_gameState.ActivePlayers] = newPlayer;
+            _gameState.Players[currentNewPlayerId] = newPlayer;
+            _gameState.gridObservers[currentNewPlayerId] = new GridObserverPublisher();
 
             return newPlayer;
         }
