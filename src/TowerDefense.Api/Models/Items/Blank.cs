@@ -1,4 +1,6 @@
-﻿namespace TowerDefense.Api.Models.Items
+﻿using TowerDefense.Api.Strategies;
+
+namespace TowerDefense.Api.Models.Items
 {
     public class Blank : IItem
     {
@@ -6,8 +8,8 @@
         public int Price { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Blank;
         public int Health { get; set; } = 0;
-        public int Demage { get; set; } = 0;
-        public bool CanBeAffectedByAttack { get; set; } = false;
+        public int Damage { get; set; } = 0;
+        public IAttackStrategy AttackStrategy { get; set; } = new NoAttackStrategy();
 
         public IItem Clone()
         {

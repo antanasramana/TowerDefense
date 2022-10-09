@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Battle\Factories\NewFolder\**" />
+    <Content Remove="Battle\Factories\NewFolder\**" />
+    <EmbeddedResource Remove="Battle\Factories\NewFolder\**" />
+    <None Remove="Battle\Factories\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
@@ -14,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Battle\Factories\NewFolder\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
 

@@ -1,5 +1,4 @@
-﻿using TowerDefense.Api.Battle.Grid;
-using TowerDefense.Api.Strategies.RocketStrategy;
+﻿using TowerDefense.Api.Strategies;
 
 namespace TowerDefense.Api.Models.Items
 {
@@ -9,10 +8,10 @@ namespace TowerDefense.Api.Models.Items
         public int Price { get; set; } = 100;
 
         public ItemType ItemType { get; set; } = ItemType.Rockets;
-        public IRocketsStrategy Strategy { get; set; }
         public int Health { get; set; } = 25;
-        public int Demage { get; set; } = 25;
-        public bool CanBeAffectedByAttack { get; set; } = true;
+        public int Damage { get; set; } = 25;
+        public IAttackStrategy AttackStrategy { get; set; } = new FirstInHorizontalLineAttackStrategy();
+
         public IItem Clone()
         {
             return new Rockets

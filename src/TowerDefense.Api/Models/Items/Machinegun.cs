@@ -1,4 +1,6 @@
-﻿namespace TowerDefense.Api.Models.Items
+﻿using TowerDefense.Api.Strategies;
+
+namespace TowerDefense.Api.Models.Items
 {
     public class Machinegun : IItem
     {
@@ -6,8 +8,9 @@
         public int Price { get; set; } = 100;
         public ItemType ItemType { get; set; } = ItemType.Machinegun;
         public int Health { get; set; } = 50;
-        public int Demage { get; set; } = 50;
-        public bool CanBeAffectedByAttack { get; set; } = true;
+        public int Damage { get; set; } = 50;
+        public IAttackStrategy AttackStrategy { get; set; } = new VerticalLineOfThreeAttackStrategy();
+
         public IItem Clone()
         {
             return new Machinegun
