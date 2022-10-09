@@ -6,6 +6,6 @@ namespace TowerDefense.Api.Strategies
 {
     public interface IAttackStrategy
     {
-        List<int> AttackedGridItems(GridItem[] opponentGridItems, IPlayer opponent, int damage, int rocketGridId);
+        IEnumerable<int> AttackedGridItems(GridItem[] opponentGridItems, int attackingGridItemId);
     }
 }

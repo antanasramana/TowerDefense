@@ -1,4 +1,6 @@
-﻿using TowerDefense.Api.Strategies;
+﻿using TowerDefense.Api.Battle.Grid;
+using TowerDefense.Api.Models.Player;
+using TowerDefense.Api.Strategies;
 
 namespace TowerDefense.Api.Models.Items
 {
@@ -10,7 +12,7 @@ namespace TowerDefense.Api.Models.Items
         int Damage { get; set; }
         ItemType ItemType { get; set; }
         IAttackStrategy AttackStrategy { get; set; }
-
+        IEnumerable<AttackResult> Attack(GridItem[] opponentGridItems, int attackingGridItemId);
         IItem Clone();
     }
 }

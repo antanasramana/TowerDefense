@@ -5,7 +5,7 @@ namespace TowerDefense.Api.Strategies
 {
     public class NoAttackStrategy : IAttackStrategy
     {
-        public List<int> AttackedGridItems(GridItem[] opponentGridItems, IPlayer opponent, int damage, int rocketGridId)
+        public IEnumerable<int> AttackedGridItems(GridItem[] opponentGridItems, int attackingGridItemId)
         {
             return new List<int>();
         }
