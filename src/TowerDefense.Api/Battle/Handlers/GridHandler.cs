@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using TowerDefense.Api.Battle.Grid;
+using TowerDefense.Api.Battle.Observer;
 using TowerDefense.Api.Models.Items;
+using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.Battle.Handlers
 {
@@ -15,10 +17,13 @@ namespace TowerDefense.Api.Battle.Handlers
     {
         private readonly GameState _gameState;
         private readonly IInventoryHandler _inventoryHandler;
-        public GridHandler(IInventoryHandler inventoryHandler)
+        private readonly IPublisherHandler _publisherHandler;
+
+        public GridHandler(IInventoryHandler inventoryHandler, IPublisherHandler publisherHandler)
         {
             _gameState = GameState.Instance;
             _inventoryHandler = inventoryHandler;
+            _publisherHandler = publisherHandler;
         }
         public IArenaGrid GetGridItems(string playerName)
         {
@@ -38,26 +43,15 @@ namespace TowerDefense.Api.Battle.Handlers
             player.ArenaGrid.GridItems[gridItemId].ItemType = inventoryItem.ItemType;
             player.ArenaGrid.GridItems[gridItemId].Item = inventoryItem;
 
-            bool isItemValid = (player.ArenaGrid.GridItems[gridItemId].ItemType != ItemType.Blank ||
-                                player.ArenaGrid.GridItems[gridItemId].ItemType != ItemType.Placeholder);
+            var gridItemSubscriber = player.ArenaGrid.GridItems[gridItemId];
 
-            if (isItemValid)
-            {
-                switch (playerId)
-                {
-                    case 0:
-                        _gameState.gridObservers[1].Attach(player.ArenaGrid.GridItems[gridItemId]);
-                        break;
-                    
-                    case 1:
-                        _gameState.gridObservers[0].Attach(player.ArenaGrid.GridItems[gridItemId]);
-                        break;
-                }
-            }
+            _publisherHandler.AddSubscriberToPublisher(playerId, gridItemSubscriber);
 
             _inventoryHandler.RemoveItemFromPlayerInventory(playerName, inventoryItemId);
 
             return player.ArenaGrid;
         }
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using TowerDefense.Api.Battle.Handlers;
+using TowerDefense.Api.Battle.Observer;
 using TowerDefense.Api.Hubs;
 
 namespace TowerDefense.Api.Bootstrap
@@ -15,6 +16,7 @@ namespace TowerDefense.Api.Bootstrap
             serviceCollection.AddTransient<INotificationHub, NotificationHub>();
             serviceCollection.AddTransient<IGridHandler, GridHandler>();
             serviceCollection.AddTransient<IPlayerHandler, PlayerHandler>();
+            serviceCollection.AddTransient<IPublisherHandler, PublisherHandler>();
         }
     }
 }
