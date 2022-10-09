@@ -7,27 +7,29 @@ namespace TowerDefense.Api.Strategies
     {
         public IEnumerable<int> AttackedGridItems(GridItem[] opponentGridItems, int attackingGridItemId)
         {
-            int affectedRow = GetAttackingItemRow(attackingGridItemId);
-            var affectedGridItems = new List<int>();
-            var affectedFirstGridItem = AffectedGridItems(opponentGridItems, affectedRow - 1);
-            var affectedSecondGridItem = AffectedGridItems(opponentGridItems, affectedRow);
-            var affectedThirdGridItem = AffectedGridItems(opponentGridItems, affectedRow + 1);
+            var affectedRow = GetAttackingItemRow(attackingGridItemId);
 
-            TryAddAffetctedGridItemId(affectedGridItems, affectedFirstGridItem);
-            TryAddAffetctedGridItemId(affectedGridItems, affectedSecondGridItem);
-            TryAddAffetctedGridItemId(affectedGridItems, affectedThirdGridItem);
+            var affectedFirstGridItem = GetAffectedGridItems(opponentGridItems, affectedRow - 1);
+            var affectedSecondGridItem = GetAffectedGridItems(opponentGridItems, affectedRow);
+            var affectedThirdGridItem = GetAffectedGridItems(opponentGridItems, affectedRow + 1);
+
+
+            var affectedGridItems = new List<int>();
+            TryAddAffectedGridItemId(affectedGridItems, affectedFirstGridItem);
+            TryAddAffectedGridItemId(affectedGridItems, affectedSecondGridItem);
+            TryAddAffectedGridItemId(affectedGridItems, affectedThirdGridItem);
 
             return affectedGridItems;
         }
 
-        private static int? AffectedGridItems(GridItem[] opponentGridItems, int targetRow)
+        private static int? GetAffectedGridItems(GridItem[] opponentGridItems, int targetRow)
         {
             int? affectedItemId = null;
             var opponentsAffectedGridItems = GetOpponentGridItemsInFrontOfAttackingItem(targetRow, opponentGridItems);
 
             foreach (var gridItem in opponentsAffectedGridItems)
             {
-                if (IsItemDamageble(gridItem))
+                if (IsItemDamageable(gridItem))
                 {
                     return gridItem.Id;
                 }
@@ -35,8 +37,7 @@ namespace TowerDefense.Api.Strategies
             return affectedItemId;
         }
 
-        //TODO make it an extension
-        private static void TryAddAffetctedGridItemId(List<int> affectedGridItems, int? affectedGridItemId)
+        private static void TryAddAffectedGridItemId(ICollection<int> affectedGridItems, int? affectedGridItemId)
         {
             if (!affectedGridItemId.HasValue) return;
 

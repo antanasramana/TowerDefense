@@ -1,5 +1,4 @@
 ﻿using TowerDefense.Api.Battle.Grid;
-using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.Strategies
 {
