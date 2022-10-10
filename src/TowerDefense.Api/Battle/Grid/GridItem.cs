@@ -15,12 +15,10 @@ namespace TowerDefense.Api.Battle.Grid
             {
                 this.ItemType = ItemType.Blank;
                 this.Item.ItemType = ItemType.Blank;
-                System.Diagnostics.Debug.WriteLine("GridItem destroyed");
             } 
             else
             {
                 this.Item.Health = Item.Health - damage;
-                System.Diagnostics.Debug.WriteLine("Removed Damage");
             }
         }
     }
