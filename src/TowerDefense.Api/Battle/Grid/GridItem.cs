@@ -1,8 +1,9 @@
-﻿using TowerDefense.Api.Models.Items;
+﻿using TowerDefense.Api.Battle.Observer;
+using TowerDefense.Api.Models.Items;
 
 namespace TowerDefense.Api.Battle.Grid
 {
-    public class GridItem
+    public class GridItem : IAttackSubscriber
     {
         public int Id { get; set; }
         public ItemType ItemType { get; set; }
@@ -10,9 +11,15 @@ namespace TowerDefense.Api.Battle.Grid
 
         public void HandleAttack(int damage)
         {
-            //If item is not placeholder do stuff below
-            //Health of item then equals health minus damage
-            //If health equals zero Item then equal blank
+            if(Item.Health - damage <= 0)
+            {
+                this.ItemType = ItemType.Blank;
+                this.Item.ItemType = ItemType.Blank;
+            } 
+            else
+            {
+                this.Item.Health = Item.Health - damage;
+            }
         }
     }
 }
