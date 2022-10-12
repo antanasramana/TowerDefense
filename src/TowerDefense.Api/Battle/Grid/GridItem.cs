@@ -11,14 +11,16 @@ namespace TowerDefense.Api.Battle.Grid
 
         public void HandleAttack(int damage)
         {
-            if(Item.Health - damage <= 0)
+            bool isDestroyed = Item.Health - damage <= 0;
+
+            if (isDestroyed)
             {
                 this.ItemType = ItemType.Blank;
-                this.Item.ItemType = ItemType.Blank;
-            } 
+                this.Item = new Blank();
+            }
             else
             {
-                this.Item.Health = Item.Health - damage;
+                this.Item.Health -= damage;
             }
         }
     }
