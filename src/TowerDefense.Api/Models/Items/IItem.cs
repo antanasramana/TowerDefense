@@ -12,7 +12,7 @@ namespace TowerDefense.Api.Models.Items
         int Damage { get; set; }
         ItemType ItemType { get; set; }
         IAttackStrategy AttackStrategy { get; set; }
-        IEnumerable<AttackResult> Attack(GridItem[] opponentGridItems, int attackingGridItemId);
+        IEnumerable<AttackDeclaration> Attack(GridItem[] opponentGridItems, int attackingGridItemId);
         IItem Clone();
     }
 }

@@ -41,9 +41,9 @@ namespace TowerDefense.Api.Battle.Handlers
 
             _notificationHub.SendEndTurnInfo(_gameState.Players[0], _gameState.Players[1]);
         }
-        private IEnumerable<AttackResult> HandlePlayerAttacks(IArenaGrid playerArenaGrid, IArenaGrid opponentArenaGrid)
+        private IEnumerable<AttackDeclaration> HandlePlayerAttacks(IArenaGrid playerArenaGrid, IArenaGrid opponentArenaGrid)
         {
-            var result = new List<AttackResult>();
+            var result = new List<AttackDeclaration>();
             foreach (GridItem gridItem in playerArenaGrid.GridItems)
             {
                 result.AddRange(gridItem.Item.Attack(opponentArenaGrid.GridItems, gridItem.Id));

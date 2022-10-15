@@ -12,10 +12,10 @@ namespace TowerDefense.Api.Models.Items
         public int Damage { get; set; } = 25;
         public IAttackStrategy AttackStrategy { get; set; } = new FirstInHorizontalLineAttackStrategy();
 
-        public IEnumerable<AttackResult> Attack(GridItem[] opponentGridItems, int attackingGridItemId)
+        public IEnumerable<AttackDeclaration> Attack(GridItem[] opponentGridItems, int attackingGridItemId)
         {
             var affectedGridItemList = AttackStrategy.AttackedGridItems(opponentGridItems, attackingGridItemId);
-            return affectedGridItemList.Select(x => new AttackResult() { GridItemId = x, Damage = Damage });
+            return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Damage });
         }
 
         public IItem Clone()

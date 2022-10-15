@@ -16,15 +16,15 @@ namespace TowerDefense.Api.Battle.Observer
             _subscribers.Remove(subscriber);
         }
 
-        public void Notify(IEnumerable<AttackResult> attackResults)
+        public void Notify(IEnumerable<AttackDeclaration> attackDeclarations)
         {
             foreach (var subscriber in _subscribers)
             {
-                foreach (var attackResult in attackResults)
+                foreach (var attackDeclaration in attackDeclarations)
                 {
-                    if (attackResult != null && attackResult.GridItemId == subscriber.Id)
+                    if (attackDeclaration != null && attackDeclaration.GridItemId == subscriber.Id)
                     {
-                        subscriber.HandleAttack(attackResult.Damage);
+                        subscriber.HandleAttack(attackDeclaration);
                     }
                 }
             }
