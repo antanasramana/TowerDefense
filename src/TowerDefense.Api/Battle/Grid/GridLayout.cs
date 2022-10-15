@@ -16,7 +16,6 @@ namespace TowerDefense.Api.Battle.Grid
                 gridItems[i] = new GridItem
                 {
                     Id = i,
-                    ItemType = type,
                     Item = ItemHandler.CreateItem(type)
                 };
             }

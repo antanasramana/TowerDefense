@@ -6,8 +6,9 @@ namespace TowerDefense.Api.Battle.Grid
     public class GridItem : IAttackSubscriber
     {
         public int Id { get; set; }
-        public ItemType ItemType { get; set; }
         public IItem Item { get; set; }
+
+        public ItemType ItemType => Item.ItemType; 
 
         public void HandleAttack(int damage)
         {
@@ -15,7 +16,6 @@ namespace TowerDefense.Api.Battle.Grid
 
             if (isDestroyed)
             {
-                this.ItemType = ItemType.Blank;
                 this.Item = new Blank();
             }
             else
