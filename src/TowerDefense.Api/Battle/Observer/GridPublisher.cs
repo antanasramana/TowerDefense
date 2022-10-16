@@ -1,4 +1,5 @@
-﻿using TowerDefense.Api.Models;
+﻿using System.Collections.Generic;
+using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Battle.Observer
 {
@@ -16,18 +17,23 @@ namespace TowerDefense.Api.Battle.Observer
             _subscribers.Remove(subscriber);
         }
 
-        public void Notify(IEnumerable<AttackDeclaration> attackDeclarations)
+        public List<AttackResult> Notify(IEnumerable<AttackDeclaration> attackDeclarations)
         {
+            List<AttackResult> attackResults = new List<AttackResult>();
+
             foreach (var subscriber in _subscribers)
             {
                 foreach (var attackDeclaration in attackDeclarations)
                 {
                     if (attackDeclaration != null && attackDeclaration.GridItemId == subscriber.Id)
                     {
-                        subscriber.HandleAttack(attackDeclaration);
+                        var attackResult = subscriber.HandleAttack(attackDeclaration);
+                        attackResults.Add(attackResult);
                     }
                 }
             }
+
+            return attackResults;
         }
     }
 }

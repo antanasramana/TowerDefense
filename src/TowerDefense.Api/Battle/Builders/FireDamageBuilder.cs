@@ -28,7 +28,7 @@
             fireDamage.Time = time;
         }
 
-        public FireDamage GetResult()
+        public Damage GetResult()
         {
             return fireDamage;
         }

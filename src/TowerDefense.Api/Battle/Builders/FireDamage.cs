@@ -1,9 +1,7 @@
 ﻿namespace TowerDefense.Api.Battle.Builders
 {
-    public class FireDamage
+    public class FireDamage : Damage
     {
-        public float Intensity { get; set; }
-        public int Size { get; set; }
-        public int Time { get; set; }
+        public override DamageType DamageType { get; set; } = DamageType.Fire;
     }
 }

@@ -29,7 +29,7 @@
             this.projectileDamage.Time = time;
         }
 
-        public ProjectileDamage GetResult()
+        public Damage GetResult()
         {
             return this.projectileDamage;
         }
