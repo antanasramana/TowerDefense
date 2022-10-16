@@ -10,7 +10,7 @@ namespace TowerDefense.Api.Models.Items
         public int Price { get; set; } = 100;
         public ItemType ItemType { get; set; } = ItemType.Machinegun;
         public int Health { get; set; } = 50;
-        public int Damage { get; set; } = 50;
+        public int Damage { get; set; } = 100;
         public IAttackStrategy AttackStrategy { get; set; } = new LineOfThreeAttackStrategy();
 
         public IEnumerable<AttackDeclaration> Attack(GridItem[] opponentGridItems, int attackingGridItemId)

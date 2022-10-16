@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using TowerDefense.Api.Battle;
 using TowerDefense.Api.Battle.Handlers;
 using TowerDefense.Api.Contracts;
 using TowerDefense.Api.Contracts.Grid;
+using TowerDefense.Api.Strategies;
 
 namespace TowerDefense.Api.Controllers
 {
@@ -37,6 +39,27 @@ namespace TowerDefense.Api.Controllers
             var arenaGridItemResponse = _mapper.Map<AddGridItemResponse>(arenaGrid);
 
             return Ok(arenaGridItemResponse);
+        }
+
+        [HttpPost("upgradeRockets")]
+        public ActionResult UpgradeRockets()
+        {
+            GameState gameState = GameState.Instance;
+
+            foreach (var player in gameState.Players)
+            {
+                foreach (var gridItem in player.ArenaGrid.GridItems)
+                {
+                    var item = gridItem.Item;
+
+                    if (item.ItemType == Models.Items.ItemType.Rockets)
+                    {
+                        item.AttackStrategy = new LineOfThreeAttackStrategy();
+                    }
+                }
+            }
+
+            return Ok();    
         }
     }
 }

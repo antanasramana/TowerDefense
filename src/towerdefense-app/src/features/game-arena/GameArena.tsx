@@ -10,7 +10,7 @@ import Grid from '../grid/Grid';
 import EndTurnButton from '../end-turn-button/EndTurnButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setName } from '../player/EnemySlice';
-import { getEnemyGridItems, getPlayerGridItems } from '../grid/GridSlice';
+import { getEnemyGridItems, getPlayerGridItems, upgradeRockets } from '../grid/GridSlice';
 import { useEndTurnMutation } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
 
@@ -110,6 +110,9 @@ const GameArena: React.FC = () => {
 				</div>
 			</div>
 			<div className='footer'>
+				<button onClick={()=>dispatch(upgradeRockets())}>
+          			Upgrade Rockets
+				</button>
 				<Inventory />
 				<EndTurnButton onClick={onEndTurnClick} text={endTurnText} />
 				<Shop />

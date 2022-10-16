@@ -9,12 +9,14 @@ interface Props {
 }
 
 const DamageOverlay: React.FC<Props> = (props) => {
-	const imageSource = DamageImage.sourceMap.get(props.damage.damageType);
+	const size = props.damage.size == 1 ? 'Small' : 'Big';
+	const imageName = `${DamageType[props.damage.damageType]}_${size}`;
+	const imageSource = DamageImage.sourceMap.get(imageName);
 
 	return (
 		<div className='damage'
 			style={{
-				backgroundImage: `url(${imageSource})`,
+				backgroundImage: `url(${imageSource})`
 			}}
 		/>
 	);
