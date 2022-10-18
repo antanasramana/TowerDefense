@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TowerDefense.Api.Battle;
+using TowerDefense.Api.Battle.Command;
 using TowerDefense.Api.Battle.Handlers;
 using TowerDefense.Api.Contracts;
 using TowerDefense.Api.Contracts.Grid;
@@ -15,10 +16,12 @@ namespace TowerDefense.Api.Controllers
     {
         private readonly IGridHandler _gridHandler;
         private readonly IMapper _mapper;
-        public GridController(IGridHandler gridHandler, IMapper mapper)
+        private readonly IPlayerHandler _playerHandler;
+        public GridController(IGridHandler gridHandler, IMapper mapper, IPlayerHandler playerHandler)
         {
             _gridHandler = gridHandler;
             _mapper = mapper;
+            _playerHandler = playerHandler;
         }
 
         [HttpGet("{playerName}")]
@@ -32,18 +35,26 @@ namespace TowerDefense.Api.Controllers
         }
 
         [HttpPost("add")]
-        public ActionResult<AddGridItemResponse> AddGridItem(AddGridItemRequest addGridItemRequest)
+        public ActionResult AddGridItem(AddGridItemRequest addGridItemRequest)
         {
-            var arenaGrid = _gridHandler.AddGridItem(addGridItemRequest.PlayerName, addGridItemRequest.InventoryItemId, addGridItemRequest.GridItemId);
-
-            var arenaGridItemResponse = _mapper.Map<AddGridItemResponse>(arenaGrid);
-
-            return Ok(arenaGridItemResponse);
+            var placeCommand = new PlaceCommand(addGridItemRequest.InventoryItemId, addGridItemRequest.GridItemId);
+            var player = _playerHandler.GetPlayer(addGridItemRequest.PlayerName);
+            player.CommandExecutor.Execute(placeCommand);
+          
+            return Ok();
         }
 
-        [HttpPost("upgradeRockets")]
-        public ActionResult UpgradeRockets()
+        [HttpPost("upgradeRockets/{playerName}")]
+        public ActionResult UpgradeRockets(string playerName)
         {
+
+            var placeCommand = new UndoCommand();
+            var player = _playerHandler.GetPlayer(playerName);
+            player.CommandExecutor.Execute(placeCommand);
+
+            return Ok();
+
+            /*
             GameState gameState = GameState.Instance;
 
             foreach (var player in gameState.Players)
@@ -58,7 +69,7 @@ namespace TowerDefense.Api.Controllers
                     }
                 }
             }
-
+            */
             return Ok();    
         }
     }

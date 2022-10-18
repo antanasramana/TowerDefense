@@ -9,6 +9,10 @@
         }
         public IRevertable Pop()
         {
+            if (_executedCommands.Count == 0)
+            {
+                return null;
+            }
             return _executedCommands.Pop();
         }
     }

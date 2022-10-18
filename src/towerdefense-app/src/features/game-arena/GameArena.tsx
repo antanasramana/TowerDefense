@@ -13,6 +13,7 @@ import { setName } from '../player/EnemySlice';
 import { getEnemyGridItems, getPlayerGridItems, upgradeRockets } from '../grid/GridSlice';
 import { useEndTurnMutation } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
+import { getInventoryItems } from '../inventory/InventorySlice';
 
 const SIGNALR_URL = `${process.env.REACT_APP_BACKEND}/gameHub`;
 
@@ -110,8 +111,13 @@ const GameArena: React.FC = () => {
 				</div>
 			</div>
 			<div className='footer'>
-				<button onClick={()=>dispatch(upgradeRockets())}>
-          			Upgrade Rockets
+				<button onClick={()=>{
+					dispatch(upgradeRockets()).then(() => {
+						dispatch(getPlayerGridItems());
+						dispatch(getInventoryItems());
+					});
+				}}>
+          			Undo
 				</button>
 				<Inventory />
 				<EndTurnButton onClick={onEndTurnClick} text={endTurnText} />

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GridTile from './GridTile';
 import './Grid.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useAddGridItemMutation, setPlayerGridItems } from './GridSlice';
+import { useAddGridItemMutation, setPlayerGridItems, getPlayerGridItems } from './GridSlice';
 import { getInventoryItems } from '../inventory/InventorySlice';
 import { AddGridItemRequest } from '../../contracts/AddGridItemRequest';
 import TileType from '../tile/enums/TileType';
@@ -69,8 +69,8 @@ const Grid: React.FC<Props> = (props) => {
 
 		addGridItem(addGridItemRequest)
 			.unwrap()
-			.then((res) => {
-				dispatch(setPlayerGridItems(res.gridItems));
+			.then(() => {
+				dispatch(getPlayerGridItems());
 				dispatch(getInventoryItems());
 			});
 	}

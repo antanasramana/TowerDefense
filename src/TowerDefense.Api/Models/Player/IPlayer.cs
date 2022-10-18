@@ -1,4 +1,5 @@
-﻿using TowerDefense.Api.Battle.Grid;
+﻿using TowerDefense.Api.Battle.Command;
+using TowerDefense.Api.Battle.Grid;
 using TowerDefense.Api.Battle.Observer;
 using TowerDefense.Api.Battle.Shop;
 
@@ -15,4 +16,5 @@ public interface IPlayer
     IArenaGrid ArenaGrid { get; set; }
     IGridPublisher Publisher { get; set; }
     IShop Shop { get; set; }
+    ICommandExecutor CommandExecutor { get; set; }
 }
