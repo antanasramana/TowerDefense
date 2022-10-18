@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using TowerDefense.Api.Battle.Command;
 using TowerDefense.Api.Battle.Grid;
 using TowerDefense.Api.Battle.Observer;
 using TowerDefense.Api.Models.Items;
@@ -17,13 +18,11 @@ namespace TowerDefense.Api.Battle.Handlers
     {
         private readonly GameState _gameState;
         private readonly IInventoryHandler _inventoryHandler;
-        private readonly IPublisherHandler _publisherHandler;
 
-        public GridHandler(IInventoryHandler inventoryHandler, IPublisherHandler publisherHandler)
+        public GridHandler(IInventoryHandler inventoryHandler)
         {
             _gameState = GameState.Instance;
             _inventoryHandler = inventoryHandler;
-            _publisherHandler = publisherHandler;
         }
         public IArenaGrid GetGridItems(string playerName)
         {
@@ -35,6 +34,10 @@ namespace TowerDefense.Api.Battle.Handlers
         public IArenaGrid AddGridItem(string playerName, string inventoryItemId, int gridItemId)
         {
             var player = _gameState.Players.First(x => x.Name == playerName);
+
+            PlaceCommand placeCommand = new PlaceCommand(player, inventoryItemId, gridItemId);
+
+            placeCommand.Execute();
             /*
             int playerId = Array.IndexOf(_gameState.Players, player);
 

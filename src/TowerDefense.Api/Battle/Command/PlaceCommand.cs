@@ -6,25 +6,23 @@ namespace TowerDefense.Api.Battle.Command
 {
     public class PlaceCommand : Command, IRevertable
     {
-        private readonly string itemId;
-        private readonly int gridId;
-        public PlaceCommand(IPlayer player, string itemId, int gridId) : base(player)
+        private readonly string inventoryItemId;
+        private readonly int gridItemId;
+        public PlaceCommand(IPlayer player, string inventoryItemId, int gridItemId) : base(player)
         {
-            this.itemId = itemId;
-            this.gridId = gridId;
+            this.inventoryItemId = inventoryItemId;
+            this.gridItemId = gridItemId;
         }
-
-        protected override bool canBeUndone => throw new NotImplementedException();
 
         public override void Execute()
         {
             var inventory = player.Inventory;
-            var inventoryItem = inventory.Items.FirstOrDefault(x => x.Id == itemId);
+            var inventoryItem = inventory.Items.FirstOrDefault(x => x.Id == inventoryItemId);
 
             if (inventoryItem == null) return;
             inventory.Items.Remove(inventoryItem);
 
-            var selectedGridItem = player.ArenaGrid.GridItems[gridId];
+            var selectedGridItem = player.ArenaGrid.GridItems[gridItemId];
             selectedGridItem.Item = inventoryItem;
 
             player.Publisher.Attach(selectedGridItem);
@@ -32,7 +30,7 @@ namespace TowerDefense.Api.Battle.Command
 
         public void Undo()
         {
-            var selectedGridItem = player.ArenaGrid.GridItems[gridId];
+            var selectedGridItem = player.ArenaGrid.GridItems[gridItemId];
             player.Publisher.Detach(selectedGridItem);
 
             player.Inventory.Items.Add(selectedGridItem.Item);
