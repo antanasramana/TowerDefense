@@ -12,7 +12,6 @@ namespace TowerDefense.Api.Battle
         public Dictionary<string, bool> PlayersFinishedTurn { get;  } = new();
         public int ActivePlayers => Players.Count(player => player != null);
         public Level Level { get; set; }
-        public IGridPublisher[] GridPublishers { get; } = new IGridPublisher[Game.MaxNumberOfPlayers];
         private GameState() { }
     }
 }

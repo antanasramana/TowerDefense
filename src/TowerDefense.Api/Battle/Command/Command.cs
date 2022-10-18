@@ -6,7 +6,7 @@ namespace TowerDefense.Api.Battle.Command
     {
         protected abstract bool canBeUndone { get; }
         public bool CanBeUndone => canBeUndone;
-        private readonly IPlayer player;
+        protected readonly IPlayer player;
 
         public Command(IPlayer player)
         {

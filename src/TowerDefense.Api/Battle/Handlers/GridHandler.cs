@@ -31,10 +31,11 @@ namespace TowerDefense.Api.Battle.Handlers
             return player.ArenaGrid;
         }
 
+        [Obsolete("PlaceCommand should be used")]
         public IArenaGrid AddGridItem(string playerName, string inventoryItemId, int gridItemId)
         {
             var player = _gameState.Players.First(x => x.Name == playerName);
-            
+            /*
             int playerId = Array.IndexOf(_gameState.Players, player);
 
             var inventoryItem = _inventoryHandler.GetItemFromPlayerInventory(playerName, inventoryItemId);
@@ -47,7 +48,7 @@ namespace TowerDefense.Api.Battle.Handlers
             _publisherHandler.AddSubscriberToPublisher(playerId, gridItemSubscriber);
 
             _inventoryHandler.RemoveItemFromPlayerInventory(playerName, inventoryItemId);
-
+            */
             return player.ArenaGrid;
         }
 

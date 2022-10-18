@@ -41,8 +41,8 @@ namespace TowerDefense.Api.Battle.Handlers
             var player2AttackDeclarations = HandlePlayerAttacks(player2ArenaGrid, player1ArenaGrid);
 
             // Notify opposing players grid items to receive attack
-            var player1AttackResults = _gameState.GridPublishers[0].Notify(player1AttackDeclarations);
-            var player2AttackResults = _gameState.GridPublishers[1].Notify(player2AttackDeclarations);
+            var player1AttackResults = player1.Publisher.Notify(player1AttackDeclarations);
+            var player2AttackResults = player2.Publisher.Notify(player2AttackDeclarations);
 
             var player1TurnOutcome = new EndTurnResponse { 
                 GridItems = player2ArenaGrid.GridItems, 
