@@ -21,6 +21,11 @@ const initialState: Grid = {
 // TODO - ADD CONTRACTS
 // TODO - make it parametrized
 
+export const upgradeRockets = createAsyncThunk('grid/upgradeRockets', async () => {
+	await axios.post(`${API_URL}/grid/upgradeRockets`);
+});
+
+
 export const getPlayerGridItems = createAsyncThunk<GridItem[]>('grid/getPlayerGrid', async () => {
 	const reduxStore = store.getState();
 	const response = await axios.get(`${API_URL}/grid/${reduxStore.player.name}`);

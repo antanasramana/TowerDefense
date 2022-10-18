@@ -7,6 +7,7 @@ namespace TowerDefense.Api.Hubs
     public interface INotificationHub
     {
         Task NotifyGameStart(IPlayer firstPlayer, IPlayer secondPlayer);
+        Task SendEndTurnInfo(IPlayer player, EndTurnResponse turnOutcome);
         Task SendEndTurnInfo(IPlayer firstPlayer, IPlayer secondPlayer);
     }
 
@@ -24,6 +25,13 @@ namespace TowerDefense.Api.Hubs
             await _gameHubContext.Clients.Client(secondPlayer.ConnectionId).SendAsync("EnemyInfo", firstPlayer);
         }
 
+        public async Task SendEndTurnInfo(IPlayer player, EndTurnResponse turnOutcome)
+        {
+            await _gameHubContext.Clients.Client(player.ConnectionId)
+                .SendAsync("EndTurn", turnOutcome);
+        }
+
+        [Obsolete]
         public async Task SendEndTurnInfo(IPlayer firstPlayer, IPlayer secondPlayer)
         {
             await _gameHubContext.Clients.Client(firstPlayer.ConnectionId)

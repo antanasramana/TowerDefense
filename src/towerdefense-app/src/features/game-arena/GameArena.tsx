@@ -10,7 +10,7 @@ import Grid from '../grid/Grid';
 import EndTurnButton from '../end-turn-button/EndTurnButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setName } from '../player/EnemySlice';
-import { getEnemyGridItems, getPlayerGridItems } from '../grid/GridSlice';
+import { getEnemyGridItems, getPlayerGridItems, upgradeRockets } from '../grid/GridSlice';
 import { useEndTurnMutation } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
 
@@ -18,6 +18,8 @@ const SIGNALR_URL = `${process.env.REACT_APP_BACKEND}/gameHub`;
 
 import './GameArena.css';
 import { EndTurnRequest } from '../../contracts/EndTurnRequest';
+import { EndTurnResponse } from '../../contracts/EndTurnResponse';
+import { AttackResult } from '../../models/AttackResult';
 
 const GameArena: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -25,6 +27,9 @@ const GameArena: React.FC = () => {
 	// useState
 	const [connection, setConnection] = useState<signalR.HubConnection>();
 	const [endTurnText, setEndTurnText] = useState<string>('End turn');
+
+	const [playerAttackResult, setPlayerAttackResult] = useState<AttackResult[]>([]);
+	const [enemyAttackResult, setEnemyAttackResult] = useState<AttackResult[]>([]);
 
 	// redux State
 	const playerName = useAppSelector((state) => state.player.name);
@@ -55,7 +60,11 @@ const GameArena: React.FC = () => {
 						dispatch(setName(message.name));
 						dispatch(getEnemyGridItems());
 					});
-					connection.on('EndTurn', () => {
+					connection.on('EndTurn', (res) => {
+						const endTurnResponse: EndTurnResponse = res;
+						console.log(endTurnResponse);
+						setPlayerAttackResult(endTurnResponse.playerAttackResults);
+						setEnemyAttackResult(endTurnResponse.enemyAttackResults);
 						dispatch(getEnemyGridItems());
 						dispatch(getPlayerGridItems());
 						setEndTurnText('End Turn');
@@ -91,8 +100,8 @@ const GameArena: React.FC = () => {
 					<TowerHealth isEnemy={false}/>
 					<Tower isEnemy={false} />
 				</div>
-				<Grid isEnemy={false} />
-				<Grid isEnemy={true} />
+				<Grid isEnemy={false} attackResults={playerAttackResult} />
+				<Grid isEnemy={true} attackResults={enemyAttackResult} />
 				<div className='tower-container'>
 					<h1 className='name-header'>{enemyName}</h1>
 					<TowerArmor isEnemy={true}/>
@@ -101,6 +110,9 @@ const GameArena: React.FC = () => {
 				</div>
 			</div>
 			<div className='footer'>
+				<button onClick={()=>dispatch(upgradeRockets())}>
+          			Upgrade Rockets
+				</button>
 				<Inventory />
 				<EndTurnButton onClick={onEndTurnClick} text={endTurnText} />
 				<Shop />

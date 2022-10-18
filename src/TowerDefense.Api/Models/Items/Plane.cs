@@ -1,4 +1,5 @@
-﻿using TowerDefense.Api.Battle.Grid;
+﻿using TowerDefense.Api.Battle.Builders;
+using TowerDefense.Api.Battle.Grid;
 using TowerDefense.Api.Strategies;
 
 namespace TowerDefense.Api.Models.Items
@@ -9,13 +10,13 @@ namespace TowerDefense.Api.Models.Items
         public int Price { get; set; } = 500;
         public ItemType ItemType { get; set; } = ItemType.Plane;
         public int Health { get; set; } = 50;
-        public int Damage { get; set; } = 150;
+        public int Damage { get; set; } = 25;
         public IAttackStrategy AttackStrategy { get; set; } = new HorizontalLineAttackStrategy();
 
-        public IEnumerable<AttackResult> Attack(GridItem[] opponentGridItems, int attackingGridItemId)
+        public IEnumerable<AttackDeclaration> Attack(GridItem[] opponentGridItems, int attackingGridItemId)
         {
             var affectedGridItemList = AttackStrategy.AttackedGridItems(opponentGridItems, attackingGridItemId);
-            return affectedGridItemList.Select(x => new AttackResult() { GridItemId = x, Damage = Damage });
+            return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Damage, DamageType = DamageType.Fire });
         }
 
         public IItem Clone()

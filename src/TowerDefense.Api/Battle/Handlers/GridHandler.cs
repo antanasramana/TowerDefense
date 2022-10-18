@@ -40,7 +40,6 @@ namespace TowerDefense.Api.Battle.Handlers
             var inventoryItem = _inventoryHandler.GetItemFromPlayerInventory(playerName, inventoryItemId);
             if (inventoryItem == null) return player.ArenaGrid;
 
-            player.ArenaGrid.GridItems[gridItemId].ItemType = inventoryItem.ItemType;
             player.ArenaGrid.GridItems[gridItemId].Item = inventoryItem;
 
             var gridItemSubscriber = player.ArenaGrid.GridItems[gridItemId];

@@ -11,6 +11,6 @@ namespace TowerDefense.Api.Battle.Observer
         void Detach(IAttackSubscriber subscriber);
 
         // Notify all observers about an event.
-        public void Notify(IEnumerable<AttackResult> attackResults);
+        public List<AttackResult> Notify(IEnumerable<AttackDeclaration> attackResults);
     }
 }

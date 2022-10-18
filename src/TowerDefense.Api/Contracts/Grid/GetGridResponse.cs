@@ -4,6 +4,6 @@ namespace TowerDefense.Api.Contracts.Grid
 {
     public class GetGridResponse
     {
-        public GridItem[] GridItems { get; set; }
+        public GetGridItemResponse[] GridItems { get; set; }
     }
 }

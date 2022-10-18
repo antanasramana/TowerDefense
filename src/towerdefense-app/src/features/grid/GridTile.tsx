@@ -1,4 +1,6 @@
 import React from 'react';
+import { Damage } from '../../models/Damage';
+import DamageOverlay from '../damage/DamageOverlay';
 import TileType from '../tile/enums/TileType';
 import Tile from '../tile/Tile';
 
@@ -7,6 +9,7 @@ interface Props {
   onTileClick: (id: number, tileType: TileType) => void;
   tileType: TileType;
   selectable: boolean;
+  damage: Damage| undefined;
 }
 
 const GridTile: React.FC<Props> = (props) => {
@@ -17,6 +20,7 @@ const GridTile: React.FC<Props> = (props) => {
 			onClick={() => props.onTileClick(props.id, props.tileType)}
 		>
 			<Tile tileType={props.tileType}></Tile>
+			{ props.damage != undefined && <DamageOverlay damage={props.damage}></DamageOverlay> }
 		</div>
 	);
 };

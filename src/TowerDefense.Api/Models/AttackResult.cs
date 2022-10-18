@@ -1,8 +1,10 @@
-﻿namespace TowerDefense.Api.Models
+﻿using TowerDefense.Api.Battle.Builders;
+
+namespace TowerDefense.Api.Models
 {
     public class AttackResult
     {
-        public int GridItemId { get; set; }
-        public int Damage { get; set; }
+        public int GridId { get; set; }
+        public Damage Damage { get; set; }
     }
 }

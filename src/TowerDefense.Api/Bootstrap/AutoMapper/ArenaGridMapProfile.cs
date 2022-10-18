@@ -13,6 +13,9 @@ namespace TowerDefense.Api.Bootstrap.AutoMapper
             
             CreateMap<IArenaGrid, GetGridResponse>()
                 .ForMember(dest => dest.GridItems, opt => opt.MapFrom(src => src.GridItems));
+
+            CreateMap<GridItem, GetGridItemResponse>()
+                .ForMember(dest => dest.ItemType, opt => opt.MapFrom(src => src.Item.ItemType));
         }
     }
 }
