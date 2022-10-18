@@ -13,6 +13,7 @@
         {
             fireDamage = new FireDamage();
         }
+
         public void SetIntensity(float intensity)
         {
             fireDamage.Intensity = intensity;

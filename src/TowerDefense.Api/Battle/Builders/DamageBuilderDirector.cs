@@ -8,6 +8,7 @@
             damageBuilder.SetSize(1);
             damageBuilder.SetIntensity(0.5f);
         }
+
         public void MakeBigDamage(IDamageBuilder damageBuilder)
         {
             damageBuilder.SetTime(5);

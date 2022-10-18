@@ -13,6 +13,7 @@
         {
             this.projectileDamage = new ProjectileDamage();
         }
+
         public void SetIntensity(float intensity)
         {
             this.projectileDamage.Intensity = intensity;
