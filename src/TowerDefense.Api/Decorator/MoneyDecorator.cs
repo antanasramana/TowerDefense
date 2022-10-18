@@ -12,14 +12,14 @@ namespace TowerDefense.Api.Decorator
 
         public override IEnumerable<AttackDeclaration> Attack(GridItem[] opponentGridItems, int attackingGridItemId)
         {
-            var attackResult = _item.Attack(opponentGridItems, attackingGridItemId).ToList();
-            attackResult.ForEach(x => CalculateEarnedMoney(x));
-            return attackResult;
+            var attackDeclarations = _item.Attack(opponentGridItems, attackingGridItemId).ToList();
+            attackDeclarations.ForEach(x => SetEarnedMoney(x));
+            return attackDeclarations;
         }
 
-        private static void CalculateEarnedMoney(AttackDeclaration attackResult)
+        private static void SetEarnedMoney(AttackDeclaration attackDeclaration)
         {
-            attackResult.EarnedMoney = 10;
+            attackDeclaration.EarnedMoney = 10;
         }
     }
 }
