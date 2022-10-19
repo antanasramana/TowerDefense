@@ -40,6 +40,11 @@ namespace TowerDefense.Api.Battle.Handlers
             var player1AttackDeclarations = HandlePlayerAttacks(player1ArenaGrid, player2ArenaGrid);
             var player2AttackDeclarations = HandlePlayerAttacks(player2ArenaGrid, player1ArenaGrid);
 
+            // Calculate players earned money 
+
+            player1.Money += PlayerEarnedMoneyAfterAttack(player1AttackDeclarations);
+            player2.Money += PlayerEarnedMoneyAfterAttack(player2AttackDeclarations);
+
             // Notify opposing players grid items to receive attack
             var player1AttackResults = player2.Publisher.Notify(player1AttackDeclarations);
             var player2AttackResults = player1.Publisher.Notify(player2AttackDeclarations);
@@ -67,6 +72,11 @@ namespace TowerDefense.Api.Battle.Handlers
                 result.AddRange(gridItem.Item.Attack(opponentArenaGrid.GridItems, gridItem.Id));
             }
             return result;
+        }
+
+        private int PlayerEarnedMoneyAfterAttack(IEnumerable<AttackDeclaration> attackDeclarations)
+        {
+            return attackDeclarations.Sum(x => x.EarnedMoney);
         }
     }
 }
