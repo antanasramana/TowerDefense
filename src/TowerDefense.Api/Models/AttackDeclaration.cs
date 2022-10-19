@@ -8,5 +8,6 @@ namespace TowerDefense.Api.Models
         public int Damage { get; set; }
 
         public DamageType DamageType { get; set; } = DamageType.Projectile; // Setting to avoid nulls
+        public int EarnedMoney { get; set; } = 0;
     }
 }
