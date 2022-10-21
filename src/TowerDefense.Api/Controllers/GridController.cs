@@ -44,33 +44,34 @@ namespace TowerDefense.Api.Controllers
             return Ok();
         }
 
-        [HttpPost("upgradeRockets/{playerName}")]
-        public ActionResult UpgradeRockets(string playerName)
+        [HttpPost("upgrade/{playerName}/{gridItemId}")]
+        public ActionResult UpgradeItem(string playerName, int gridItemId)
         {
+            var upgradeCommand = new UpgradeCommand(gridItemId);
+            var player = _playerHandler.GetPlayer(playerName);
+            player.CommandExecutor.Execute(upgradeCommand);
 
+            return Ok();  
+        }
+
+        [HttpPost("remove/{playerName}/{gridItemId}")]
+        public ActionResult RemoveItem(string playerName, int gridItemId)
+        {
+            var removeCommand = new RemoveCommand(gridItemId);
+            var player = _playerHandler.GetPlayer(playerName);
+            player.CommandExecutor.Execute(removeCommand);
+
+            return Ok();
+        }
+
+        [HttpPost("undo/{playerName}")]
+        public ActionResult UndoCommand(string playerName)
+        {
             var placeCommand = new UndoCommand();
             var player = _playerHandler.GetPlayer(playerName);
             player.CommandExecutor.Execute(placeCommand);
 
             return Ok();
-
-            /*
-            GameState gameState = GameState.Instance;
-
-            foreach (var player in gameState.Players)
-            {
-                foreach (var gridItem in player.ArenaGrid.GridItems)
-                {
-                    var item = gridItem.Item;
-
-                    if (item.ItemType == Models.Items.ItemType.Rockets)
-                    {
-                        item.AttackStrategy = new LineOfThreeAttackStrategy();
-                    }
-                }
-            }
-            */
-            return Ok();    
         }
     }
 }

@@ -11,19 +11,29 @@ const API_URL = process.env.REACT_APP_BACKEND;
 interface Grid {
   playerGridItems: GridItem[];
   enemyGridItems: GridItem[];
+  selectedGridItemId: number;
 }
 
 const initialState: Grid = {
-	playerGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Blank })),
-	enemyGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Placeholder })),
+	playerGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Blank, level: 0 })),
+	enemyGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Placeholder, level: 0 })),
+	selectedGridItemId: -1
 };
 
 // TODO - ADD CONTRACTS
 // TODO - make it parametrized
 
-export const upgradeRockets = createAsyncThunk('grid/upgradeRockets', async () => {
+export const upgradeRockets = createAsyncThunk('grid/upgrade', async () => {
 	const reduxStore = store.getState();
-	await axios.post(`${API_URL}/grid/upgradeRockets/${reduxStore.player.name}`);
+	await axios.post(`${API_URL}/grid/upgrade/${reduxStore.player.name}/${reduxStore.grid.selectedGridItemId}`);
+});
+export const removeItem = createAsyncThunk('grid/remove', async () => {
+	const reduxStore = store.getState();
+	await axios.post(`${API_URL}/grid/remove/${reduxStore.player.name}/${reduxStore.grid.selectedGridItemId}`);
+});
+export const undo = createAsyncThunk('grid/undo', async () => {
+	const reduxStore = store.getState();
+	await axios.post(`${API_URL}/grid/undo/${reduxStore.player.name}`);
 });
 
 
@@ -49,6 +59,9 @@ const gridSlice = createSlice({
 		},
 		setEnemyGridItems(state, action: PayloadAction<GridItem[]>) {
 			state.enemyGridItems = action.payload;
+		},
+		setSelectedGridItemId(state, action: PayloadAction<number>) {
+			state.selectedGridItemId = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -92,5 +105,5 @@ export const gridApiSlice = createApi({
 });
 
 export const { useAddGridItemMutation } = gridApiSlice;
-export const { setEnemyGridItems, setPlayerGridItems } = gridSlice.actions;
+export const { setEnemyGridItems, setPlayerGridItems, setSelectedGridItemId } = gridSlice.actions;
 export default gridSlice.reducer;

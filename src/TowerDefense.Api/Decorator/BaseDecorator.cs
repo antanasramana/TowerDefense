@@ -9,6 +9,7 @@ namespace TowerDefense.Api.Decorator
     {
         public string Id { get; set; }
         public int Price { get; set; }
+        public int Level { get; set; }
         public int Health { get; set; }
         public int Damage { get; set; }
         public ItemType ItemType { get; set; }
@@ -21,6 +22,7 @@ namespace TowerDefense.Api.Decorator
             _item = item;
             Id = item.Id;
             Price = item.Price;
+            Level = item.Level+1;
             Health = item.Health;
             Damage = item.Damage;
             AttackStrategy = item.AttackStrategy;

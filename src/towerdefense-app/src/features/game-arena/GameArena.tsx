@@ -10,7 +10,7 @@ import Grid from '../grid/Grid';
 import EndTurnButton from '../end-turn-button/EndTurnButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setName } from '../player/EnemySlice';
-import { getEnemyGridItems, getPlayerGridItems, upgradeRockets } from '../grid/GridSlice';
+import { getEnemyGridItems, getPlayerGridItems, upgradeRockets, removeItem, undo, setSelectedGridItemId } from '../grid/GridSlice';
 import { useEndTurnMutation } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
 import { getInventoryItems } from '../inventory/InventorySlice';
@@ -112,12 +112,30 @@ const GameArena: React.FC = () => {
 			</div>
 			<div className='footer'>
 				<button onClick={()=>{
+					dispatch(undo()).then(() => {
+						dispatch(getPlayerGridItems());
+						dispatch(getInventoryItems());
+						dispatch(setSelectedGridItemId(-1));
+					});
+				}}>
+          			Undo
+				</button>
+				<button onClick={()=>{
 					dispatch(upgradeRockets()).then(() => {
 						dispatch(getPlayerGridItems());
 						dispatch(getInventoryItems());
 					});
 				}}>
-          			Undo
+          			Upgrade
+				</button>
+				<button onClick={()=>{
+					dispatch(removeItem()).then(() => {
+						dispatch(getPlayerGridItems());
+						dispatch(getInventoryItems());
+						dispatch(setSelectedGridItemId(-1));
+					});
+				}}>
+          			Remove
 				</button>
 				<Inventory />
 				<EndTurnButton onClick={onEndTurnClick} text={endTurnText} />

@@ -7,6 +7,7 @@ namespace TowerDefense.Api.Models.Items
     {
         public string Id { get; set; } = nameof(Rock);
         public int Price { get; set; } = 20;
+        public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Rock;
         public int Health { get; set; } = 150;
         public int Damage { get; set; } = 0;

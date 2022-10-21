@@ -86,6 +86,7 @@ const Grid: React.FC<Props> = (props) => {
 						onTileClick={() => {0;}}
 						tileType={item.itemType}
 						damage={attackResults.find(x => x.gridId==item.id)?.damage}
+						item={item}
 
 					/>
 				))
@@ -99,6 +100,7 @@ const Grid: React.FC<Props> = (props) => {
 						onTileClick={onGridTileClick}
 						tileType={item.itemType}
 						damage={attackResults.find(x => x.gridId==item.id)?.damage}
+						item={item}
 					/>
 				))}
 		</div>
