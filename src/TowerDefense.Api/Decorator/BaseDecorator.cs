@@ -22,7 +22,7 @@ namespace TowerDefense.Api.Decorator
             _item = item;
             Id = item.Id;
             Price = item.Price;
-            Level = item.Level+1;
+            Level = item.Level + 1;
             Health = item.Health;
             Damage = item.Damage;
             AttackStrategy = item.AttackStrategy;
