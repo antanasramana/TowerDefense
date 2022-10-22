@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import GridTile from './GridTile';
 import './Grid.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useAddGridItemMutation, setPlayerGridItems, getPlayerGridItems } from './GridSlice';
+import { executePlaceCommand, getPlayerGridItems } from './GridSlice';
 import { getInventoryItems } from '../inventory/InventorySlice';
-import { AddGridItemRequest } from '../../contracts/AddGridItemRequest';
 import TileType from '../tile/enums/TileType';
 import { AttackResult } from '../../models/AttackResult';
 
@@ -19,12 +18,8 @@ const Grid: React.FC<Props> = (props) => {
 	// redux State
 	const [attackResults, setAttackResults] = useState<AttackResult[]>([]);
 	const selectedInventoryItem = useAppSelector((state) => state.inventory.selectedItem);
-	const playerName = useAppSelector((state) => state.player.name);
 	const playerGrid = useAppSelector((state) => state.grid.playerGridItems);
 	const enemyGrid = useAppSelector((state) => state.grid.enemyGridItems);
-
-	// redux api
-	const [addGridItem] = useAddGridItemMutation();
 
 	// use effect
 	useEffect(() => {
@@ -61,14 +56,7 @@ const Grid: React.FC<Props> = (props) => {
 			return;
 		}
 
-		const addGridItemRequest: AddGridItemRequest = {
-			playerName: playerName,
-			inventoryItemId: selectedInventoryItem,
-			gridItemId: id,
-		};
-
-		addGridItem(addGridItemRequest)
-			.unwrap()
+		dispatch(executePlaceCommand(id))
 			.then(() => {
 				dispatch(getPlayerGridItems());
 				dispatch(getInventoryItems());

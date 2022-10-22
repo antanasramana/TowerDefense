@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TowerDefense.Api.Battle;
-using TowerDefense.Api.Battle.Command;
+using TowerDefense.Api.Battle.Commands;
 using TowerDefense.Api.Battle.Handlers;
 using TowerDefense.Api.Contracts;
+using TowerDefense.Api.Contracts.Command;
 using TowerDefense.Api.Contracts.Grid;
 using TowerDefense.Api.Strategies;
 
@@ -23,7 +24,7 @@ namespace TowerDefense.Api.Controllers
             _mapper = mapper;
             _commandHandler = commandHandler;
         }
-
+        
         [HttpGet("{playerName}")]
         public ActionResult<GetGridResponse> GetGrid(string playerName)
         {
@@ -34,38 +35,10 @@ namespace TowerDefense.Api.Controllers
             return Ok(getGridResponse);
         }
 
-        [HttpPost("add")]
-        public ActionResult AddGridItem(AddGridItemRequest addGridItemRequest)
+        [HttpPost("command")]
+        public ActionResult AddGridItem(ExecuteCommandRequest commandRequest)
         {
-            var placeCommand = new PlaceCommand(addGridItemRequest.InventoryItemId, addGridItemRequest.GridItemId);
-            _commandHandler.ExecuteCommandForPlayer(addGridItemRequest.PlayerName, placeCommand);
-          
-            return Ok();
-        }
-
-        [HttpPost("upgrade/{playerName}/{gridItemId}")]
-        public ActionResult UpgradeItem(string playerName, int gridItemId)
-        {
-            var upgradeCommand = new UpgradeCommand(gridItemId);
-            _commandHandler.ExecuteCommandForPlayer(playerName, upgradeCommand);
-
-            return Ok();  
-        }
-
-        [HttpPost("remove/{playerName}/{gridItemId}")]
-        public ActionResult RemoveItem(string playerName, int gridItemId)
-        {
-            var removeCommand = new RemoveCommand(gridItemId);
-            _commandHandler.ExecuteCommandForPlayer(playerName, removeCommand);
-
-            return Ok();
-        }
-
-        [HttpPost("undo/{playerName}")]
-        public ActionResult UndoCommand(string playerName)
-        {
-            var placeCommand = new UndoCommand();
-            _commandHandler.ExecuteCommandForPlayer(playerName, placeCommand);
+            _commandHandler.ExecuteCommandForPlayer(commandRequest);
 
             return Ok();
         }
