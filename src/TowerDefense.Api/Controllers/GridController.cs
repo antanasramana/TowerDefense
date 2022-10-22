@@ -16,12 +16,12 @@ namespace TowerDefense.Api.Controllers
     {
         private readonly IGridHandler _gridHandler;
         private readonly IMapper _mapper;
-        private readonly IPlayerHandler _playerHandler;
-        public GridController(IGridHandler gridHandler, IMapper mapper, IPlayerHandler playerHandler)
+        private readonly ICommandHandler _commandHandler;
+        public GridController(IGridHandler gridHandler, IMapper mapper, ICommandHandler commandHandler)
         {
             _gridHandler = gridHandler;
             _mapper = mapper;
-            _playerHandler = playerHandler;
+            _commandHandler = commandHandler;
         }
 
         [HttpGet("{playerName}")]
@@ -38,8 +38,7 @@ namespace TowerDefense.Api.Controllers
         public ActionResult AddGridItem(AddGridItemRequest addGridItemRequest)
         {
             var placeCommand = new PlaceCommand(addGridItemRequest.InventoryItemId, addGridItemRequest.GridItemId);
-            var player = _playerHandler.GetPlayer(addGridItemRequest.PlayerName);
-            player.CommandExecutor.Execute(placeCommand);
+            _commandHandler.ExecuteCommandForPlayer(addGridItemRequest.PlayerName, placeCommand);
           
             return Ok();
         }
@@ -48,8 +47,7 @@ namespace TowerDefense.Api.Controllers
         public ActionResult UpgradeItem(string playerName, int gridItemId)
         {
             var upgradeCommand = new UpgradeCommand(gridItemId);
-            var player = _playerHandler.GetPlayer(playerName);
-            player.CommandExecutor.Execute(upgradeCommand);
+            _commandHandler.ExecuteCommandForPlayer(playerName, upgradeCommand);
 
             return Ok();  
         }
@@ -58,8 +56,7 @@ namespace TowerDefense.Api.Controllers
         public ActionResult RemoveItem(string playerName, int gridItemId)
         {
             var removeCommand = new RemoveCommand(gridItemId);
-            var player = _playerHandler.GetPlayer(playerName);
-            player.CommandExecutor.Execute(removeCommand);
+            _commandHandler.ExecuteCommandForPlayer(playerName, removeCommand);
 
             return Ok();
         }
@@ -68,8 +65,7 @@ namespace TowerDefense.Api.Controllers
         public ActionResult UndoCommand(string playerName)
         {
             var placeCommand = new UndoCommand();
-            var player = _playerHandler.GetPlayer(playerName);
-            player.CommandExecutor.Execute(placeCommand);
+            _commandHandler.ExecuteCommandForPlayer(playerName, placeCommand);
 
             return Ok();
         }
