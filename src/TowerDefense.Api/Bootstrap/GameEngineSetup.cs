@@ -10,7 +10,7 @@ namespace TowerDefense.Api.Bootstrap
         {
             serviceCollection.AddTransient<IShopHandler, ShopHandler>();
             serviceCollection.AddTransient<ITurnHandler, TurnHandler>();
-            serviceCollection.AddTransient<IBattleHandler, BattleHandler>();
+            serviceCollection.AddTransient<IBattleHandlerFacade, BattleHandlerFacade>();
             serviceCollection.AddTransient<IInitialGameSetupHandler, InitialGameSetupHandler>();
             serviceCollection.AddTransient<IInventoryHandler, InventoryHandler>();
             serviceCollection.AddTransient<INotificationHub, NotificationHub>();
