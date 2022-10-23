@@ -16,7 +16,7 @@ namespace TowerDefense.Api.Models.Items
 
         public IEnumerable<AttackDeclaration> Attack(GridItem[] opponentGridItems, int attackingGridItemId)
         {
-            var attackAdapter = new AttackAdapter(AttackStrategy);
+            var attackAdapter = new AttackInformationAdapter(AttackStrategy);
             var affectedGridItemList = attackAdapter.AttackedGridItems(opponentGridItems, attackingGridItemId);
             return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Damage });
         }
