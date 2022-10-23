@@ -3,19 +3,24 @@ using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Battle.Handlers
 {
-    public static class AttackHandler
+    public interface IAttackHandler
     {
-        public static IEnumerable<AttackDeclaration> HandlePlayerAttacks(IArenaGrid playerArenaGrid, IArenaGrid opponentArenaGrid)
+        IEnumerable<AttackDeclaration> HandlePlayerAttacks(IArenaGrid playerArenaGrid, IArenaGrid opponentArenaGrid);
+        int PlayerEarnedMoneyAfterAttack(IEnumerable<AttackDeclaration> attackDeclarations);
+    }
+    public class AttackHandler: IAttackHandler
+    {
+        public IEnumerable<AttackDeclaration> HandlePlayerAttacks(IArenaGrid playerArenaGrid, IArenaGrid opponentArenaGrid)
         {
             var result = new List<AttackDeclaration>();
             foreach (GridItem gridItem in playerArenaGrid.GridItems)
             {
-                result.AddRange(gridItem.Item.Attack(opponentArenaGrid.GridItems, gridItem.Id));
+                result.AddRange(gridItem.Item.Attack(opponentArenaGrid, gridItem.Id));
             }
             return result;
         }
 
-        public static int PlayerEarnedMoneyAfterAttack(IEnumerable<AttackDeclaration> attackDeclarations)
+        public int PlayerEarnedMoneyAfterAttack(IEnumerable<AttackDeclaration> attackDeclarations)
         {
             return attackDeclarations.Sum(x => x.EarnedMoney);
         }

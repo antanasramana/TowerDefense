@@ -19,6 +19,7 @@ namespace TowerDefense.Api.Bootstrap
             serviceCollection.AddTransient<IPlayerHandler, PlayerHandler>();
             serviceCollection.AddTransient<ICommandHandler, CommandHandler>();
             serviceCollection.AddTransient<ICommandExecutor, CommandExecutor>();
+            serviceCollection.AddTransient<IAttackHandler, AttackHandler>();
         }
     }
 }
