@@ -1,7 +1,5 @@
 ﻿using TowerDefense.Api.Battle.Grid;
 using TowerDefense.Api.Constants;
-using TowerDefense.Api.Models;
-using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Strategies;
 
 namespace TowerDefense.Api.Adapter
