@@ -6,7 +6,8 @@ namespace TowerDefense.Api.Contracts.Grid
     {
         public int Id { get; set; }
         public ItemType ItemType { get; set; }
-
         public int Level { get; set; }
+        public int Health { get; set; }
+        public int Damage { get; set; }
     }
 }

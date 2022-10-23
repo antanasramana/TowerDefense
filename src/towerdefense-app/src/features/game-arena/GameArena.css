@@ -32,10 +32,48 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
+  width: 1800px;
+  margin-top: 20px;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   width: 1024px;
   margin-top: 20px;
+
+  flex: 0 1 auto;
+  position: absolute;
+  /* new */
+  left: 50%;
+  transform: translateX(-50%);
 }
+
+.commands {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.command {
+  font-family: Quadrit;
+  color: white;
+  -webkit-text-stroke: 1.5px black;
+  text-decoration: none;
+  font-size: large;
+  background-color: transparent;
+  border: 2px solid white;
+  outline: 2px solid black;
+  outline-offset: 0px;
+}
+.command:hover {
+  background-color: rgba(128, 128, 128, 0.462);
+}
+
+
 
 .name-header {
   font-family: Quadrit;

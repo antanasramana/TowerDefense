@@ -17,8 +17,8 @@ interface Grid {
 }
 
 const initialState: Grid = {
-	playerGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Blank, level: 0 })),
-	enemyGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Placeholder, level: 0 })),
+	playerGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Blank, level: 0, damage: 0, health: 0 })),
+	enemyGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Placeholder, level: 0, damage: 0, health: 0 })),
 	selectedGridItemId: -1
 };
 

@@ -22,6 +22,7 @@ import { EndTurnRequest } from '../../contracts/EndTurnRequest';
 import { EndTurnResponse } from '../../contracts/EndTurnResponse';
 import { AttackResult } from '../../models/AttackResult';
 import CommandType from '../../models/CommandType';
+import ItemInfo from '../info/ItemInfo';
 
 const GameArena: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -121,18 +122,23 @@ const GameArena: React.FC = () => {
 				</div>
 			</div>
 			<div className='footer'>
-				<button onClick={()=>handleCommandClick(CommandType.Undo, true)}>
-          			Undo
-				</button>
-				<button onClick={()=>handleCommandClick(CommandType.Upgrade, false)}>
-          			Upgrade
-				</button>
-				<button onClick={()=>handleCommandClick(CommandType.Remove, true)}>
-          			Remove
-				</button>
-				<Inventory />
-				<EndTurnButton onClick={onEndTurnClick} text={endTurnText} />
-				<Shop />
+				<ItemInfo/>
+				<div className='controls'>
+					<div className='commands'>
+						<button className='command' onClick={()=>handleCommandClick(CommandType.Undo, true)}>
+							Undo
+						</button>
+						<button className='command' onClick={()=>handleCommandClick(CommandType.Upgrade, false)}>
+							Upgrade
+						</button>
+						<button className='command' onClick={()=>handleCommandClick(CommandType.Remove, true)}>
+							Remove
+						</button>
+					</div>
+					<Inventory />
+					<EndTurnButton onClick={onEndTurnClick} text={endTurnText} />
+					<Shop />
+				</div>
 			</div>
 		</div>
 	);

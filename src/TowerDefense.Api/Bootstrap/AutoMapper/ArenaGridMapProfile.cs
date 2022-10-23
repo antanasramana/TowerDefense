@@ -16,7 +16,9 @@ namespace TowerDefense.Api.Bootstrap.AutoMapper
 
             CreateMap<GridItem, GetGridItemResponse>()
                 .ForMember(dest => dest.ItemType, opt => opt.MapFrom(src => src.Item.ItemType))
-                .ForMember(dest => dest.Level, opt => opt.MapFrom(src => src.Item.Level));
+                .ForMember(dest => dest.Level, opt => opt.MapFrom(src => src.Item.Level))
+                .ForMember(dest => dest.Damage, opt => opt.MapFrom(src => src.Item.Damage))
+                .ForMember(dest => dest.Health, opt => opt.MapFrom(src => src.Item.Health));
         }
     }
 }
