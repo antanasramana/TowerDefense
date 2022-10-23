@@ -6,23 +6,24 @@ using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.Battle.Handlers
 {
-    public interface IBattleHandler
+    public interface IBattleHandlerFacade
     {
         void HandleEndTurn(string playerName);
     }
 
-    public class BattleHandler : IBattleHandler
+    public class BattleHandlerFacade : IBattleHandlerFacade
     {
         private readonly GameState _gameState;
         private readonly ITurnHandler _turnHandler;
         private readonly INotificationHub _notificationHub;
-        private readonly IPlayerHandler _playerHandler;
+        private readonly IAttackHandler _attackHandler;
 
-        public BattleHandler(ITurnHandler turnHandler, INotificationHub notificationHub)
+        public BattleHandlerFacade(ITurnHandler turnHandler, INotificationHub notificationHub, IAttackHandler attackHandler)
         {
             _turnHandler = turnHandler;
             _gameState = GameState.Instance;
             _notificationHub = notificationHub;
+            _attackHandler = attackHandler;
         }
 
         public void HandleEndTurn(string playerName)
@@ -39,13 +40,13 @@ namespace TowerDefense.Api.Battle.Handlers
 
             // Get all AttackDeclarations
 
-            var player1AttackDeclarations = HandlePlayerAttacks(player1ArenaGrid, player2ArenaGrid);
-            var player2AttackDeclarations = HandlePlayerAttacks(player2ArenaGrid, player1ArenaGrid);
+            var player1AttackDeclarations = _attackHandler.HandlePlayerAttacks(player1ArenaGrid, player2ArenaGrid);
+            var player2AttackDeclarations = _attackHandler.HandlePlayerAttacks(player2ArenaGrid, player1ArenaGrid);
 
             // Calculate players earned money 
 
-            player1.Money += PlayerEarnedMoneyAfterAttack(player1AttackDeclarations);
-            player2.Money += PlayerEarnedMoneyAfterAttack(player2AttackDeclarations);
+            player1.Money += _attackHandler.PlayerEarnedMoneyAfterAttack(player1AttackDeclarations);
+            player2.Money += _attackHandler.PlayerEarnedMoneyAfterAttack(player2AttackDeclarations);
 
             // Notify opposing players grid items to receive attack
             var player1AttackResults = player2.Publisher.Notify(player1AttackDeclarations);
@@ -65,20 +66,6 @@ namespace TowerDefense.Api.Battle.Handlers
 
             _notificationHub.SendEndTurnInfo(player1, player1TurnOutcome);
             _notificationHub.SendEndTurnInfo(player2, player2TurnOutcome);
-        }
-        private IEnumerable<AttackDeclaration> HandlePlayerAttacks(IArenaGrid playerArenaGrid, IArenaGrid opponentArenaGrid)
-        {
-            var result = new List<AttackDeclaration>();
-            foreach (GridItem gridItem in playerArenaGrid.GridItems)
-            {
-                result.AddRange(gridItem.Item.Attack(opponentArenaGrid, gridItem.Id));
-            }
-            return result;
-        }
-
-        private int PlayerEarnedMoneyAfterAttack(IEnumerable<AttackDeclaration> attackDeclarations)
-        {
-            return attackDeclarations.Sum(x => x.EarnedMoney);
         }
     }
 }
