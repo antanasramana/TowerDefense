@@ -29,9 +29,9 @@ namespace TowerDefense.Api.Decorator
             ItemType = item.ItemType;
         }
 
-        public virtual IEnumerable<AttackDeclaration> Attack(AttackInformation attackInformation)
+        public virtual IEnumerable<AttackDeclaration> Attack(GridItem[] opponentGridItems, int attackingGridItemId)
         {
-            return _item.Attack(attackInformation);
+            return _item.Attack(opponentGridItems, attackingGridItemId);
         }
 
         public IItem Clone()

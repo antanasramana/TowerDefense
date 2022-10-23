@@ -8,7 +8,7 @@ namespace TowerDefense.Api.Strategies
     {
         public IEnumerable<int> AttackedGridItems(AttackInformation attackInformation)
         {
-            var affectedGridItems = GetOpponentGridItemsInFrontOfAttackingItem(attackInformation.AttackingItemRow, attackInformation.OpponentsGridItems);
+            var affectedGridItems = GetOpponentGridItemsInFrontOfAttackingItem(attackInformation.OpponentsGridItems, attackInformation.AttackingItemRow);
 
             return affectedGridItems.Select(x => x.Id);
         }

@@ -21,10 +21,10 @@ namespace TowerDefense.Api.Strategies
             return affectedGridItems;
         }
 
-        private static int? GetAffectedGridItems(List<GridItem> opponentGridItems, int targetRow)
+        private static int? GetAffectedGridItems(List<GridRow> opponentGridItems, int targetRow)
         {
             int? affectedItemId = null;
-            var opponentsAffectedGridItems = GetOpponentGridItemsInFrontOfAttackingItem(targetRow, opponentGridItems);
+            var opponentsAffectedGridItems = GetOpponentGridItemsInFrontOfAttackingItem(opponentGridItems, targetRow);
 
             foreach (var gridItem in opponentsAffectedGridItems)
             {

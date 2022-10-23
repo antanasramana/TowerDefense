@@ -6,20 +6,10 @@ namespace TowerDefense.Api.Strategies
 {
     public static class StrategyHelper
     {
-        public static int GetAttackingItemRow(int attackingGridItemId)
+        public static IEnumerable<GridItem> GetOpponentGridItemsInFrontOfAttackingItem(List<GridRow> opponentsGridRows, int attackingItemId)
         {
-            return attackingGridItemId / Game.MaxGridGridItemsInRow;
-        }
-
-        public static IEnumerable<GridItem> GetOpponentGridItemsInFrontOfAttackingItem(int attackingItemRow, List<GridItem> opponentGridItems)
-        {
-            var rowInFrontOfAttackingItem = Enumerable.Range(0, Game.MaxGridGridItemsInRow)
-                .Select(x => x + (attackingItemRow * Game.MaxGridGridItemsInRow))
-                .Reverse()
-                .ToList();
-
-            var affectedGridItems = opponentGridItems.Where(x => rowInFrontOfAttackingItem.Contains(x.Id))
-                                                     .OrderByDescending(x => x.Id);
+            var affectedGridItems = opponentsGridRows.Where(x => x.RowId == attackingItemId)
+                                                     .SelectMany(x => x.GridItems);
             return affectedGridItems;
         }
 

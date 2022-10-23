@@ -1,6 +1,7 @@
 ﻿using TowerDefense.Api.Battle.Grid;
 using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Models;
+using TowerDefense.Api.Adapter;
 
 namespace TowerDefense.Api.Decorator
 {
