@@ -11,7 +11,7 @@ import EndTurnButton from '../end-turn-button/EndTurnButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setName } from '../player/EnemySlice';
 import { getEnemyGridItems, getPlayerGridItems, executeCommand, setSelectedGridItemId } from '../grid/GridSlice';
-import { useEndTurnMutation } from '../player/PlayerSlice';
+import { getPlayerInfo, useEndTurnMutation } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
 import { getInventoryItems } from '../inventory/InventorySlice';
 
@@ -69,6 +69,7 @@ const GameArena: React.FC = () => {
 						setEnemyAttackResult(endTurnResponse.enemyAttackResults);
 						dispatch(getEnemyGridItems());
 						dispatch(getPlayerGridItems());
+						dispatch(getPlayerInfo());
 						setEndTurnText('End Turn');
 					});
 				})
