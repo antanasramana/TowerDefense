@@ -71,7 +71,7 @@ namespace TowerDefense.Api.Battle.Handlers
             var result = new List<AttackDeclaration>();
             foreach (GridItem gridItem in playerArenaGrid.GridItems)
             {
-                result.AddRange(gridItem.Item.Attack(opponentArenaGrid.GridItems, gridItem.Id));
+                result.AddRange(gridItem.Item.Attack(opponentArenaGrid, gridItem.Id));
             }
             return result;
         }

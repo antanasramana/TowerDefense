@@ -11,9 +11,9 @@ namespace TowerDefense.Api.Decorator
             Health = IncreaseHealth(item.Health);
         }
 
-        public override IEnumerable<AttackDeclaration> Attack(GridItem[] opponentGridItems, int attackingGridItemId)
+        public override IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
-            return _item.Attack(opponentGridItems, attackingGridItemId);
+            return _item.Attack(opponentsArenaGrid, attackingGridItemId);
         }
         
         private static int IncreaseHealth(int health)
