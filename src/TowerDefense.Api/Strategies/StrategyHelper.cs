@@ -6,9 +6,9 @@ namespace TowerDefense.Api.Strategies
 {
     public static class StrategyHelper
     {
-        public static IEnumerable<GridItem> GetOpponentGridItemsInFrontOfAttackingItem(List<GridRow> opponentsGridRows, int attackingItemId)
+        public static IEnumerable<GridItem> GetOpponentGridItemsInFrontOfAttackingItem(List<GridRow> opponentsGridRows, int attackingItemRow)
         {
-            var affectedGridItems = opponentsGridRows.Where(x => x.RowId == attackingItemId)
+            var affectedGridItems = opponentsGridRows.Where(x => x.RowId == attackingItemRow)
                                                      .SelectMany(x => x.GridItems);
             return affectedGridItems;
         }
