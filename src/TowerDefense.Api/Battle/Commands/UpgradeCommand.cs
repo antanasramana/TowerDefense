@@ -2,6 +2,7 @@
 using TowerDefense.Api.Decorator;
 using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Models.Player;
+using TowerDefense.Api.Strategies;
 
 namespace TowerDefense.Api.Battle.Commands
 {
@@ -28,6 +29,7 @@ namespace TowerDefense.Api.Battle.Commands
             bool isUpgradeable = previousItem.Level < 3;
             if (!isUpgradeable) return false;
 
+            
 
             IItem upgradedItem = previousItem.Level switch
             {
@@ -35,6 +37,7 @@ namespace TowerDefense.Api.Battle.Commands
                 1 => new MoneyDecorator(previousItem),
                 _ => new HealthDecorator(previousItem)
             };
+
 
             gridItem.Item = upgradedItem;
 
