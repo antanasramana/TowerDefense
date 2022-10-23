@@ -1,4 +1,4 @@
-import DamageType from "./DamageType";
+import DamageType from './DamageType';
 
 export type Damage = {
     intensity: number

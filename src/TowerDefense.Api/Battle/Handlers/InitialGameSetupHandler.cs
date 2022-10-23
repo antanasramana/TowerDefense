@@ -70,7 +70,6 @@ namespace TowerDefense.Api.Battle.Handlers
             var currentNewPlayerId = _gameState.ActivePlayers;
             var newPlayer = abstractLevelFactory.CreatePlayer(playerName);
             _gameState.Players[currentNewPlayerId] = newPlayer;
-            _gameState.GridPublishers[currentNewPlayerId] = new GridPublisher();
 
             return newPlayer;
         }

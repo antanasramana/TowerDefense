@@ -16,6 +16,7 @@ namespace TowerDefense.Api.Battle.Handlers
         private readonly GameState _gameState;
         private readonly ITurnHandler _turnHandler;
         private readonly INotificationHub _notificationHub;
+        private readonly IPlayerHandler _playerHandler;
 
         public BattleHandler(ITurnHandler turnHandler, INotificationHub notificationHub)
         {
@@ -26,6 +27,7 @@ namespace TowerDefense.Api.Battle.Handlers
 
         public void HandleEndTurn(string playerName)
         {
+
             var areTurnsEnded = _turnHandler.TryEndTurn(playerName);
             if (!areTurnsEnded) return;
 
@@ -46,8 +48,8 @@ namespace TowerDefense.Api.Battle.Handlers
             player2.Money += PlayerEarnedMoneyAfterAttack(player2AttackDeclarations);
 
             // Notify opposing players grid items to receive attack
-            var player1AttackResults = _gameState.GridPublishers[0].Notify(player1AttackDeclarations);
-            var player2AttackResults = _gameState.GridPublishers[1].Notify(player2AttackDeclarations);
+            var player1AttackResults = player2.Publisher.Notify(player1AttackDeclarations);
+            var player2AttackResults = player1.Publisher.Notify(player2AttackDeclarations);
 
             var player1TurnOutcome = new EndTurnResponse { 
                 GridItems = player2ArenaGrid.GridItems, 

@@ -6,25 +6,48 @@ import { AddGridItemResponse } from '../../contracts/AddGridItemResponse';
 import { store } from '../../app/store';
 import { GridItem } from '../../models/GridItem';
 import TileType from '../tile/enums/TileType';
+import { ExecuteCommandRequest } from '../../contracts/ExecuteCommandRequest';
+import CommandType from '../../models/CommandType';
 const API_URL = process.env.REACT_APP_BACKEND;
 
 interface Grid {
   playerGridItems: GridItem[];
   enemyGridItems: GridItem[];
+  selectedGridItemId: number;
 }
 
 const initialState: Grid = {
-	playerGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Blank })),
-	enemyGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Placeholder })),
+	playerGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Blank, level: 0 })),
+	enemyGridItems: Array.from(Array(72).keys()).map<GridItem>((index) => ({ id: index, itemType: TileType.Placeholder, level: 0 })),
+	selectedGridItemId: -1
 };
 
 // TODO - ADD CONTRACTS
 // TODO - make it parametrized
 
-export const upgradeRockets = createAsyncThunk('grid/upgradeRockets', async () => {
-	await axios.post(`${API_URL}/grid/upgradeRockets`);
+export const executeCommand = createAsyncThunk('grid/command', async (commandType: CommandType) => {
+	const reduxStore = store.getState();
+	const executeCommandRequest: ExecuteCommandRequest = {
+		playerName: reduxStore.player.name,
+		shopItemId: reduxStore.shop.selectedItem,
+		gridItemId: reduxStore.grid.selectedGridItemId,
+		inventoryItemId: reduxStore.inventory.selectedItem,
+		commandType: commandType
+	};
+	await axios.post(`${API_URL}/grid/command`, executeCommandRequest);
 });
 
+export const executePlaceCommand = createAsyncThunk('grid/command', async (selectedGridItemId: number) => {
+	const reduxStore = store.getState();
+	const executeCommandRequest: ExecuteCommandRequest = {
+		playerName: reduxStore.player.name,
+		shopItemId: reduxStore.shop.selectedItem,
+		gridItemId: selectedGridItemId,
+		inventoryItemId: reduxStore.inventory.selectedItem,
+		commandType: CommandType.Place
+	};
+	await axios.post(`${API_URL}/grid/command`, executeCommandRequest);
+});
 
 export const getPlayerGridItems = createAsyncThunk<GridItem[]>('grid/getPlayerGrid', async () => {
 	const reduxStore = store.getState();
@@ -48,6 +71,9 @@ const gridSlice = createSlice({
 		},
 		setEnemyGridItems(state, action: PayloadAction<GridItem[]>) {
 			state.enemyGridItems = action.payload;
+		},
+		setSelectedGridItemId(state, action: PayloadAction<number>) {
+			state.selectedGridItemId = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -91,5 +117,5 @@ export const gridApiSlice = createApi({
 });
 
 export const { useAddGridItemMutation } = gridApiSlice;
-export const { setEnemyGridItems, setPlayerGridItems } = gridSlice.actions;
+export const { setEnemyGridItems, setPlayerGridItems, setSelectedGridItemId } = gridSlice.actions;
 export default gridSlice.reducer;

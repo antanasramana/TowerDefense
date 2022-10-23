@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TowerDefense.Api.Battle;
+using TowerDefense.Api.Battle.Commands;
 using TowerDefense.Api.Battle.Handlers;
 using TowerDefense.Api.Contracts;
+using TowerDefense.Api.Contracts.Command;
 using TowerDefense.Api.Contracts.Grid;
 using TowerDefense.Api.Strategies;
 
@@ -15,12 +17,14 @@ namespace TowerDefense.Api.Controllers
     {
         private readonly IGridHandler _gridHandler;
         private readonly IMapper _mapper;
-        public GridController(IGridHandler gridHandler, IMapper mapper)
+        private readonly ICommandHandler _commandHandler;
+        public GridController(IGridHandler gridHandler, IMapper mapper, ICommandHandler commandHandler)
         {
             _gridHandler = gridHandler;
             _mapper = mapper;
+            _commandHandler = commandHandler;
         }
-
+        
         [HttpGet("{playerName}")]
         public ActionResult<GetGridResponse> GetGrid(string playerName)
         {
@@ -31,35 +35,12 @@ namespace TowerDefense.Api.Controllers
             return Ok(getGridResponse);
         }
 
-        [HttpPost("add")]
-        public ActionResult<AddGridItemResponse> AddGridItem(AddGridItemRequest addGridItemRequest)
+        [HttpPost("command")]
+        public ActionResult AddGridItem(ExecuteCommandRequest commandRequest)
         {
-            var arenaGrid = _gridHandler.AddGridItem(addGridItemRequest.PlayerName, addGridItemRequest.InventoryItemId, addGridItemRequest.GridItemId);
+            _commandHandler.ExecuteCommandForPlayer(commandRequest);
 
-            var arenaGridItemResponse = _mapper.Map<AddGridItemResponse>(arenaGrid);
-
-            return Ok(arenaGridItemResponse);
-        }
-
-        [HttpPost("upgradeRockets")]
-        public ActionResult UpgradeRockets()
-        {
-            GameState gameState = GameState.Instance;
-
-            foreach (var player in gameState.Players)
-            {
-                foreach (var gridItem in player.ArenaGrid.GridItems)
-                {
-                    var item = gridItem.Item;
-
-                    if (item.ItemType == Models.Items.ItemType.Rockets)
-                    {
-                        item.AttackStrategy = new LineOfThreeAttackStrategy();
-                    }
-                }
-            }
-
-            return Ok();    
+            return Ok();
         }
     }
 }

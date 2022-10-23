@@ -1,4 +1,4 @@
-import { Damage } from "./Damage";
+import { Damage } from './Damage';
 
 export type AttackResult = {
     gridId: number;

@@ -15,6 +15,16 @@
 .grid-item {
   background-color: transparent;
 }
+
+.grid-item.selected {
+  background-color: rgb(174, 150, 61);
+  border-radius: 20%;
+}
+.grid-item.selected:hover {
+  background-color: rgb(174, 150, 61);
+  border-radius: 20%;
+}
+
 .grid-item:hover {
   background-color: rgba(94, 94, 94, 0.185);
   border-radius: 20%;
@@ -22,4 +32,13 @@
 
 .grid-item-enemy {
   background-color: transparent;
+}
+
+.item-level {
+  margin-top: -60px;
+  color: white;
+  font-size: large;
+  font-family: Quadrit;
+  color: white;
+  -webkit-text-stroke: 1px black;
 }

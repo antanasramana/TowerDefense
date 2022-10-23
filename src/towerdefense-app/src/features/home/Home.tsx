@@ -62,7 +62,7 @@ const Home: React.FC = () => {
 					</label>
 				</div>
 				<br />
-				<button className='Home-start-button' onClick={startGame}>
+				<button className='Home-start-button' onClick={startGame} disabled={!playerName}>
           			Start game
 				</button>
 			</div>

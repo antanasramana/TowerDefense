@@ -10,9 +10,10 @@ import Grid from '../grid/Grid';
 import EndTurnButton from '../end-turn-button/EndTurnButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setName } from '../player/EnemySlice';
-import { getEnemyGridItems, getPlayerGridItems, upgradeRockets } from '../grid/GridSlice';
+import { getEnemyGridItems, getPlayerGridItems, executeCommand, setSelectedGridItemId } from '../grid/GridSlice';
 import { useEndTurnMutation } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
+import { getInventoryItems } from '../inventory/InventorySlice';
 
 const SIGNALR_URL = `${process.env.REACT_APP_BACKEND}/gameHub`;
 
@@ -20,6 +21,7 @@ import './GameArena.css';
 import { EndTurnRequest } from '../../contracts/EndTurnRequest';
 import { EndTurnResponse } from '../../contracts/EndTurnResponse';
 import { AttackResult } from '../../models/AttackResult';
+import CommandType from '../../models/CommandType';
 
 const GameArena: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -87,6 +89,14 @@ const GameArena: React.FC = () => {
 		endTurn(endTurnRequest);
 	}
 
+	async function handleCommandClick(commandType: CommandType, resetGridSelection: boolean) {
+		await dispatch(executeCommand(commandType));		
+		dispatch(getPlayerGridItems());
+		dispatch(getInventoryItems());
+		if (resetGridSelection){
+			dispatch(setSelectedGridItemId(-1));
+		}
+	}
 	return (
 		<div className='root-container'>
 			<div className='header'>
@@ -110,8 +120,14 @@ const GameArena: React.FC = () => {
 				</div>
 			</div>
 			<div className='footer'>
-				<button onClick={()=>dispatch(upgradeRockets())}>
-          			Upgrade Rockets
+				<button onClick={()=>handleCommandClick(CommandType.Undo, true)}>
+          			Undo
+				</button>
+				<button onClick={()=>handleCommandClick(CommandType.Upgrade, false)}>
+          			Upgrade
+				</button>
+				<button onClick={()=>handleCommandClick(CommandType.Remove, true)}>
+          			Remove
 				</button>
 				<Inventory />
 				<EndTurnButton onClick={onEndTurnClick} text={endTurnText} />
