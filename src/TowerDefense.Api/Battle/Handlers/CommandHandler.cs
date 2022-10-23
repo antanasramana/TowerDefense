@@ -1,24 +1,40 @@
-﻿using TowerDefense.Api.Battle.Command;
+﻿using TowerDefense.Api.Battle.Commands;
+using TowerDefense.Api.Contracts.Command;
 
 namespace TowerDefense.Api.Battle.Handlers
 {
     public interface ICommandHandler
     {
-        void ExecuteCommandForPlayer(string playerName, Command.Command command);
+        void ExecuteCommandForPlayer(ExecuteCommandRequest commandRequest);
     }
     public class CommandHandler : ICommandHandler
     {
         private readonly IPlayerHandler _playerHandler;
+        private readonly ICommandExecutor _commandExecutor;
 
-        public CommandHandler (IPlayerHandler playerHandler)
+        public CommandHandler (IPlayerHandler playerHandler, ICommandExecutor commandExecutor)
         {
             _playerHandler = playerHandler;
+            _commandExecutor = commandExecutor;
         }
 
-        public void ExecuteCommandForPlayer(string playerName, Command.Command command)
+        public void ExecuteCommandForPlayer(ExecuteCommandRequest commandRequest)
         {
-            var player = _playerHandler.GetPlayer(playerName);
-            player.CommandExecutor.Execute(command);
+            var command = InterpretCommand(commandRequest);
+            var player = _playerHandler.GetPlayer(commandRequest.PlayerName);
+            _commandExecutor.Execute(player, command);
+        }
+
+        public ICommand InterpretCommand(ExecuteCommandRequest commandRequest)
+        {
+            return commandRequest.CommandType switch
+            {
+                CommandType.Place => new PlaceCommand(commandRequest.InventoryItemId, commandRequest.GridItemId.Value),
+                CommandType.Remove => new RemoveCommand(commandRequest.GridItemId.Value),
+                CommandType.Upgrade => new UpgradeCommand(commandRequest.GridItemId.Value),
+                CommandType.Undo => new UndoCommand(),
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
     }
 }

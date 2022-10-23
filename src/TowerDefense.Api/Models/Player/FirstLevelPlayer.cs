@@ -1,5 +1,5 @@
 ﻿using TowerDefense.Api.Battle;
-using TowerDefense.Api.Battle.Command;
+using TowerDefense.Api.Battle.Commands;
 using TowerDefense.Api.Battle.Grid;
 using TowerDefense.Api.Battle.Observer;
 using TowerDefense.Api.Battle.Shop;
@@ -17,11 +17,6 @@ namespace TowerDefense.Api.Models.Player
         public IArenaGrid ArenaGrid { get; set; } = null;
         public IShop Shop { get; set; } = null;
         public IGridPublisher Publisher { get; set; } = new GridPublisher();
-        public ICommandExecutor CommandExecutor { get; set; }
-
-        public FirstLevelPlayer()
-        {
-            CommandExecutor = new CommandExecutor(this);
-        }
+        public ICommandHistory CommandHistory { get; set; } = new CommandHistory();
     }
 }

@@ -16,6 +16,7 @@ namespace TowerDefense.Api.Battle.Handlers
         private readonly GameState _gameState;
         private readonly ITurnHandler _turnHandler;
         private readonly INotificationHub _notificationHub;
+        private readonly IPlayerHandler _playerHandler;
 
         public BattleHandlerFacade(ITurnHandler turnHandler, INotificationHub notificationHub)
         {
@@ -26,6 +27,7 @@ namespace TowerDefense.Api.Battle.Handlers
 
         public void HandleEndTurn(string playerName)
         {
+
             var areTurnsEnded = _turnHandler.TryEndTurn(playerName);
             if (!areTurnsEnded) return;
 

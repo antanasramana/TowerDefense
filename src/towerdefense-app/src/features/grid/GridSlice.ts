@@ -6,6 +6,8 @@ import { AddGridItemResponse } from '../../contracts/AddGridItemResponse';
 import { store } from '../../app/store';
 import { GridItem } from '../../models/GridItem';
 import TileType from '../tile/enums/TileType';
+import { ExecuteCommandRequest } from '../../contracts/ExecuteCommandRequest';
+import CommandType from '../../models/CommandType';
 const API_URL = process.env.REACT_APP_BACKEND;
 
 interface Grid {
@@ -23,19 +25,29 @@ const initialState: Grid = {
 // TODO - ADD CONTRACTS
 // TODO - make it parametrized
 
-export const upgradeRockets = createAsyncThunk('grid/upgrade', async () => {
+export const executeCommand = createAsyncThunk('grid/command', async (commandType: CommandType) => {
 	const reduxStore = store.getState();
-	await axios.post(`${API_URL}/grid/upgrade/${reduxStore.player.name}/${reduxStore.grid.selectedGridItemId}`);
-});
-export const removeItem = createAsyncThunk('grid/remove', async () => {
-	const reduxStore = store.getState();
-	await axios.post(`${API_URL}/grid/remove/${reduxStore.player.name}/${reduxStore.grid.selectedGridItemId}`);
-});
-export const undo = createAsyncThunk('grid/undo', async () => {
-	const reduxStore = store.getState();
-	await axios.post(`${API_URL}/grid/undo/${reduxStore.player.name}`);
+	const executeCommandRequest: ExecuteCommandRequest = {
+		playerName: reduxStore.player.name,
+		shopItemId: reduxStore.shop.selectedItem,
+		gridItemId: reduxStore.grid.selectedGridItemId,
+		inventoryItemId: reduxStore.inventory.selectedItem,
+		commandType: commandType
+	};
+	await axios.post(`${API_URL}/grid/command`, executeCommandRequest);
 });
 
+export const executePlaceCommand = createAsyncThunk('grid/command', async (selectedGridItemId: number) => {
+	const reduxStore = store.getState();
+	const executeCommandRequest: ExecuteCommandRequest = {
+		playerName: reduxStore.player.name,
+		shopItemId: reduxStore.shop.selectedItem,
+		gridItemId: selectedGridItemId,
+		inventoryItemId: reduxStore.inventory.selectedItem,
+		commandType: CommandType.Place
+	};
+	await axios.post(`${API_URL}/grid/command`, executeCommandRequest);
+});
 
 export const getPlayerGridItems = createAsyncThunk<GridItem[]>('grid/getPlayerGrid', async () => {
 	const reduxStore = store.getState();
