@@ -13,7 +13,8 @@ namespace TowerDefense.Api.ArenaAdapter
 
         public GridItem GetItemByPosition(int x, int y)
         {
-            if (x < 0 || x > Game.MaxGridItemsInColumn || y < 0)
+            var isOutOfBounds = x < 0 || x > Game.MaxGridItemsInColumn || y < 0 || y > Game.MaxGridGridItemsInRow - 1;
+            if (isOutOfBounds)
             {
                 return null;
             }
