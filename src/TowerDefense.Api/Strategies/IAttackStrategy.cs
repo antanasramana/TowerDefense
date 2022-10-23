@@ -4,6 +4,6 @@ namespace TowerDefense.Api.Strategies
 {
     public interface IAttackStrategy
     {
-        IEnumerable<int> AttackedGridItems(GridItem[] opponentGridItems, int attackingGridItemId);
+        IEnumerable<int> AttackedGridItems(AttackInformation attackInformation);
     }
 }

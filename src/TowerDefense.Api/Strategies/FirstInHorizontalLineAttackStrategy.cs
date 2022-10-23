@@ -5,10 +5,9 @@ namespace TowerDefense.Api.Strategies
 {
     public class FirstInHorizontalLineAttackStrategy : IAttackStrategy
     {
-        public IEnumerable<int> AttackedGridItems(GridItem[] opponentGridItems, int attackingGridItemId)
+        public IEnumerable<int> AttackedGridItems(AttackInformation attackInformation)
         {
-            var attackingItemRow = GetAttackingItemRow(attackingGridItemId);
-            var possiblyAffectedGridItems = GetOpponentGridItemsInFrontOfAttackingItem(attackingItemRow, opponentGridItems);
+            var possiblyAffectedGridItems = GetOpponentGridItemsInFrontOfAttackingItem(attackInformation.AttackingItemRow, attackInformation.OpponentsGridItems);
             
             var affectedGridItems = new List<int>();
 

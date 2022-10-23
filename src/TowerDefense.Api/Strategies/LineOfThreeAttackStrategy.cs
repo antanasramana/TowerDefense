@@ -5,13 +5,12 @@ namespace TowerDefense.Api.Strategies
 {
     public class LineOfThreeAttackStrategy : IAttackStrategy
     {
-        public IEnumerable<int> AttackedGridItems(GridItem[] opponentGridItems, int attackingGridItemId)
+        public IEnumerable<int> AttackedGridItems(AttackInformation attackInformation)
         {
-            var affectedRow = GetAttackingItemRow(attackingGridItemId);
 
-            var affectedFirstGridItem = GetAffectedGridItems(opponentGridItems, affectedRow - 1);
-            var affectedSecondGridItem = GetAffectedGridItems(opponentGridItems, affectedRow);
-            var affectedThirdGridItem = GetAffectedGridItems(opponentGridItems, affectedRow + 1);
+            var affectedFirstGridItem = GetAffectedGridItems(attackInformation.OpponentsGridItems, attackInformation.AttackingItemRow - 1);
+            var affectedSecondGridItem = GetAffectedGridItems(attackInformation.OpponentsGridItems, attackInformation.AttackingItemRow);
+            var affectedThirdGridItem = GetAffectedGridItems(attackInformation.OpponentsGridItems, attackInformation.AttackingItemRow + 1);
 
 
             var affectedGridItems = new List<int>();
@@ -22,7 +21,7 @@ namespace TowerDefense.Api.Strategies
             return affectedGridItems;
         }
 
-        private static int? GetAffectedGridItems(GridItem[] opponentGridItems, int targetRow)
+        private static int? GetAffectedGridItems(List<GridItem> opponentGridItems, int targetRow)
         {
             int? affectedItemId = null;
             var opponentsAffectedGridItems = GetOpponentGridItemsInFrontOfAttackingItem(targetRow, opponentGridItems);

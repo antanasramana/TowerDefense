@@ -11,7 +11,7 @@ namespace TowerDefense.Api.Strategies
             return attackingGridItemId / Game.MaxGridGridItemsInRow;
         }
 
-        public static IEnumerable<GridItem> GetOpponentGridItemsInFrontOfAttackingItem(int attackingItemRow, GridItem[] opponentGridItems)
+        public static IEnumerable<GridItem> GetOpponentGridItemsInFrontOfAttackingItem(int attackingItemRow, List<GridItem> opponentGridItems)
         {
             var rowInFrontOfAttackingItem = Enumerable.Range(0, Game.MaxGridGridItemsInRow)
                 .Select(x => x + (attackingItemRow * Game.MaxGridGridItemsInRow))

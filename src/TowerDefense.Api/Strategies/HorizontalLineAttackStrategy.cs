@@ -6,10 +6,9 @@ namespace TowerDefense.Api.Strategies
 {
     public class HorizontalLineAttackStrategy : IAttackStrategy
     {
-        public IEnumerable<int> AttackedGridItems(GridItem[] opponentGridItems, int attackingGridItemId)
+        public IEnumerable<int> AttackedGridItems(AttackInformation attackInformation)
         {
-            var attackingItemRow = attackingGridItemId / Game.MaxGridGridItemsInRow;
-            var affectedGridItems = GetOpponentGridItemsInFrontOfAttackingItem(attackingItemRow, opponentGridItems);
+            var affectedGridItems = GetOpponentGridItemsInFrontOfAttackingItem(attackInformation.AttackingItemRow, attackInformation.OpponentsGridItems);
 
             return affectedGridItems.Select(x => x.Id);
         }
