@@ -37,7 +37,7 @@ namespace TowerDefense.Api.Strategies
             return affectedGridItems;
         }
 
-        private void TryAddingDawPoints(IMatrix opponentsMatrix, int x, int y, ICollection<int> affectedGridItems)
+        private static void TryAddingDawPoints(IMatrix opponentsMatrix, int x, int y, ICollection<int> affectedGridItems)
         {
             GridItem uperRightGridItem = opponentsMatrix.GetItemByPosition(x, y);
 
