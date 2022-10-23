@@ -13,9 +13,9 @@ namespace TowerDefense.Api.Models.Items
         public int Damage { get; set; } = 10;
         public IAttackStrategy AttackStrategy { get; set; } = new FirstInHorizontalLineAttackStrategy();
 
-        public IEnumerable<AttackDeclaration> Attack(GridItem[] opponentGridItems, int attackingGridItemId)
+        public IEnumerable<AttackDeclaration> Attack(AttackInformation attackInformation)
         {
-            var affectedGridItemList = AttackStrategy.AttackedGridItems(opponentGridItems, attackingGridItemId);
+            var affectedGridItemList = AttackStrategy.AttackedGridItems(attackInformation);
             return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Damage, DamageType = Battle.Builders.DamageType.Projectile });
         }
 
