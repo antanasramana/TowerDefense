@@ -6,10 +6,10 @@ using TowerDefense.Api.Strategies;
 
 namespace TowerDefense.Api.Adapter
 {
-    public class AttackAdapter
+    public class AttackInformationAdapter
     {
         private readonly IAttackStrategy _adaptee;
-        public AttackAdapter(IAttackStrategy adaptee)
+        public AttackInformationAdapter(IAttackStrategy adaptee)
         {
             _adaptee = adaptee;
         }
@@ -19,9 +19,9 @@ namespace TowerDefense.Api.Adapter
             var opponentsGridItemsRows = GetOpponentsGridRows(opponentsGridItems);
             return _adaptee.AttackedGridItems(new AttackInformation { AttackingItemRow = attackingItemRow, OpponentsGridItems = opponentsGridItemsRows });
         }
-        private static int GetItemRow(int attackingGridItemId)
+        private static int GetItemRow(int gridItemId)
         {
-            return attackingGridItemId / Game.MaxGridGridItemsInRow;
+            return gridItemId / Game.MaxGridGridItemsInRow;
         }
         private static List<GridRow> GetOpponentsGridRows(GridItem[] opponentsGridItems)
         {
