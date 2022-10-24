@@ -41,7 +41,7 @@ namespace TowerDefense.Api.Strategies
         {
             GridItem uperRightGridItem = opponentsMatrix.GetItemByPosition(x, y);
 
-            if (uperRightGridItem != null)
+            if (IsItemDamageable(uperRightGridItem))
             {
                 affectedGridItems.Add(uperRightGridItem.Id);
             }

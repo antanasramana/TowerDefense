@@ -1,8 +1,5 @@
-﻿using TowerDefense.Api.Battle.Grid;
-using TowerDefense.Api.Contracts.Turn;
+﻿using TowerDefense.Api.Contracts.Turn;
 using TowerDefense.Api.Hubs;
-using TowerDefense.Api.Models;
-using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.Battle.Handlers
 {

@@ -13,7 +13,8 @@ interface Props {
   tileType: TileType;
   selectable: boolean;
   damage: Damage| undefined;
-  item: GridItem
+  item: GridItem,
+  isEnemy: boolean
 }
 
 const GridTile: React.FC<Props> = (props) => {
@@ -21,6 +22,9 @@ const GridTile: React.FC<Props> = (props) => {
 	const selectedGridItemId = useAppSelector((state) => state.grid.selectedGridItemId);
 
 	function onGridItemClick() {
+		if (props.isEnemy) {
+			return;
+		}
 		dispatch(setSelectedGridItemId(-1));
 		if (props.id == selectedGridItemId) {
 			return;
@@ -47,7 +51,7 @@ const GridTile: React.FC<Props> = (props) => {
 		>
 			<Tile tileType={props.tileType}></Tile>
 			{  props.damage != undefined && <DamageOverlay damage={props.damage}></DamageOverlay> }
-			{ props.item.level != 0 && <h6 className='item-level'>{props.item.level}</h6> }
+			{ props.item.level != 0 && <h6 className={props.isEnemy ? 'item-level enemy' : 'item-level' }>{props.item.level}</h6> }
 		</div>
 	);
 };

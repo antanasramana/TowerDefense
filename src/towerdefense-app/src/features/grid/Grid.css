@@ -35,10 +35,15 @@
 }
 
 .item-level {
+  
   margin-top: -60px;
   color: white;
   font-size: large;
   font-family: Quadrit;
   color: white;
   -webkit-text-stroke: 1px black;
+}
+
+.item-level.enemy {
+  transform: rotateY(180deg);
 }

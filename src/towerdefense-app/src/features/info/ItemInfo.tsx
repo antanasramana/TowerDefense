@@ -14,7 +14,7 @@ const ItemInfo: React.FC = () => {
 		<div className='info-box'>
 			{ playerGrid.selectedGridItemId != -1 &&
 				<>
-					<div>
+					<div className='properties'>
 						<h3>Health: {getGridItem(playerGrid.selectedGridItemId)?.health}</h3>
 						<h3>Damage: {getGridItem(playerGrid.selectedGridItemId)?.damage}</h3>
 						<h3>Level: {getGridItem(playerGrid.selectedGridItemId)?.level}</h3>
