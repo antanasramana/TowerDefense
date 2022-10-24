@@ -1,7 +1,9 @@
 .info-box {
+    display: flex;
+    flex-direction: row;
     margin-top: -20px;
     padding: 5px;
-    width: 300px;
+    width: 350px;
     height: 200px;
     font-family: Quadrit;
     font-size: large;
@@ -12,4 +14,17 @@
     border: 2px solid white;
     outline: 2px solid black;
     outline-offset: 0px;
+    column-gap: 20px;
+}
+
+.power-ups {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 5px;
+}
+
+.power-up {
+    padding: 0px;
+    margin: 0px;
 }

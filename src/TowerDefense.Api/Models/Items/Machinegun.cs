@@ -12,6 +12,7 @@ namespace TowerDefense.Api.Models.Items
         public ItemType ItemType { get; set; } = ItemType.Machinegun;
         public int Health { get; set; } = 50;
         public int Damage { get; set; } = 100;
+        public ICollection<string> PowerUps { get; set; } = new List<string>();
         public IAttackStrategy AttackStrategy { get; set; } = new LineOfThreeAttackStrategy();
 
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)

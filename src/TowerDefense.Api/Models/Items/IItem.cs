@@ -14,6 +14,9 @@ namespace TowerDefense.Api.Models.Items
         ItemType ItemType { get; set; }
         IAttackStrategy AttackStrategy { get; set; }
         IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId);
+        
+        // Just cosmetic property to show that we add decorators
+        ICollection<string> PowerUps { get; set; }
         IItem Clone();
     }
 }

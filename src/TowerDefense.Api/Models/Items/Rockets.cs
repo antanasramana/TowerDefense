@@ -13,6 +13,7 @@ namespace TowerDefense.Api.Models.Items
         public int Health { get; set; } = 25;
         public int Damage { get; set; } = 60;
         public IAttackStrategy AttackStrategy { get; set; } = new DawAttackStrategy();
+        public ICollection<string> PowerUps { get; set; } = new List<string>();
 
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {

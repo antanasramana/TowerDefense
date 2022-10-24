@@ -6,4 +6,5 @@ export type GridItem = {
   level: number
   health: number
   damage: number
+  powerUps: string[]
 };

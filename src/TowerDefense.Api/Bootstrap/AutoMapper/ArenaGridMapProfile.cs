@@ -18,7 +18,8 @@ namespace TowerDefense.Api.Bootstrap.AutoMapper
                 .ForMember(dest => dest.ItemType, opt => opt.MapFrom(src => src.Item.ItemType))
                 .ForMember(dest => dest.Level, opt => opt.MapFrom(src => src.Item.Level))
                 .ForMember(dest => dest.Damage, opt => opt.MapFrom(src => src.Item.Damage))
-                .ForMember(dest => dest.Health, opt => opt.MapFrom(src => src.Item.Health));
+                .ForMember(dest => dest.Health, opt => opt.MapFrom(src => src.Item.Health))
+                .ForMember(dest => dest.PowerUps, opt => opt.MapFrom(src => src.Item.PowerUps));
         }
     }
 }
