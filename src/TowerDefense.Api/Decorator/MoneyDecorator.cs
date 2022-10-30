@@ -6,6 +6,9 @@ namespace TowerDefense.Api.Decorator
 {
     public class MoneyDecorator : BaseDecorator
     {
+        private const int MoneyReward = 50;
+        protected override string _powerUpName => "ILikeMoney";
+
         public MoneyDecorator(IItem item) : base(item)
         {
         }
@@ -19,7 +22,7 @@ namespace TowerDefense.Api.Decorator
 
         private static void SetEarnedMoney(AttackDeclaration attackDeclaration)
         {
-            attackDeclaration.EarnedMoney = 10;
+            attackDeclaration.EarnedMoney = MoneyReward;
         }
     }
 }

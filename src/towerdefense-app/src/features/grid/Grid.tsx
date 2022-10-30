@@ -75,7 +75,7 @@ const Grid: React.FC<Props> = (props) => {
 						tileType={item.itemType}
 						damage={attackResults.find(x => x.gridId==item.id)?.damage}
 						item={item}
-
+						isEnemy={props.isEnemy}
 					/>
 				))
 				: playerGrid.map((item, index) => (
@@ -89,6 +89,7 @@ const Grid: React.FC<Props> = (props) => {
 						tileType={item.itemType}
 						damage={attackResults.find(x => x.gridId==item.id)?.damage}
 						item={item}
+						isEnemy={props.isEnemy}
 					/>
 				))}
 		</div>

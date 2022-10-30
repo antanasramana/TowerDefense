@@ -2,6 +2,7 @@
 using TowerDefense.Api.Models;
 using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Strategies;
+using System.Linq;
 
 namespace TowerDefense.Api.Decorator
 {
@@ -14,8 +15,9 @@ namespace TowerDefense.Api.Decorator
         public int Damage { get; set; }
         public ItemType ItemType { get; set; }
         public IAttackStrategy AttackStrategy { get; set; }
-
+        public ICollection<string> PowerUps { get; set; }
         protected IItem _item { get; set; }
+        protected abstract string _powerUpName { get; }
 
         public BaseDecorator(IItem item)
         {
@@ -27,6 +29,8 @@ namespace TowerDefense.Api.Decorator
             Damage = item.Damage;
             AttackStrategy = item.AttackStrategy;
             ItemType = item.ItemType;
+            PowerUps = item.PowerUps.ToList();
+            PowerUps.Add(_powerUpName);
         }
 
         public virtual IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)

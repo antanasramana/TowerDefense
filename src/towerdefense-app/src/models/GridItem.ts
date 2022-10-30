@@ -4,4 +4,7 @@ export type GridItem = {
   id: number;
   itemType: TileType;
   level: number
+  health: number
+  damage: number
+  powerUps: string[]
 };

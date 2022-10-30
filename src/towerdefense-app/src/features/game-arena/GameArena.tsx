@@ -11,7 +11,7 @@ import EndTurnButton from '../end-turn-button/EndTurnButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setName } from '../player/EnemySlice';
 import { getEnemyGridItems, getPlayerGridItems, executeCommand, setSelectedGridItemId } from '../grid/GridSlice';
-import { useEndTurnMutation } from '../player/PlayerSlice';
+import { getPlayerInfo, useEndTurnMutation } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
 import { getInventoryItems } from '../inventory/InventorySlice';
 
@@ -22,6 +22,7 @@ import { EndTurnRequest } from '../../contracts/EndTurnRequest';
 import { EndTurnResponse } from '../../contracts/EndTurnResponse';
 import { AttackResult } from '../../models/AttackResult';
 import CommandType from '../../models/CommandType';
+import ItemInfo from '../info/ItemInfo';
 
 const GameArena: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -69,6 +70,7 @@ const GameArena: React.FC = () => {
 						setEnemyAttackResult(endTurnResponse.enemyAttackResults);
 						dispatch(getEnemyGridItems());
 						dispatch(getPlayerGridItems());
+						dispatch(getPlayerInfo());
 						setEndTurnText('End Turn');
 					});
 				})
@@ -120,18 +122,23 @@ const GameArena: React.FC = () => {
 				</div>
 			</div>
 			<div className='footer'>
-				<button onClick={()=>handleCommandClick(CommandType.Undo, true)}>
-          			Undo
-				</button>
-				<button onClick={()=>handleCommandClick(CommandType.Upgrade, false)}>
-          			Upgrade
-				</button>
-				<button onClick={()=>handleCommandClick(CommandType.Remove, true)}>
-          			Remove
-				</button>
-				<Inventory />
-				<EndTurnButton onClick={onEndTurnClick} text={endTurnText} />
-				<Shop />
+				<ItemInfo/>
+				<div className='controls'>
+					<div className='commands'>
+						<button className='command' onClick={()=>handleCommandClick(CommandType.Undo, true)}>
+							Undo
+						</button>
+						<button className='command' onClick={()=>handleCommandClick(CommandType.Upgrade, false)}>
+							Upgrade
+						</button>
+						<button className='command' onClick={()=>handleCommandClick(CommandType.Remove, true)}>
+							Remove
+						</button>
+					</div>
+					<Inventory />
+					<EndTurnButton onClick={onEndTurnClick} text={endTurnText} />
+					<Shop />
+				</div>
 			</div>
 		</div>
 	);

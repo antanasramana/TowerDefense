@@ -6,6 +6,8 @@ namespace TowerDefense.Api.Decorator
 {
     public class HealthDecorator : BaseDecorator
     {
+        protected override string _powerUpName => "+100Health";
+
         public HealthDecorator(IItem item) : base(item)
         {
             Health = IncreaseHealth(item.Health);
@@ -18,7 +20,7 @@ namespace TowerDefense.Api.Decorator
         
         private static int IncreaseHealth(int health)
         {
-            return health + 10;
+            return health + 100;
         }
     }
 }
