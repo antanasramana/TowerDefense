@@ -8,7 +8,7 @@ namespace TowerDefense.Api.Models.Items
         public string Id { get; set; } = nameof(Placeholder);
         public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Placeholder;
-        public IItemStats Stats { get; set; } = new ItemStats(0, 0, 0);
+        public IItemStats Stats { get; set; } = new DefaulItemStats();
         public ICollection<string> PowerUps { get; set; } = new List<string>();
         public IAttackStrategy AttackStrategy { get; set; } = new NoAttackStrategy();
 

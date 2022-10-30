@@ -2,9 +2,9 @@
 {
     public interface IItemStats
     {
-        int Price { get; set; }
-        int Health { get; set; }
-        int Damage { get; set;  }
+        int Price { get; }
+        int Health { get; }
+        int Damage { get; }
 
     }
 
@@ -20,6 +20,13 @@
             Health = health;
             Damage = damage;
         }
+    }
+
+    public class DefaulItemStats : IItemStats
+    {
+        public int Price { get; } = 0;
+        public int Health { get; } = 0;
+        public int Damage { get; } = 0;
     }
 
 }
