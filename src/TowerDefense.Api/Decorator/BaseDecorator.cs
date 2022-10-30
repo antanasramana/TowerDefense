@@ -17,8 +17,8 @@ namespace TowerDefense.Api.Decorator
         public IAttackStrategy AttackStrategy { get; set; }
         public ICollection<string> PowerUps { get; set; }
         protected IItem _item { get; set; }
-
         protected abstract string _powerUpName { get; }
+
         public BaseDecorator(IItem item)
         {
             _item = item;

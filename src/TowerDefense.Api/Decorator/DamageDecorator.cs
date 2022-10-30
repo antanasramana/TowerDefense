@@ -7,6 +7,7 @@ namespace TowerDefense.Api.Decorator
     public class DamageDecorator : BaseDecorator
     {
         protected override string _powerUpName => "DoubleDamage";
+
         public DamageDecorator(IItem item) : base(item)
         {
             Damage = item.Damage * 2;
