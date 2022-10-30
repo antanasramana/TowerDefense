@@ -33,10 +33,10 @@ namespace TowerDefense.Api.Battle.Handlers
 
             if (item == null) return false;
 
-            var isAbleToAfford = item.Price < player.Money;
+            var isAbleToAfford = item.Stats.Price < player.Money;
             if (!isAbleToAfford) return false;
 
-            player.Money -= item.Price;
+            player.Money -= item.Stats.Price;
 
             //PROTOTYPE DESIGN PATTERN!!!!!! WE DONT WANT TO EXPOSE EXACT ITEM ONLY ITS PROPERTIES
             var inventoryItem = item.Clone();

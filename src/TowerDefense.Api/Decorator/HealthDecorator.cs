@@ -10,7 +10,7 @@ namespace TowerDefense.Api.Decorator
 
         public HealthDecorator(IItem item) : base(item)
         {
-            Health = IncreaseHealth(item.Health);
+            Stats.Health = IncreaseHealth(item.Stats.Health);
         }
 
         public override IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
