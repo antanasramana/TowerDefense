@@ -16,8 +16,12 @@ namespace TowerDefense.Api.Battle.Grid
 
         public AttackResult HandleAttack(AttackDeclaration attackDeclaration)
         {
-            this.Item.Health -= attackDeclaration.Damage;
-            bool isDestroyed = Item.Health <= 0;
+            if (Item.Stats is not DefaultZeroItemStats)
+            {
+                this.Item.Stats.Health -= attackDeclaration.Damage;
+            }
+
+            bool isDestroyed = Item.Stats.Health <= 0;
 
             if (isDestroyed)
             {

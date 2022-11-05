@@ -6,18 +6,16 @@ namespace TowerDefense.Api.Models.Items
     public class Placeholder : IItem
     {
         public string Id { get; set; } = nameof(Placeholder);
-        public int Price { get; set; } = 0;
         public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Placeholder;
-        public int Health { get; set; } = 0;
-        public int Damage { get; set; } = 0;
+        public IItemStats Stats { get; set; } = new DefaultZeroItemStats();
         public ICollection<string> PowerUps { get; set; } = new List<string>();
         public IAttackStrategy AttackStrategy { get; set; } = new NoAttackStrategy();
 
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
             var affectedGridItemList = AttackStrategy.AttackedGridItems(opponentsArenaGrid, attackingGridItemId);
-            return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Damage });
+            return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Stats.Damage });
         }
 
         public IItem Clone()

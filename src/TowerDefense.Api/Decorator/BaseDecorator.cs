@@ -9,10 +9,8 @@ namespace TowerDefense.Api.Decorator
     public abstract class BaseDecorator : IItem
     {
         public string Id { get; set; }
-        public int Price { get; set; }
         public int Level { get; set; }
-        public int Health { get; set; }
-        public int Damage { get; set; }
+        public IItemStats Stats { get; set; }
         public ItemType ItemType { get; set; }
         public IAttackStrategy AttackStrategy { get; set; }
         public ICollection<string> PowerUps { get; set; }
@@ -23,10 +21,8 @@ namespace TowerDefense.Api.Decorator
         {
             _item = item;
             Id = item.Id;
-            Price = item.Price;
+            Stats = item.Stats;
             Level = item.Level + 1;
-            Health = item.Health;
-            Damage = item.Damage;
             AttackStrategy = item.AttackStrategy;
             ItemType = item.ItemType;
             PowerUps = item.PowerUps.ToList();

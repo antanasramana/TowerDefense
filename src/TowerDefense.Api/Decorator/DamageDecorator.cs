@@ -10,7 +10,10 @@ namespace TowerDefense.Api.Decorator
 
         public DamageDecorator(IItem item) : base(item)
         {
-            Damage = item.Damage * 2;
+            if (item.Stats is not DefaultZeroItemStats)
+            {
+                Stats.Damage = item.Stats.Damage * 2;
+            }
         }
 
         public override IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
@@ -22,7 +25,7 @@ namespace TowerDefense.Api.Decorator
 
         private void IncreaseDamage(IEnumerable<AttackDeclaration> attackDeclarations)
         {
-            attackDeclarations.ToList().ForEach(x => x.Damage = Damage);
+            attackDeclarations.ToList().ForEach(x => x.Damage = Stats.Damage);
         }
     }
 }

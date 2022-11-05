@@ -7,18 +7,16 @@ namespace TowerDefense.Api.Models.Items
     public class Rockets : IItem
     {
         public string Id { get; set; } = nameof(Rockets);
-        public int Price { get; set; } = 100;
         public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Rockets;
-        public int Health { get; set; } = 25;
-        public int Damage { get; set; } = 60;
+        public IItemStats Stats { get; set; } = new MediumCostHighDamageItemStats();
         public IAttackStrategy AttackStrategy { get; set; } = new DawAttackStrategy();
         public ICollection<string> PowerUps { get; set; } = new List<string>();
 
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
             var affectedGridItemList = AttackStrategy.AttackedGridItems(opponentsArenaGrid, attackingGridItemId);
-            return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Damage, DamageType = DamageType.Fire });
+            return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Stats.Damage, DamageType = DamageType.Fire });
         }
 
         public IItem Clone()
