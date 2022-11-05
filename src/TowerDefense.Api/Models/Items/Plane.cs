@@ -9,7 +9,7 @@ namespace TowerDefense.Api.Models.Items
         public string Id { get; set; } = nameof(Plane);
         public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Plane;
-        public IItemStats Stats { get; set; } = new ItemStats(500, 50, 25);
+        public IItemStats Stats { get; set; } = new SpecialItemStats();
         public ICollection<string> PowerUps { get; set; } = new List<string>();
         public IAttackStrategy AttackStrategy { get; set; } = new HorizontalLineAttackStrategy();
 

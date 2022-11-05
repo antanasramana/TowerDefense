@@ -9,7 +9,7 @@ namespace TowerDefense.Api.Models.Items
         public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Blank;
         public ICollection<string> PowerUps { get; set; } = new List<string>();
-        public IItemStats Stats { get; set; } = new DefaulItemStats();
+        public IItemStats Stats { get; set; } = new DefaultZeroItemStats();
         public IAttackStrategy AttackStrategy { get; set; } = new NoAttackStrategy();
 
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)

@@ -8,7 +8,7 @@ namespace TowerDefense.Api.Models.Items
         public string Id { get; set; } = nameof(Soldier);
         public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Soldier;
-        public IItemStats Stats { get; set; } = new ItemStats(150, 10, 10);
+        public IItemStats Stats { get; set; } = new RegularDefaultItemStats();
         public ICollection<string> PowerUps { get; set; } = new List<string>();
         public IAttackStrategy AttackStrategy { get; set; } = new FirstInHorizontalLineAttackStrategy();
 

@@ -9,7 +9,7 @@ namespace TowerDefense.Api.Models.Items
         public string Id { get; set; } = nameof(Machinegun);
         public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Machinegun;
-        public IItemStats Stats { get; set; } = new ItemStats(100, 50, 100);
+        public IItemStats Stats { get; set; } = new HighDamageItemStats();
         public ICollection<string> PowerUps { get; set; } = new List<string>();
         public IAttackStrategy AttackStrategy { get; set; } = new LineOfThreeAttackStrategy();
 
