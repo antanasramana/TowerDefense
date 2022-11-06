@@ -1,5 +1,5 @@
-﻿using TowerDefense.Api.Battle.Builders;
-using TowerDefense.Api.Battle.Grid;
+﻿using TowerDefense.Api.GameLogic.Builders;
+using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Strategies;
 
 namespace TowerDefense.Api.Models.Items
@@ -7,16 +7,17 @@ namespace TowerDefense.Api.Models.Items
     public class Plane : IItem
     {
         public string Id { get; set; } = nameof(Plane);
+        public int Price { get; set; } = 500;
         public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Plane;
-        public IItemStats Stats { get; set; } = new SpecialItemStats();
-        public ICollection<string> PowerUps { get; set; } = new List<string>();
+        public int Health { get; set; } = 50;
+        public int Damage { get; set; } = 25;
         public IAttackStrategy AttackStrategy { get; set; } = new HorizontalLineAttackStrategy();
 
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
             var affectedGridItemList = AttackStrategy.AttackedGridItems(opponentsArenaGrid, attackingGridItemId);
-            return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Stats.Damage, DamageType = DamageType.Fire });
+            return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Damage, DamageType = DamageType.Fire });
         }
 
         public IItem Clone()

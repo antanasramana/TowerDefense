@@ -1,4 +1,4 @@
-﻿using TowerDefense.Api.Battle.Commands;
+﻿using TowerDefense.Api.GameLogic.Commands;
 
 namespace TowerDefense.Api.Contracts.Command
 {

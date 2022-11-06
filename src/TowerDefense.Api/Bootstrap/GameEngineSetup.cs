@@ -1,6 +1,6 @@
-﻿using TowerDefense.Api.Battle.Commands;
-using TowerDefense.Api.Battle.Handlers;
-using TowerDefense.Api.Battle.Observer;
+﻿using TowerDefense.Api.GameLogic.Commands;
+using TowerDefense.Api.GameLogic.Handlers;
+using TowerDefense.Api.GameLogic.Observer;
 using TowerDefense.Api.Hubs;
 
 namespace TowerDefense.Api.Bootstrap

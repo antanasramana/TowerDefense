@@ -1,4 +1,4 @@
-﻿using TowerDefense.Api.Battle.Grid;
+﻿using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Strategies;
 
 namespace TowerDefense.Api.Models.Items
@@ -6,16 +6,17 @@ namespace TowerDefense.Api.Models.Items
     public class Placeholder : IItem
     {
         public string Id { get; set; } = nameof(Placeholder);
+        public int Price { get; set; } = 0;
         public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Placeholder;
-        public IItemStats Stats { get; set; } = new DefaultZeroItemStats();
-        public ICollection<string> PowerUps { get; set; } = new List<string>();
+        public int Health { get; set; } = 0;
+        public int Damage { get; set; } = 0;
         public IAttackStrategy AttackStrategy { get; set; } = new NoAttackStrategy();
 
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
             var affectedGridItemList = AttackStrategy.AttackedGridItems(opponentsArenaGrid, attackingGridItemId);
-            return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Stats.Damage });
+            return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Damage });
         }
 
         public IItem Clone()

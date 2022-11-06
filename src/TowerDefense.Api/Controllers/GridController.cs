@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TowerDefense.Api.Battle;
-using TowerDefense.Api.Battle.Commands;
-using TowerDefense.Api.Battle.Handlers;
+using TowerDefense.Api.GameLogic;
+using TowerDefense.Api.GameLogic.Commands;
+using TowerDefense.Api.GameLogic.Handlers;
 using TowerDefense.Api.Contracts;
 using TowerDefense.Api.Contracts.Command;
 using TowerDefense.Api.Contracts.Grid;

@@ -1,4 +1,4 @@
-﻿using TowerDefense.Api.Battle.Factories;
+﻿using TowerDefense.Api.GameLogic.Factories;
 using TowerDefense.Api.Enums;
 
 namespace TowerDefense.Api.Models.Items

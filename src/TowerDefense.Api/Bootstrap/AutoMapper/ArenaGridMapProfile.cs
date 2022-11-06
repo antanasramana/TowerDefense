@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TowerDefense.Api.Battle.Grid;
+using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Contracts.Grid;
 
 namespace TowerDefense.Api.Bootstrap.AutoMapper
@@ -16,10 +16,7 @@ namespace TowerDefense.Api.Bootstrap.AutoMapper
 
             CreateMap<GridItem, GetGridItemResponse>()
                 .ForMember(dest => dest.ItemType, opt => opt.MapFrom(src => src.Item.ItemType))
-                .ForMember(dest => dest.Level, opt => opt.MapFrom(src => src.Item.Level))
-                .ForMember(dest => dest.Damage, opt => opt.MapFrom(src => src.Item.Stats.Damage))
-                .ForMember(dest => dest.Health, opt => opt.MapFrom(src => src.Item.Stats.Health))
-                .ForMember(dest => dest.PowerUps, opt => opt.MapFrom(src => src.Item.PowerUps));
+                .ForMember(dest => dest.Level, opt => opt.MapFrom(src => src.Item.Level));
         }
     }
 }

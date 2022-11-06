@@ -1,7 +1,7 @@
-﻿using TowerDefense.Api.Battle.Commands;
-using TowerDefense.Api.Battle.Grid;
-using TowerDefense.Api.Battle.Observer;
-using TowerDefense.Api.Battle.Shop;
+﻿using TowerDefense.Api.GameLogic.Commands;
+using TowerDefense.Api.GameLogic.Grid;
+using TowerDefense.Api.GameLogic.Observer;
+using TowerDefense.Api.GameLogic.Shop;
 
 namespace TowerDefense.Api.Models.Player
 {
