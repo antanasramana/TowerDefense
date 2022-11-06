@@ -2,7 +2,7 @@
 using TowerDefense.Api.Constants;
 using TowerDefense.Api.Models.Items;
 
-namespace TowerDefense.Api.Strategies
+namespace TowerDefense.Api.GameLogic.Strategies
 {
     public static class StrategyHelper
     {

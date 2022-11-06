@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.GameLogic.Grid;
 
-namespace TowerDefense.Api.Strategies
+namespace TowerDefense.Api.GameLogic.Strategies
 {
     public class NoAttackStrategy : IAttackStrategy
     {

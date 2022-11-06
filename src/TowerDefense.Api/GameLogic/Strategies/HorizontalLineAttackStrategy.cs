@@ -2,7 +2,7 @@
 using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Constants;
 
-namespace TowerDefense.Api.Strategies
+namespace TowerDefense.Api.GameLogic.Strategies
 {
     public class HorizontalLineAttackStrategy : IAttackStrategy
     {

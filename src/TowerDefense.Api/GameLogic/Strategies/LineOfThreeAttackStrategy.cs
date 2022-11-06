@@ -1,8 +1,8 @@
 ﻿using TowerDefense.Api.ArenaAdapter;
 using TowerDefense.Api.GameLogic.Grid;
-using static TowerDefense.Api.Strategies.StrategyHelper;
+using static TowerDefense.Api.GameLogic.Strategies.StrategyHelper;
 
-namespace TowerDefense.Api.Strategies
+namespace TowerDefense.Api.GameLogic.Strategies
 {
     public class LineOfThreeAttackStrategy : IAttackStrategy
     {

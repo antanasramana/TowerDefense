@@ -1,7 +1,7 @@
 ﻿using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Models;
 using TowerDefense.Api.Models.Items;
-using TowerDefense.Api.Strategies;
+using TowerDefense.Api.GameLogic.Strategies;
 
 namespace TowerDefense.Api.GameLogic.Decorator
 {
