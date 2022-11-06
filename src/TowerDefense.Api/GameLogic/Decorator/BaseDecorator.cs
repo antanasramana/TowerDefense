@@ -3,7 +3,7 @@ using TowerDefense.Api.Models;
 using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Strategies;
 
-namespace TowerDefense.Api.Decorator
+namespace TowerDefense.Api.GameLogic.Decorator
 {
     public abstract class BaseDecorator : IItem
     {

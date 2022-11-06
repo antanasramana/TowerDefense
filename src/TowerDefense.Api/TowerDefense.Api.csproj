@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Battle\Factories\NewFolder\**" />
-    <Content Remove="Battle\Factories\NewFolder\**" />
-    <EmbeddedResource Remove="Battle\Factories\NewFolder\**" />
-    <None Remove="Battle\Factories\NewFolder\**" />
+    <Compile Remove="GameLogic\Factories\NewFolder\**" />
+    <Content Remove="GameLogic\Factories\NewFolder\**" />
+    <EmbeddedResource Remove="GameLogic\Factories\NewFolder\**" />
+    <None Remove="GameLogic\Factories\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>

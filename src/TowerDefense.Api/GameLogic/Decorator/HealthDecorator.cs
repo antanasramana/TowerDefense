@@ -2,7 +2,7 @@
 using TowerDefense.Api.Models;
 using TowerDefense.Api.Models.Items;
 
-namespace TowerDefense.Api.Decorator
+namespace TowerDefense.Api.GameLogic.Decorator
 {
     public class HealthDecorator : BaseDecorator
     {

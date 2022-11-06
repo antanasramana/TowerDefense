@@ -1,4 +1,4 @@
-﻿using TowerDefense.Api.Decorator;
+﻿using TowerDefense.Api.GameLogic.Decorator;
 using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Models.Player;
 

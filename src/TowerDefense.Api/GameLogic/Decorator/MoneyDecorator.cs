@@ -2,7 +2,7 @@
 using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Models;
 
-namespace TowerDefense.Api.Decorator
+namespace TowerDefense.Api.GameLogic.Decorator
 {
     public class MoneyDecorator : BaseDecorator
     {
