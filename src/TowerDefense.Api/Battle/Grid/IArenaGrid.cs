@@ -1,4 +1,4 @@
-﻿namespace TowerDefense.Api.Battle.Grid;
+﻿namespace TowerDefense.Api.GameLogic.Grid;
 
 public interface IArenaGrid
 {

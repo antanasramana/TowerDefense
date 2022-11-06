@@ -1,7 +1,7 @@
 ﻿using TowerDefense.Api.Models;
 using TowerDefense.Api.Models.Items;
 
-namespace TowerDefense.Api.Battle.Handlers
+namespace TowerDefense.Api.GameLogic.Handlers
 {
     public interface IInventoryHandler
     {

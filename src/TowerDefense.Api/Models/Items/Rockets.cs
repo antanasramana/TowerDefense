@@ -1,5 +1,5 @@
-﻿using TowerDefense.Api.Battle.Builders;
-using TowerDefense.Api.Battle.Grid;
+﻿using TowerDefense.Api.GameLogic.Builders;
+using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Strategies;
 
 namespace TowerDefense.Api.Models.Items

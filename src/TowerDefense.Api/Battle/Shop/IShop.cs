@@ -1,7 +1,6 @@
-﻿using TowerDefense.Api.Models;
-using TowerDefense.Api.Models.Items;
+﻿using TowerDefense.Api.Models.Items;
 
-namespace TowerDefense.Api.Battle.Shop
+namespace TowerDefense.Api.GameLogic.Shop
 {
     public interface IShop
     {

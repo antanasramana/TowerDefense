@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using TowerDefense.Api.Models;
+﻿using TowerDefense.Api.Models;
 
-namespace TowerDefense.Api.Battle.Observer
+namespace TowerDefense.Api.GameLogic.Observer
 {
     public class GridPublisher : IGridPublisher
     {

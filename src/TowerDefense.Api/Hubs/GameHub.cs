@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using TowerDefense.Api.Battle.Handlers;
+using TowerDefense.Api.GameLogic.Handlers;
 
 namespace TowerDefense.Api.Hubs
 {

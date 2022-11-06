@@ -1,7 +1,7 @@
-﻿using TowerDefense.Api.Battle.Commands;
+﻿using TowerDefense.Api.GameLogic.Commands;
 using TowerDefense.Api.Contracts.Command;
 
-namespace TowerDefense.Api.Battle.Handlers
+namespace TowerDefense.Api.GameLogic.Handlers
 {
     public interface ICommandHandler
     {

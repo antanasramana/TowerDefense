@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.Models.Player;
 
-namespace TowerDefense.Api.Battle.Handlers
+namespace TowerDefense.Api.GameLogic.Handlers
 {
     public interface IPlayerHandler
     {

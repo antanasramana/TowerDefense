@@ -1,9 +1,7 @@
-﻿using TowerDefense.Api.Battle.Grid;
-using TowerDefense.Api.Models;
-using TowerDefense.Api.Models.Items;
+﻿using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Models.Player;
 
-namespace TowerDefense.Api.Battle.Commands
+namespace TowerDefense.Api.GameLogic.Commands
 {
     public class PlaceCommand : ICommand
     {

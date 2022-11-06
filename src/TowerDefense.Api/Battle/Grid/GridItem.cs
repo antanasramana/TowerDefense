@@ -1,9 +1,9 @@
-﻿using TowerDefense.Api.Battle.Builders;
-using TowerDefense.Api.Battle.Observer;
+﻿using TowerDefense.Api.GameLogic.Builders;
+using TowerDefense.Api.GameLogic.Observer;
 using TowerDefense.Api.Models;
 using TowerDefense.Api.Models.Items;
 
-namespace TowerDefense.Api.Battle.Grid
+namespace TowerDefense.Api.GameLogic.Grid
 {
     public class GridItem : IAttackSubscriber
     {

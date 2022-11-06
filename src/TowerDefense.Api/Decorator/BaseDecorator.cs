@@ -1,8 +1,7 @@
-﻿using TowerDefense.Api.Battle.Grid;
+﻿using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Models;
 using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Strategies;
-using System.Linq;
 
 namespace TowerDefense.Api.Decorator
 {

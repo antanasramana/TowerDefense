@@ -1,11 +1,10 @@
-﻿using TowerDefense.Api.Battle.Factories;
-using TowerDefense.Api.Battle.Observer;
+﻿using TowerDefense.Api.GameLogic.Factories;
 using TowerDefense.Api.Constants;
 using TowerDefense.Api.Enums;
 using TowerDefense.Api.Hubs;
 using TowerDefense.Api.Models.Player;
 
-namespace TowerDefense.Api.Battle.Handlers
+namespace TowerDefense.Api.GameLogic.Handlers
 {
     public interface IInitialGameSetupHandler
     {

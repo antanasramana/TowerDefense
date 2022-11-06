@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.Constants;
 
-namespace TowerDefense.Api.Battle.Handlers
+namespace TowerDefense.Api.GameLogic.Handlers
 {
     public interface ITurnHandler
     {

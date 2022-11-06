@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.Models.Items;
 
-namespace TowerDefense.Api.Battle.Grid
+namespace TowerDefense.Api.GameLogic.Grid
 {
     public static class GridLayout
     {

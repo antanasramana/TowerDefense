@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.Models.Items;
 
-namespace TowerDefense.Api.Battle.Factories.ItemFactories
+namespace TowerDefense.Api.GameLogic.Factories.ItemFactories
 {
     public class ShieldItemFactory : IItemFactory
     {

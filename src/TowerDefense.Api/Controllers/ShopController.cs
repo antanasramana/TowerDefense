@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TowerDefense.Api.Battle.Handlers;
+using TowerDefense.Api.GameLogic.Handlers;
 using TowerDefense.Api.Contracts.Shop;
 
 namespace TowerDefense.Api.Controllers

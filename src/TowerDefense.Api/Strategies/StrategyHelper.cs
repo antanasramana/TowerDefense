@@ -1,4 +1,4 @@
-﻿using TowerDefense.Api.Battle.Grid;
+﻿using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Constants;
 using TowerDefense.Api.Models.Items;
 

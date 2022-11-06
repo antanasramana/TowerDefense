@@ -1,4 +1,4 @@
-﻿namespace TowerDefense.Api.Battle.Factories
+﻿namespace TowerDefense.Api.GameLogic.Factories
 {
     public class ItemFactory
     {

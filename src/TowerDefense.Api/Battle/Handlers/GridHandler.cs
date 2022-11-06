@@ -1,6 +1,6 @@
-﻿using TowerDefense.Api.Battle.Grid;
+﻿using TowerDefense.Api.GameLogic.Grid;
 
-namespace TowerDefense.Api.Battle.Handlers
+namespace TowerDefense.Api.GameLogic.Handlers
 {
     public interface IGridHandler
     {

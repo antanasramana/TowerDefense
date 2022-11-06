@@ -1,4 +1,4 @@
-﻿namespace TowerDefense.Api.Battle.Commands
+﻿namespace TowerDefense.Api.GameLogic.Commands
 {
     public interface ICommandHistory
     {

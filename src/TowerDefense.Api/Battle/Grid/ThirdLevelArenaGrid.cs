@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.Constants;
 
-namespace TowerDefense.Api.Battle.Grid
+namespace TowerDefense.Api.GameLogic.Grid
 {
     public class ThirdLevelArenaGrid : IArenaGrid
     {

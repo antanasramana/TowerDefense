@@ -1,4 +1,4 @@
-﻿namespace TowerDefense.Api.Battle.Builders
+﻿namespace TowerDefense.Api.GameLogic.Builders
 {
     public class DamageBuilderDirector
     {

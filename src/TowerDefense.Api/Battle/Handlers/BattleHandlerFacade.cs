@@ -1,7 +1,7 @@
 ﻿using TowerDefense.Api.Contracts.Turn;
 using TowerDefense.Api.Hubs;
 
-namespace TowerDefense.Api.Battle.Handlers
+namespace TowerDefense.Api.GameLogic.Handlers
 {
     public interface IBattleHandlerFacade
     {

@@ -1,9 +1,8 @@
-﻿using TowerDefense.Api.Battle.Observer;
-using TowerDefense.Api.Constants;
+﻿using TowerDefense.Api.Constants;
 using TowerDefense.Api.Enums;
 using TowerDefense.Api.Models.Player;
 
-namespace TowerDefense.Api.Battle
+namespace TowerDefense.Api.GameLogic
 {
     public class GameState
     {

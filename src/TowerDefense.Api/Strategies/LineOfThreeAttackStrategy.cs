@@ -1,5 +1,5 @@
 ﻿using TowerDefense.Api.ArenaAdapter;
-using TowerDefense.Api.Battle.Grid;
+using TowerDefense.Api.GameLogic.Grid;
 using static TowerDefense.Api.Strategies.StrategyHelper;
 
 namespace TowerDefense.Api.Strategies

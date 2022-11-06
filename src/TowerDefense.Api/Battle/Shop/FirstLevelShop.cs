@@ -1,7 +1,7 @@
-﻿using TowerDefense.Api.Battle.Factories.ItemFactories;
+﻿using TowerDefense.Api.GameLogic.Factories.ItemFactories;
 using TowerDefense.Api.Models.Items;
 
-namespace TowerDefense.Api.Battle.Shop
+namespace TowerDefense.Api.GameLogic.Shop
 {
     public class FirstLevelShop : IShop
     {

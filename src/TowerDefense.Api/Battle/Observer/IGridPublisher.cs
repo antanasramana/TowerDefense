@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.Models;
 
-namespace TowerDefense.Api.Battle.Observer
+namespace TowerDefense.Api.GameLogic.Observer
 {
     public interface IGridPublisher
     {

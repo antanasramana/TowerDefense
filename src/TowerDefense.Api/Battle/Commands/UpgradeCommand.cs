@@ -1,10 +1,8 @@
-﻿using TowerDefense.Api.Battle.Builders;
-using TowerDefense.Api.Decorator;
+﻿using TowerDefense.Api.Decorator;
 using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Models.Player;
-using TowerDefense.Api.Strategies;
 
-namespace TowerDefense.Api.Battle.Commands
+namespace TowerDefense.Api.GameLogic.Commands
 {
     public class UpgradeCommand : ICommand
     {

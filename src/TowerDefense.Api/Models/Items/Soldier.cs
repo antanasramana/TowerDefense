@@ -1,4 +1,4 @@
-﻿using TowerDefense.Api.Battle.Grid;
+﻿using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Strategies;
 
 namespace TowerDefense.Api.Models.Items
@@ -15,7 +15,7 @@ namespace TowerDefense.Api.Models.Items
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
             var affectedGridItemList = AttackStrategy.AttackedGridItems(opponentsArenaGrid, attackingGridItemId);
-            return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Stats.Damage, DamageType = Battle.Builders.DamageType.Projectile });
+            return affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Stats.Damage, DamageType = GameLogic.Builders.DamageType.Projectile });
         }
 
         public IItem Clone()
