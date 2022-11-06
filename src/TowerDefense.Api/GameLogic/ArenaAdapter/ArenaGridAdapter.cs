@@ -1,7 +1,7 @@
 ﻿using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Constants;
 
-namespace TowerDefense.Api.ArenaAdapter
+namespace TowerDefense.Api.GameLogic.ArenaAdapter
 {
     public class ArenaGridAdapter : IMatrix
     {

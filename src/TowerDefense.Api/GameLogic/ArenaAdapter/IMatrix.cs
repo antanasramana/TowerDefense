@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.GameLogic.Grid;
 
-namespace TowerDefense.Api.ArenaAdapter
+namespace TowerDefense.Api.GameLogic.ArenaAdapter
 {
     public interface IMatrix
     {

@@ -1,4 +1,4 @@
-﻿using TowerDefense.Api.ArenaAdapter;
+﻿using TowerDefense.Api.GameLogic.ArenaAdapter;
 using TowerDefense.Api.GameLogic.Grid;
 using static TowerDefense.Api.GameLogic.Strategies.StrategyHelper;
 
