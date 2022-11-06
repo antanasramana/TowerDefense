@@ -21,7 +21,7 @@ namespace TowerDefense.Api.Decorator
         {
             _item = item;
             Id = item.Id;
-            Stats = item.Stats;
+            Stats = item.Stats.Clone();
             Level = item.Level + 1;
             AttackStrategy = item.AttackStrategy;
             ItemType = item.ItemType;
