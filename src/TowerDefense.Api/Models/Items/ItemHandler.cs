@@ -1,7 +1,4 @@
-﻿using TowerDefense.Api.Battle.Factories;
-using TowerDefense.Api.Enums;
-
-namespace TowerDefense.Api.Models.Items
+﻿namespace TowerDefense.Api.Models.Items
 {
     public static class ItemHandler
     {

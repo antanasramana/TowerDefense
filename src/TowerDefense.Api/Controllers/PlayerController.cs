@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TowerDefense.Api.Battle.Factories;
-using TowerDefense.Api.Battle.Handlers;
-using TowerDefense.Api.Contracts.Inventory;
+using TowerDefense.Api.GameLogic.Factories;
+using TowerDefense.Api.GameLogic.Handlers;
 using TowerDefense.Api.Contracts.Player;
 using TowerDefense.Api.Contracts.Turn;
 using TowerDefense.Api.Enums;

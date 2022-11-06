@@ -1,4 +1,4 @@
-﻿using TowerDefense.Api.Battle.Grid;
+﻿using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.Contracts.Turn

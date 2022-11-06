@@ -1,4 +1,4 @@
-﻿using TowerDefense.Api.Battle.Builders;
+﻿using TowerDefense.Api.GameLogic.Builders;
 
 namespace TowerDefense.Api.Models
 {

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TowerDefense.Api.Battle.Grid;
+using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Contracts.Grid;
 
 namespace TowerDefense.Api.Bootstrap.AutoMapper

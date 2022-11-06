@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TowerDefense.Api.Battle.Shop;
+using TowerDefense.Api.GameLogic.Shop;
 using TowerDefense.Api.Contracts.Shop;
 
 namespace TowerDefense.Api.Bootstrap.AutoMapper
