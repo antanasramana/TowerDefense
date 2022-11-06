@@ -10,7 +10,7 @@ namespace TowerDefense.Api.Decorator
 
         public HealthDecorator(IItem item) : base(item)
         {
-            if (item.Stats is DefaultZeroItemStats)
+            if (item.Stats is not DefaultZeroItemStats)
             {
                 Stats.Health = IncreaseHealth(item.Stats.Health);
             }
