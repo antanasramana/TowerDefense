@@ -1,6 +1,7 @@
 ﻿using TowerDefense.Api.GameLogic.ArenaAdapter;
 using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Constants;
+using static TowerDefense.Api.GameLogic.Strategies.StrategyHelper;
 
 namespace TowerDefense.Api.GameLogic.Strategies
 {
@@ -11,7 +12,8 @@ namespace TowerDefense.Api.GameLogic.Strategies
             var attackingItemRow = attackingGridItemId / Game.MaxGridGridItemsInRow;
             IMatrix opponentsMatrix = new ArenaGridAdapter(opponentsArenaGrid);
             var affectedGridItems = opponentsMatrix.GetItemsByRow(attackingItemRow)
-                                                   .OrderByDescending(x => x.Id);
+                                                    .Where(x => IsItemDamageable(x))
+                                                    .OrderByDescending(x => x.Id);
 
             return affectedGridItems.Select(x => x.Id);
         }
