@@ -1,4 +1,6 @@
-﻿using TowerDefense.Api.GameLogic.Grid;
+﻿using TowerDefense.Api.GameLogic.Builders;
+using TowerDefense.Api.GameLogic.Grid;
+using TowerDefense.Api.GameLogic.Strategies;
 using TowerDefense.Api.Models;
 using TowerDefense.Api.Models.Items;
 
@@ -18,7 +20,9 @@ namespace TowerDefense.Api.GameLogic.Decorator
 
         public override IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
-            var attackDeclarations = _item.Attack(opponentsArenaGrid, attackingGridItemId).ToList();
+            var dawAttackStrategy = new DawAttackStrategy();
+            var affectedGridItemList = dawAttackStrategy.AttackedGridItems(opponentsArenaGrid, attackingGridItemId);
+            var attackDeclarations = affectedGridItemList.Select(x => new AttackDeclaration() { GridItemId = x, Damage = Stats.Damage, DamageType = DamageType.Fire });
             IncreaseDamage(attackDeclarations);
             return attackDeclarations;
         }
