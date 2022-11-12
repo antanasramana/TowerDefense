@@ -36,12 +36,10 @@ namespace TowerDefense.Api.GameLogic.Handlers
             var player2ArenaGrid = player2.ArenaGrid;
 
             // Get all AttackDeclarations
-
             var player1AttackDeclarations = _attackHandler.HandlePlayerAttacks(player1ArenaGrid, player2ArenaGrid);
             var player2AttackDeclarations = _attackHandler.HandlePlayerAttacks(player2ArenaGrid, player1ArenaGrid);
 
             // Calculate players earned money 
-
             player1.Money += _attackHandler.PlayerEarnedMoneyAfterAttack(player1AttackDeclarations);
             player2.Money += _attackHandler.PlayerEarnedMoneyAfterAttack(player2AttackDeclarations);
 
