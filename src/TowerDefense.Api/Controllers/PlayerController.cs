@@ -36,7 +36,7 @@ namespace TowerDefense.Api.Controllers
                 Level.First => new FirstLevelFactory(),
                 Level.Second => new SecondLevelFactory(),
                 Level.Third => new ThirdLevelFactory(),
-                _ => throw new ArgumentOutOfRangeException()
+                _ => throw new ArgumentOutOfRangeException(nameof(addPlayerRequest))
             };
 
             var player = _initialGameSetupHandler.AddNewPlayerToGame(addPlayerRequest.PlayerName, abstractLevelFactory);

@@ -14,7 +14,7 @@ namespace TowerDefense.Api.GameLogic.Commands
 
         public void Undo(IPlayer player)
         {
-            return;
+            // Method intentionally left empty.
         }
     }
 }

@@ -5,6 +5,6 @@ namespace TowerDefense.Api.GameLogic.Observer
     public interface IAttackSubscriber
     {
         public int Id { get; set; }
-        public AttackResult HandleAttack(AttackDeclaration atackDeclaration);
+        public AttackResult HandleAttack(AttackDeclaration attackDeclaration);
     }
 }
