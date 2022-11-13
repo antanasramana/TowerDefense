@@ -1,0 +1,12 @@
+{
+  "ServerUri": "http://localhost:9000",
+  "Organization": null,
+  "ProjectKey": "TDG",
+  "ProjectName": "TowerDefenseGame",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AYRso4hflQH6Lmj1B2my",
+      "ProfileTimestamp": "2022-11-12T16:19:27Z"
+    }
+  }
+}
