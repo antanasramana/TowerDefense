@@ -6,7 +6,7 @@ namespace TowerDefense.Api.GameLogic.Commands
     {
         public bool Execute(IPlayer player)
         {
-            var commandExecutor = new CommandExecutor();
+            CommandExecutor commandExecutor = new CommandExecutor();
             commandExecutor.Undo(player);
 
             return false;
@@ -14,7 +14,7 @@ namespace TowerDefense.Api.GameLogic.Commands
 
         public void Undo(IPlayer player)
         {
-            return;
+            //nothing happens here
         }
     }
 }
