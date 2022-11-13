@@ -5,19 +5,19 @@ namespace TowerDefense.Api.GameLogic.Commands
 {
     public class PlaceCommand : ICommand
     {
-        private readonly string _inventoryItemId;
+        private readonly string InventoryItemId;
         private readonly int _gridItemId;
         private IItem previousItem;
         public PlaceCommand(string inventoryItemId, int gridItemId)
         {
-            _inventoryItemId = inventoryItemId;
+            InventoryItemId = inventoryItemId;
             _gridItemId = gridItemId;
         }
 
         public bool Execute(IPlayer player)
         {
             var inventory = player.Inventory;
-            var inventoryItem = inventory.Items.FirstOrDefault(x => x.Id == _inventoryItemId);
+            var inventoryItem = inventory.Items.FirstOrDefault(x => x.Id == InventoryItemId);
 
             if (inventoryItem == null) return false;
             inventory.Items.Remove(inventoryItem);
@@ -38,6 +38,7 @@ namespace TowerDefense.Api.GameLogic.Commands
             player.Inventory.Items.Add(selectedGridItem.Item);
 
             selectedGridItem.Item = previousItem;
+            player.Money += 100;
         }
     }
 }
