@@ -1,0 +1,1 @@
+sonar-scanner-4.7.0.2747-windows\bin\sonar-scanner.bat -D"sonar.projectKey=TDG-Web" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.login=sqp_e03396a0385471048cdf02781a7c55924f0edf19"
