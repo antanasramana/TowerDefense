@@ -5,6 +5,7 @@ using TowerDefense.Api.GameLogic.Handlers;
 using TowerDefense.Api.Contracts.Player;
 using TowerDefense.Api.Contracts.Turn;
 using TowerDefense.Api.Enums;
+using TowerDefense.Api.GameLogic.Mediator;
 
 namespace TowerDefense.Api.Controllers
 {
@@ -16,13 +17,16 @@ namespace TowerDefense.Api.Controllers
         private readonly IInitialGameSetupHandler _initialGameSetupHandler;
         private readonly IPlayerHandler _playerHandler;
         private readonly IMapper _mapper;
+        private readonly IGameMediator _gameMediator;
 
         public PlayerController (IBattleHandlerFacade battleHandler, 
+            IGameMediator gameMediator,
             IInitialGameSetupHandler initialGameSetupHandler, 
             IPlayerHandler playerHandler, 
             IMapper mapper)
         {
             _battleHandler = battleHandler;
+            _gameMediator = gameMediator;
             _initialGameSetupHandler = initialGameSetupHandler;
             _playerHandler = playerHandler;
             _mapper = mapper;
@@ -53,7 +57,6 @@ namespace TowerDefense.Api.Controllers
         public ActionResult<GetPlayerInfoResponse> GetInfo(string playerName)
         {
             var player = _playerHandler.GetPlayer(playerName);
-
             var getPlayerInfoResponse = _mapper.Map<GetPlayerInfoResponse>(player);
 
             return Ok(getPlayerInfoResponse);
@@ -62,8 +65,7 @@ namespace TowerDefense.Api.Controllers
         [HttpPost("endturn")]
         public ActionResult EndTurn(EndTurnRequest endTurnRequest)
         {
-            _battleHandler.HandleEndTurn(endTurnRequest.PlayerName);
-
+            _gameMediator.Notify(this, MediatorEvent.PlayerEndedTurn, endTurnRequest.PlayerName);
             return Ok();
         }
     }

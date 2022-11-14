@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using TowerDefense.Api.Contracts.Turn;
+using TowerDefense.Api.GameLogic;
+using TowerDefense.Api.GameLogic.Handlers;
+using TowerDefense.Api.GameLogic.Mediator;
 using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.Hubs
 {
-    public interface INotificationHub
+    public interface INotificationHub: IComponent
     {
+        Task NotifyGameResult(Dictionary<string, EndTurnResponse> responses);
         Task NotifyGameStart(IPlayer firstPlayer, IPlayer secondPlayer);
         Task SendEndTurnInfo(IPlayer player, EndTurnResponse turnOutcome);
     }
@@ -13,9 +17,27 @@ namespace TowerDefense.Api.Hubs
     public class NotificationHub : INotificationHub
     {
         private readonly IHubContext<GameHub> _gameHubContext;
-        public NotificationHub(IHubContext<GameHub> gameHubContext)
+        private IGameMediator _gameMediator;
+        private readonly IPlayerHandler _playerHandler;
+        public NotificationHub(IHubContext<GameHub> gameHubContext, IPlayerHandler playerHandler)
         {
+            _playerHandler = playerHandler;
             _gameHubContext = gameHubContext;
+        }
+        public void SetMediator(IGameMediator gameMediator)
+        {
+            _gameMediator = gameMediator;
+        }
+
+        public async Task NotifyGameResult(Dictionary<string, EndTurnResponse> responses)
+        {
+            foreach (var response in responses)
+            {
+                var player = _playerHandler.GetPlayer(response.Key);
+                SendEndTurnInfo(player, response.Value);
+            }
+
+            _gameMediator.Notify(this, MediatorEvent.TurnResponsesSent);
         }
 
         public async Task NotifyGameStart(IPlayer firstPlayer, IPlayer secondPlayer)
