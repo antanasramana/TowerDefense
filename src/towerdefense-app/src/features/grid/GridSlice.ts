@@ -8,6 +8,7 @@ import { GridItem } from '../../models/GridItem';
 import TileType from '../tile/enums/TileType';
 import { ExecuteCommandRequest } from '../../contracts/ExecuteCommandRequest';
 import CommandType from '../../models/CommandType';
+import { InterpretCommandRequest } from '../../contracts/InterpretCommandRequest';
 const API_URL = process.env.REACT_APP_BACKEND;
 
 interface Grid {
@@ -24,6 +25,14 @@ const initialState: Grid = {
 
 // TODO - ADD CONTRACTS
 // TODO - make it parametrized
+export const interpretCommand = createAsyncThunk('grid/command', async (commandtext: string) => {
+	const reduxStore = store.getState();
+	const interpretCommandRequest: InterpretCommandRequest = {
+		playerName: reduxStore.player.name,
+		commandText: commandtext,
+	};
+	await axios.post(`${API_URL}/grid/command/text`, interpretCommandRequest);
+});
 
 export const executeCommand = createAsyncThunk('grid/command', async (commandType: CommandType) => {
 	const reduxStore = store.getState();

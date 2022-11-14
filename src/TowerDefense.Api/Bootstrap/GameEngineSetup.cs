@@ -1,6 +1,7 @@
-﻿using TowerDefense.Api.GameLogic.Commands;
+using TowerDefense.Api.GameLogic.Commands;
 using TowerDefense.Api.GameLogic.Handlers;
 using TowerDefense.Api.GameLogic.Mediator;
+using TowerDefense.Api.GameLogic.Interpreter;
 using TowerDefense.Api.Hubs;
 
 namespace TowerDefense.Api.Bootstrap
@@ -19,6 +20,7 @@ namespace TowerDefense.Api.Bootstrap
             serviceCollection.AddTransient<IPlayerHandler, PlayerHandler>();
             serviceCollection.AddTransient<ICommandHandler, CommandHandler>();
             serviceCollection.AddTransient<ICommandExecutor, CommandExecutor>();
+            serviceCollection.AddTransient<ICommandInterpreter, CommandInterpreter>();
             serviceCollection.AddTransient<IAttackHandler, AttackHandler>();
             serviceCollection.AddTransient<IGameMediator, GameMediator>();
         }

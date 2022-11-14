@@ -10,7 +10,7 @@ import Grid from '../grid/Grid';
 import EndTurnButton from '../end-turn-button/EndTurnButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setName } from '../player/EnemySlice';
-import { getEnemyGridItems, getPlayerGridItems, executeCommand, setSelectedGridItemId } from '../grid/GridSlice';
+import { getEnemyGridItems, getPlayerGridItems, executeCommand, setSelectedGridItemId, interpretCommand } from '../grid/GridSlice';
 import { getPlayerInfo, useEndTurnMutation } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
 import { getInventoryItems } from '../inventory/InventorySlice';
@@ -31,6 +31,7 @@ const GameArena: React.FC = () => {
 	const [connection, setConnection] = useState<signalR.HubConnection>();
 	const [endTurnText, setEndTurnText] = useState<string>('End turn');
 
+	const [commandText, setCommandText] = useState<string>('');
 	const [playerAttackResult, setPlayerAttackResult] = useState<AttackResult[]>([]);
 	const [enemyAttackResult, setEnemyAttackResult] = useState<AttackResult[]>([]);
 
@@ -99,6 +100,12 @@ const GameArena: React.FC = () => {
 			dispatch(setSelectedGridItemId(-1));
 		}
 	}
+
+	async function sendCommand() {
+		await dispatch(interpretCommand(commandText));		
+		dispatch(getPlayerInfo());
+		dispatch(getInventoryItems());
+	}
 	return (
 		<div className='root-container'>
 			<div className='header'>
@@ -134,12 +141,17 @@ const GameArena: React.FC = () => {
 						<button className='command' onClick={()=>handleCommandClick(CommandType.Remove, true)}>
 							Remove
 						</button>
+						<div>
+							<input onChange={(e) => setCommandText(e.target.value)}></input>
+							<button onClick={sendCommand}>Send</button>
+						</div>
 					</div>
 					<Inventory />
 					<EndTurnButton onClick={onEndTurnClick} text={endTurnText} />
 					<Shop />
 				</div>
 			</div>
+
 		</div>
 	);
 };
