@@ -32,9 +32,17 @@ namespace TowerDefense.Api.Controllers
         }
 
         [HttpPost("command")]
-        public ActionResult AddGridItem(ExecuteCommandRequest commandRequest)
+        public ActionResult ExecuteCommand(ExecuteCommandRequest commandRequest)
         {
             _commandHandler.ExecuteCommandForPlayer(commandRequest);
+
+            return Ok();
+        }
+
+        [HttpPost("command/text")]
+        public ActionResult InterpretCommand(InterpretCommandRequest commandRequest)
+        {
+            _commandHandler.InterpretCommand(commandRequest);
 
             return Ok();
         }
