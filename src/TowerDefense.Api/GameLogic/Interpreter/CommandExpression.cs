@@ -2,7 +2,7 @@
 
 namespace TowerDefense.Api.GameLogic.Interpreter
 {
-    public interface ICommandExpression : IAbstractExpression
+    public interface ICommandExpression : IExpression
     {
         ICommand Evaluate();
     }

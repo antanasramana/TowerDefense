@@ -2,7 +2,7 @@
 
 namespace TowerDefense.Api.GameLogic.Interpreter
 {
-    public class ItemTypeExpression : IAbstractExpression
+    public class ItemTypeExpression : IExpression
     {
         public ItemType ItemType { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace TowerDefense.Api.GameLogic.Interpreter
 {
-    public class NumberExpression : IAbstractExpression
+    public class NumberExpression : IExpression
     {
         public int Ammount { get; set; }
         public bool Interpret(List<string> words)
