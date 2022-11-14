@@ -1,34 +1,32 @@
 ﻿using TowerDefense.Api.Contracts.Turn;
+using TowerDefense.Api.GameLogic.Mediator;
 using TowerDefense.Api.Hubs;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
-    public interface IBattleHandlerFacade
+    public interface IBattleHandlerFacade: IComponent
     {
-        void HandleEndTurn(string playerName);
+        void HandleEndTurn();
     }
 
     public class BattleHandlerFacade : IBattleHandlerFacade
     {
         private readonly GameState _gameState;
-        private readonly ITurnHandler _turnHandler;
-        private readonly INotificationHub _notificationHub;
         private readonly IAttackHandler _attackHandler;
+        private IGameMediator _gameMediator;
 
-        public BattleHandlerFacade(ITurnHandler turnHandler, INotificationHub notificationHub, IAttackHandler attackHandler)
+        public BattleHandlerFacade(IAttackHandler attackHandler)
         {
-            _turnHandler = turnHandler;
             _gameState = GameState.Instance;
-            _notificationHub = notificationHub;
             _attackHandler = attackHandler;
         }
-
-        public void HandleEndTurn(string playerName)
+        public void SetMediator(IGameMediator gameMediator)
         {
+            _gameMediator = gameMediator;
+        }
 
-            var areTurnsEnded = _turnHandler.TryEndTurn(playerName);
-            if (!areTurnsEnded) return;
-
+        public void HandleEndTurn()
+        {
             var player1 = _gameState.Players[0];
             var player2 = _gameState.Players[1];
 
@@ -61,8 +59,11 @@ namespace TowerDefense.Api.GameLogic.Handlers
                 EnemyAttackResults = player2AttackResults
             };
 
-            _notificationHub.SendEndTurnInfo(player1, player1TurnOutcome);
-            _notificationHub.SendEndTurnInfo(player2, player2TurnOutcome);
+            Dictionary<string, EndTurnResponse> responses = new Dictionary<string, EndTurnResponse>();
+            responses.Add(player1.Name, player1TurnOutcome);
+            responses.Add(player2.Name, player2TurnOutcome);
+
+            _gameMediator.Notify(this, MediatorEvent.TurnResultsCreated, responses);
         }
     }
 }
