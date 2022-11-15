@@ -1,6 +1,7 @@
 ﻿using TowerDefense.Api.GameLogic.Commands;
 using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.GameLogic.Observer;
+using TowerDefense.Api.GameLogic.PerkStorage;
 using TowerDefense.Api.GameLogic.Shop;
 
 namespace TowerDefense.Api.Models.Player;
@@ -17,4 +18,5 @@ public interface IPlayer
     IGridPublisher Publisher { get; set; }
     IShop Shop { get; set; }
     ICommandHistory CommandHistory { get; set; }
+    IPerkStorage PerkStorage { get; set; }
 }

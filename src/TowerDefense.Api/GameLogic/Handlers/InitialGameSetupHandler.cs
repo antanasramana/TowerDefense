@@ -12,6 +12,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
         IPlayer AddNewPlayerToGame(string playerName, IAbstractLevelFactory abstractLevelFactory);
         void SetArenaGridForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory);
         void SetShopForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory);
+        void SetPerkStorageForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory);
         void SetLevel(Level level);
         Task TryStartGame();
     }
@@ -52,6 +53,13 @@ namespace TowerDefense.Api.GameLogic.Handlers
             var player = _gameState.Players.First(x => x.Name == playerName);
             var shop = abstractLevelFactory.CreateShop();
             player.Shop = shop;
+        }
+
+        public void SetPerkStorageForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory)
+        {
+            var player = _gameState.Players.First(x => x.Name == playerName);
+            var perkStorage = abstractLevelFactory.CreatePerkStorage();
+            player.PerkStorage = perkStorage;
         }
 
         public void SetLevel(Level level)

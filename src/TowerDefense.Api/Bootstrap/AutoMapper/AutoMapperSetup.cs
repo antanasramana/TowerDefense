@@ -12,6 +12,7 @@ namespace TowerDefense.Api.Bootstrap.AutoMapper
                 cfg.AddProfile(new ShopMapProfile());
                 cfg.AddProfile(new ArenaGridMapProfile());
                 cfg.AddProfile(new PlayerMapProfile());
+                cfg.AddProfile(new PerkStorageProfile());
             });
             serviceCollection.AddSingleton(config.CreateMapper());
         }

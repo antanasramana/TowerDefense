@@ -1,0 +1,21 @@
+.perk-storage-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: -20px;
+    padding: 5px;
+    width: 350px;
+    height: 200px;
+    font-family: Quadrit;
+    font-size: 20px;
+    color: white;
+    -webkit-text-stroke: 1.5px black;
+    text-decoration: none;
+    background-color: transparent;
+    border: 2px solid white;
+    outline: 2px solid black;
+    outline-offset: 0px;
+    column-gap: 20px;
+    justify-content: center;
+    align-items: center;
+}

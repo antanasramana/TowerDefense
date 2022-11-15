@@ -23,6 +23,7 @@ namespace TowerDefense.Api.Bootstrap
             serviceCollection.AddTransient<ICommandInterpreter, CommandInterpreter>();
             serviceCollection.AddTransient<IAttackHandler, AttackHandler>();
             serviceCollection.AddTransient<IGameMediator, GameMediator>();
+            serviceCollection.AddTransient<IPerkHandler, PerkHandler>();
         }
     }
 }

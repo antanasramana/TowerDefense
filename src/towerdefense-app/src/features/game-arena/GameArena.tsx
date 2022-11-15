@@ -23,6 +23,7 @@ import { EndTurnResponse } from '../../contracts/EndTurnResponse';
 import { AttackResult } from '../../models/AttackResult';
 import CommandType from '../../models/CommandType';
 import ItemInfo from '../info/ItemInfo';
+import PerkStorage from '../perks/PerkStorage';
 
 const GameArena: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -150,6 +151,7 @@ const GameArena: React.FC = () => {
 					<EndTurnButton onClick={onEndTurnClick} text={endTurnText} />
 					<Shop />
 				</div>
+				<PerkStorage/>
 			</div>
 
 		</div>
