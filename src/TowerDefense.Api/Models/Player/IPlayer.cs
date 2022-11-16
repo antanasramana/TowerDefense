@@ -3,10 +3,11 @@ using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.GameLogic.Observer;
 using TowerDefense.Api.GameLogic.PerkStorage;
 using TowerDefense.Api.GameLogic.Shop;
+using TowerDefense.Api.GameLogic.Visitor;
 
 namespace TowerDefense.Api.Models.Player;
 
-public interface IPlayer
+public interface IPlayer : IAcceptingVisitor
 {
     string ConnectionId { get; set; }
     string Name { get; set; }

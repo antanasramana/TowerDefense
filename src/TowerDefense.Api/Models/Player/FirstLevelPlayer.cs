@@ -3,6 +3,7 @@ using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.GameLogic.Observer;
 using TowerDefense.Api.GameLogic.PerkStorage;
 using TowerDefense.Api.GameLogic.Shop;
+using TowerDefense.Api.GameLogic.Visitor;
 
 namespace TowerDefense.Api.Models.Player
 {
@@ -19,5 +20,9 @@ namespace TowerDefense.Api.Models.Player
         public IGridPublisher Publisher { get; set; } = new GridPublisher();
         public ICommandHistory CommandHistory { get; set; } = new CommandHistory();
         public IPerkStorage PerkStorage { get; set; } = null;
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

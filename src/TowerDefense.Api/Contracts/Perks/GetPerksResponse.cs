@@ -1,9 +1,10 @@
 ﻿using TowerDefense.Api.Models;
+using TowerDefense.Api.Models.Perks;
 
 namespace TowerDefense.Api.Contracts.Perks
 {
     public class GetPerksResponse
     {
-        public IEnumerable<Perk> Perks { get; set; }
+        public IEnumerable<IPerk> Perks { get; set; }
     }
 }

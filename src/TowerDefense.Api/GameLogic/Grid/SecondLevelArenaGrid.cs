@@ -1,4 +1,5 @@
 ﻿using TowerDefense.Api.Constants;
+using TowerDefense.Api.GameLogic.Visitor;
 
 namespace TowerDefense.Api.GameLogic.Grid
 {
@@ -19,6 +20,11 @@ namespace TowerDefense.Api.GameLogic.Grid
                                         32222222";
 
             GridItems.CreateGrid(gridLayout);
+        }
+
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 }

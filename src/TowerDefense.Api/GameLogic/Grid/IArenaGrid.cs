@@ -1,6 +1,8 @@
-﻿namespace TowerDefense.Api.GameLogic.Grid;
+﻿using TowerDefense.Api.GameLogic.Visitor;
 
-public interface IArenaGrid
+namespace TowerDefense.Api.GameLogic.Grid;
+
+public interface IArenaGrid : IAcceptingVisitor
 {
     GridItem[] GridItems { get; init; }
 }
