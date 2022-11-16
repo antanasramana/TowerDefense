@@ -1,6 +1,6 @@
 ﻿namespace TowerDefense.Api.Models.Perks
 {
-    public class BackInTimePerk : IPerk
+    public class BackInTimePerkDto : IPerkDto
     {
         public int Id { get; init; }
         public string Name => "Back in Time!";

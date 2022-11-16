@@ -5,6 +5,6 @@ namespace TowerDefense.Api.GameLogic.PerkStorage
 {
     public interface IPerkStorage
     {
-        public IEnumerable<IPerk> Perks { get; set; }
+        public IEnumerable<IPerkDto> Perks { get; set; }
     }
 }

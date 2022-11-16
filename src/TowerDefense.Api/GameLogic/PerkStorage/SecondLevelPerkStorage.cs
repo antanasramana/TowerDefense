@@ -4,9 +4,9 @@ namespace TowerDefense.Api.GameLogic.PerkStorage
 {
     public class SecondLevelPerkStorage : IPerkStorage
     {
-        public IEnumerable<IPerk> Perks { get; set; } = new IPerk[] {
-            new CutInHalfPerk{ Id = 1 },
-            new RestorePerk{ Id = 2 }
+        public IEnumerable<IPerkDto> Perks { get; set; } = new IPerkDto[] {
+            new CutInHalfPerkDto{ Id = 1 },
+            new RestorePerkDto{ Id = 2 }
         };
     }
 }

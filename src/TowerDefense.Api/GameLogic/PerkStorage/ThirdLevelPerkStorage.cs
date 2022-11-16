@@ -4,11 +4,11 @@ namespace TowerDefense.Api.GameLogic.PerkStorage
 {
     public class ThirdLevelPerkStorage : IPerkStorage
     {
-        public IEnumerable<IPerk> Perks { get; set; } = new IPerk[] {
-            new CutInHalfPerk{ Id = 1 },
-            new RestorePerk{ Id = 2 },
-            new RemoveEverythingPerk{ Id = 3 },
-            new BackInTimePerk{ Id = 4 }
+        public IEnumerable<IPerkDto> Perks { get; set; } = new IPerkDto[] {
+            new CutInHalfPerkDto{ Id = 1 },
+            new RestorePerkDto{ Id = 2 },
+            new RemoveEverythingPerkDto{ Id = 3 },
+            new BackInTimePerkDto{ Id = 4 }
         };
     }
 }

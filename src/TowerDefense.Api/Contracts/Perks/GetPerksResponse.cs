@@ -5,6 +5,6 @@ namespace TowerDefense.Api.Contracts.Perks
 {
     public class GetPerksResponse
     {
-        public IEnumerable<IPerk> Perks { get; set; }
+        public IEnumerable<IPerkDto> Perks { get; set; }
     }
 }
