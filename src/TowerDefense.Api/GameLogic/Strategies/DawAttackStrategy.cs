@@ -22,7 +22,7 @@ namespace TowerDefense.Api.GameLogic.Strategies
                 if (IsItemDamageable(gridItem))
                 {
                     affectedGridItems.Add(gridItem.Id);
-                    centerOfDaw = gridItem.Id % Game.MaxGridGridItemsInRow;
+                    centerOfDaw = gridItem.Id % Constants.TowerDefense.MaxGridGridItemsInRow;
                     break;
                 }
             }

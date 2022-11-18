@@ -1,4 +1,5 @@
-﻿using TowerDefense.Api.Models.Player;
+﻿using TowerDefense.Api.GameLogic.GameState;
+using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
@@ -9,16 +10,16 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class PlayerHandler : IPlayerHandler
     {
-        private readonly GameState _gameState;
+        private readonly Game _game;
 
         public PlayerHandler()
         {
-            _gameState = GameState.Instance;
+            _game = Game.Instance;
         }
 
         public IPlayer GetPlayer(string playerName)
         {
-            return _gameState.Players.First(player => player.Name == playerName);
+            return _game.State.Players.First(player => player.Name == playerName);
         }
     }
 }

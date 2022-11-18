@@ -30,7 +30,7 @@ namespace TowerDefense.Api.Controllers
         [HttpPost]
         public ActionResult PostPerk(ApplyPerkRequest applyPerkRequest)
         {
-            _perkHandler.ApplyPerk(applyPerkRequest.PlayerName, applyPerkRequest.PerkId);
+            _perkHandler.UsePerk(applyPerkRequest.PlayerName, applyPerkRequest.PerkId);
 
             return Ok();
         }

@@ -1,5 +1,6 @@
 ﻿using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Models;
+using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.GameLogic.Visitor
@@ -8,17 +9,26 @@ namespace TowerDefense.Api.GameLogic.Visitor
     {
         public void Visit(Inventory inventory)
         {
-            throw new NotImplementedException();
+            inventory.Items = inventory.Items.Where((_, index) => index % 2 == 0).ToList();
         }
 
         public void Visit(IPlayer player)
         {
-            throw new NotImplementedException();
+            player.Armor /= 2;
+            player.Health /= 2;
+            player.Money /= 2;
         }
 
         public void Visit(IArenaGrid arenaGrid)
         {
-            throw new NotImplementedException();
+            foreach (var gridItem in arenaGrid.GridItems.Where((_, index) => index % 2 == 0))
+            {
+                gridItem.Item = gridItem.ItemType switch
+                {
+                    ItemType.Placeholder => new Placeholder(),
+                    _ => new Blank()
+                };
+            }
         }
     }
 }

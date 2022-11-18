@@ -5,7 +5,7 @@ namespace TowerDefense.Api.GameLogic.Grid
 {
     public class SecondLevelArenaGrid : IArenaGrid
     {
-        public GridItem[] GridItems { get; init; } = new GridItem[Game.MaxGridGridItemsForPlayer];
+        public GridItem[] GridItems { get; set; } = new GridItem[Constants.TowerDefense.MaxGridGridItemsForPlayer];
 
         public SecondLevelArenaGrid()
         {

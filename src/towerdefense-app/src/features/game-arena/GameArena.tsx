@@ -9,7 +9,7 @@ import Inventory from '../inventory/Inventory';
 import Grid from '../grid/Grid';
 import EndTurnButton from '../end-turn-button/EndTurnButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { setName } from '../player/EnemySlice';
+import { getEnemyInfo, setName } from '../player/EnemySlice';
 import { getEnemyGridItems, getPlayerGridItems, executeCommand, setSelectedGridItemId, interpretCommand } from '../grid/GridSlice';
 import { getPlayerInfo, useEndTurnMutation } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
@@ -71,8 +71,10 @@ const GameArena: React.FC = () => {
 						setPlayerAttackResult(endTurnResponse.playerAttackResults);
 						setEnemyAttackResult(endTurnResponse.enemyAttackResults);
 						dispatch(getEnemyGridItems());
+						dispatch(getEnemyInfo());
 						dispatch(getPlayerGridItems());
 						dispatch(getPlayerInfo());
+						dispatch(getInventoryItems());
 						setEndTurnText('End Turn');
 					});
 				})

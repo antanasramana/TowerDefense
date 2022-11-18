@@ -69,6 +69,7 @@
   border: 2px solid white;
   outline: 2px solid black;
   outline-offset: 0px;
+  width: 200px;
 }
 .command:hover {
   background-color: rgba(128, 128, 128, 0.462);

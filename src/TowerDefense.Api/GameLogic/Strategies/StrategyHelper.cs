@@ -8,7 +8,7 @@ namespace TowerDefense.Api.GameLogic.Strategies
     {
         public static int GetAttackingItemRow(int attackingGridItemId)
         {
-            return attackingGridItemId / Game.MaxGridGridItemsInRow;
+            return attackingGridItemId / Constants.TowerDefense.MaxGridGridItemsInRow;
         }
 
         public static bool IsItemDamageable(GridItem gridItem)

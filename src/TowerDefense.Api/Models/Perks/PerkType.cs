@@ -1,10 +1,10 @@
-﻿namespace TowerDefense.Api.Models
+﻿namespace TowerDefense.Api.Models.Perks
 {
     public enum PerkType
     {
         CutInHalf,
-        Restore,
+        BackInTime,
         RemoveEverything,
-        BackInTime
+        Restore
     }
 }

@@ -1,5 +1,4 @@
-﻿using TowerDefense.Api.Models;
-using TowerDefense.Api.Models.Perks;
+﻿using TowerDefense.Api.Models.Perks;
 
 namespace TowerDefense.Api.Contracts.Perks
 {
