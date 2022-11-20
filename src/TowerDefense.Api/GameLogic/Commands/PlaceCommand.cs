@@ -11,6 +11,7 @@ namespace TowerDefense.Api.GameLogic.Commands
         private readonly string _inventoryItemId;
         private readonly int _gridItemId;
         private IItem _previousItem;
+        private IHandler _handlerChain;
         public PlaceCommand(string inventoryItemId, int gridItemId)
         {
             _inventoryItemId = inventoryItemId;
@@ -19,10 +20,10 @@ namespace TowerDefense.Api.GameLogic.Commands
 
         public bool Execute(IPlayer player)
         {
-            var handlerChain = CreateChain();
+            _handlerChain = CreateChain();
             var chainRequest = CreateChainRequest(player);
 
-            var previousItem = handlerChain.Handle(chainRequest);
+            var previousItem = _handlerChain.Handle(chainRequest);
             if (previousItem == null) return false;
 
             _previousItem = previousItem;

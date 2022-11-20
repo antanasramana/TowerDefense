@@ -1,7 +1,6 @@
 ﻿using TowerDefense.Api.GameLogic.ChainOfResponsibility.ActionHandlers;
 using TowerDefense.Api.GameLogic.ChainOfResponsibility.ValidationHandlers;
 using TowerDefense.Api.GameLogic.ChainOfResponsibility;
-using TowerDefense.Api.GameLogic.Decorator;
 using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Models.Player;
 
@@ -11,6 +10,7 @@ namespace TowerDefense.Api.GameLogic.Commands
     {
         private readonly int _gridItemId;
         private IItem _itemBeforeUpgrade;
+        private IHandler _handlerChain;
 
         public UpgradeCommand(int gridItemId)
         {
@@ -19,10 +19,10 @@ namespace TowerDefense.Api.GameLogic.Commands
 
         public bool Execute(IPlayer player)
         {
-            var handlerChain = CreateChain();
+            _handlerChain = CreateChain();
             var chainRequest = CreateChainRequest(player);
 
-            var itemBeforeUpgrade = handlerChain.Handle(chainRequest);
+            var itemBeforeUpgrade = _handlerChain.Handle(chainRequest);
             if (itemBeforeUpgrade == null) return false;
 
             _itemBeforeUpgrade = itemBeforeUpgrade;

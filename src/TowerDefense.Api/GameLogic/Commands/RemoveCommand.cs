@@ -10,6 +10,7 @@ namespace TowerDefense.Api.GameLogic.Commands
     {
         private readonly int _gridItemId;
         private IItem _removedItem;
+        private IHandler _handlerChain;
 
         public RemoveCommand(int gridItemId)
         {
@@ -19,9 +20,9 @@ namespace TowerDefense.Api.GameLogic.Commands
         public bool Execute(IPlayer player)
         {
             var chainRequest = CreateChainRequest(player);
-            var handlerChain = CreateChain();
+            _handlerChain = CreateChain();
 
-            var removedItem = handlerChain.Handle(chainRequest);
+            var removedItem = _handlerChain.Handle(chainRequest);
             if (removedItem == null) return false;
 
             _removedItem = removedItem;
