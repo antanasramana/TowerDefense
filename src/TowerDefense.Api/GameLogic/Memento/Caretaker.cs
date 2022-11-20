@@ -3,7 +3,7 @@
     public interface ICaretaker
     {
         void AddSnapshot(IMemento memento);
-        IMemento GoBackToPreviousState();
+        IMemento GetPreviousState();
     }
 
     public class Caretaker : ICaretaker
@@ -14,7 +14,7 @@
         {
             _snapshotHistory.Push(memento);
         }
-        public IMemento GoBackToPreviousState()
+        public IMemento GetPreviousState()
         {
             _snapshotHistory.Pop();
             return _snapshotHistory.Peek();

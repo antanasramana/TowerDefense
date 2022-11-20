@@ -56,7 +56,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
             {
                 if (playerPerkPair.Perk.Type == PerkType.BackInTime)
                 {
-                    var snapshot = _caretaker.GoBackToPreviousState();
+                    var snapshot = _caretaker.GetPreviousState();
                     snapshot.Restore();
 
                     var playerThatUsedPerk = _game.State.Players.First(x => x.Name == playerPerkPair.PlayerName);
