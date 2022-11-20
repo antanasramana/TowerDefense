@@ -99,6 +99,7 @@ const GameArena: React.FC = () => {
 		await dispatch(executeCommand(commandType));		
 		dispatch(getPlayerGridItems());
 		dispatch(getInventoryItems());
+		dispatch(getPlayerInfo());
 		if (resetGridSelection){
 			dispatch(setSelectedGridItemId(-1));
 		}
