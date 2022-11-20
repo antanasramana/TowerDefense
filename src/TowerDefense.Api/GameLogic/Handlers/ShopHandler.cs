@@ -11,11 +11,11 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class ShopHandler : IShopHandler
     {
-        private readonly Game _game;
+        private readonly GameOriginator _game;
 
         public ShopHandler()
         {
-            _game = Game.Instance;
+            _game = GameOriginator.Instance;
         }
 
         public IShop GetPlayerShop(string playerName)

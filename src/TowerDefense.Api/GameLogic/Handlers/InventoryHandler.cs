@@ -13,10 +13,10 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class InventoryHandler : IInventoryHandler
     {
-        private readonly Game _game;
+        private readonly GameOriginator _game;
         public InventoryHandler()
         {
-            _game = Game.Instance;
+            _game = GameOriginator.Instance;
         }
         public Inventory GetPlayerInventory(string playerName)
         {

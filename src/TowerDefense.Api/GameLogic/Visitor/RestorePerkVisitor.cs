@@ -8,11 +8,11 @@ namespace TowerDefense.Api.GameLogic.Visitor
 {
     public class RestorePerkVisitor : IVisitor
     {
-        private readonly Game _game;
+        private readonly GameOriginator _game;
 
         public RestorePerkVisitor()
         {
-            _game = Game.Instance;
+            _game = GameOriginator.Instance;
         }
         public void Visit(Inventory inventory)
         {

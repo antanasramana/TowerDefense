@@ -10,11 +10,11 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class PlayerHandler : IPlayerHandler
     {
-        private readonly Game _game;
+        private readonly GameOriginator _game;
 
         public PlayerHandler()
         {
-            _game = Game.Instance;
+            _game = GameOriginator.Instance;
         }
 
         public IPlayer GetPlayer(string playerName)

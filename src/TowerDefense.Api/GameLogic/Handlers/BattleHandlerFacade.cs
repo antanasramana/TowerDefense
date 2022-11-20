@@ -15,7 +15,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class BattleHandlerFacade : IBattleHandlerFacade
     {
-        private readonly Game _game;
+        private readonly GameOriginator _game;
         private readonly IAttackHandler _attackHandler;
         private IGameMediator _gameMediator;
         private readonly IPerkHandler _perkHandler;
@@ -23,7 +23,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
         public BattleHandlerFacade(IAttackHandler attackHandler, IPerkHandler perkHandler, ICaretaker caretaker)
         {
-            _game = Game.Instance;
+            _game = GameOriginator.Instance;
             _attackHandler = attackHandler;
             _perkHandler = perkHandler;
             _caretaker = caretaker;

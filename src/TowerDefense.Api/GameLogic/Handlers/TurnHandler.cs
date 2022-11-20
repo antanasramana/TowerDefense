@@ -12,12 +12,12 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class TurnHandler: ITurnHandler
     {
-        private readonly Game _game;
+        private readonly GameOriginator _game;
         private IGameMediator _gameMediator;
 
         public TurnHandler()
         {
-            _game = Game.Instance;
+            _game = GameOriginator.Instance;
         }
 
         public void SetMediator(IGameMediator gameMediator)

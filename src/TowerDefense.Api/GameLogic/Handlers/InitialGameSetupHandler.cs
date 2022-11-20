@@ -21,13 +21,13 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class InitialGameSetupHandler : IInitialGameSetupHandler
     {
-        private readonly Game _game;
+        private readonly GameOriginator _game;
         private readonly INotificationHub _notificationHub;
         private readonly ICaretaker _caretaker;
 
         public InitialGameSetupHandler(INotificationHub notificationHub, ICaretaker caretaker)
         {
-            _game = Game.Instance;
+            _game = GameOriginator.Instance;
             _notificationHub = notificationHub;
             _caretaker = caretaker;
         }

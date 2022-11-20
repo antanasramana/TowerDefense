@@ -3,10 +3,10 @@ using TowerDefense.Api.GameLogic.Memento;
 
 namespace TowerDefense.Api.GameLogic.GameState
 {
-    public class Game
+    public class GameOriginator
     {
-        private Game() { }
-        public static Game Instance { get; } = new();
+        private GameOriginator() { }
+        public static GameOriginator Instance { get; } = new();
         public State State { get; set; } = new();
 
         public IMemento SaveSnapshot()

@@ -17,11 +17,11 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class PerkHandler : IPerkHandler
     {
-        private readonly Game _game;
+        private readonly GameOriginator _game;
         private readonly ICaretaker _caretaker;
         public PerkHandler(ICaretaker caretaker)
         {
-            _game = Game.Instance;
+            _game = GameOriginator.Instance;
             _caretaker = caretaker;
         }
 

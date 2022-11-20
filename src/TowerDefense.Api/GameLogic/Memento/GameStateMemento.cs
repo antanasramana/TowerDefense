@@ -4,10 +4,10 @@ namespace TowerDefense.Api.GameLogic.Memento
 {
     public class GameStateMemento : IMemento
     {
-        private readonly Game _game;
+        private readonly GameOriginator _game;
         private readonly State _state;
 
-        public GameStateMemento(Game game, State state)
+        public GameStateMemento(GameOriginator game, State state)
         {
             _game = game;
             _state = state;
