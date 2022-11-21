@@ -9,7 +9,7 @@ namespace TowerDefense.Api.GameLogic.Strategies
     {
         public IEnumerable<int> AttackedGridItems(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
-            var attackingItemRow = attackingGridItemId / Game.MaxGridGridItemsInRow;
+            var attackingItemRow = attackingGridItemId / Constants.TowerDefense.MaxGridGridItemsInRow;
             IMatrix opponentsMatrix = new ArenaGridAdapter(opponentsArenaGrid);
             var affectedGridItems = opponentsMatrix.GetItemsByRow(attackingItemRow)
                                                     .Where(x => IsItemDamageable(x))

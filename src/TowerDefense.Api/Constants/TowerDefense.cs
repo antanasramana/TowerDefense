@@ -1,6 +1,6 @@
 ﻿namespace TowerDefense.Api.Constants
 {
-    public static class Game
+    public static class TowerDefense
     {
         public const int MaxNumberOfPlayers = 2;
         public const int MaxGridItemsInColumn = 8;

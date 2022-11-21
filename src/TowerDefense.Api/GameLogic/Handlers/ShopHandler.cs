@@ -1,4 +1,5 @@
-﻿using TowerDefense.Api.GameLogic.Shop;
+﻿using TowerDefense.Api.GameLogic.GameState;
+using TowerDefense.Api.GameLogic.Shop;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
@@ -10,23 +11,23 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class ShopHandler : IShopHandler
     {
-        private readonly GameState _gameState;
+        private readonly GameOriginator _game;
 
         public ShopHandler()
         {
-            _gameState = GameState.Instance;
+            _game = GameOriginator.Instance;
         }
 
         public IShop GetPlayerShop(string playerName)
         {
-            var player = _gameState.Players.First(player => player.Name == playerName);
+            var player = _game.State.Players.First(player => player.Name == playerName);
 
             return player.Shop;
         }
 
         public bool TryBuyItem(string playerName, string identifier)
         {
-            var player = _gameState.Players.First(player => player.Name == playerName);
+            var player = _game.State.Players.First(player => player.Name == playerName);
             var item = player.Shop.Items.First(item => item.Id == identifier);
 
             if (item == null) return false;

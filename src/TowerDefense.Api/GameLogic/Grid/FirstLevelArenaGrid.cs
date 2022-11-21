@@ -1,10 +1,11 @@
 ﻿using TowerDefense.Api.Constants;
+using TowerDefense.Api.GameLogic.Visitor;
 
 namespace TowerDefense.Api.GameLogic.Grid
 {
     public class FirstLevelArenaGrid : IArenaGrid
     {
-        public GridItem[] GridItems { get; init; } = new GridItem[Game.MaxGridGridItemsForPlayer];
+        public GridItem[] GridItems { get; set; } = new GridItem[Constants.TowerDefense.MaxGridGridItemsForPlayer];
 
         public FirstLevelArenaGrid()
         {
@@ -19,6 +20,11 @@ namespace TowerDefense.Api.GameLogic.Grid
                                         33333333";
 
             GridItems.CreateGrid(gridLayout);
+        }
+
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 }

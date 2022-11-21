@@ -46,6 +46,7 @@ namespace TowerDefense.Api.Controllers
             var player = _initialGameSetupHandler.AddNewPlayerToGame(addPlayerRequest.PlayerName, abstractLevelFactory);
             _initialGameSetupHandler.SetArenaGridForPlayer(addPlayerRequest.PlayerName, abstractLevelFactory);
             _initialGameSetupHandler.SetShopForPlayer(addPlayerRequest.PlayerName, abstractLevelFactory);
+            _initialGameSetupHandler.SetPerkStorageForPlayer(addPlayerRequest.PlayerName, abstractLevelFactory);
             _initialGameSetupHandler.SetLevel(addPlayerRequest.Level);
 
             var addNewPlayerResponse = _mapper.Map<AddNewPlayerResponse>(player);

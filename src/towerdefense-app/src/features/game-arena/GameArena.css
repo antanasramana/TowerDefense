@@ -35,6 +35,7 @@
   justify-content: flex-start;
   width: 1800px;
   margin-top: 20px;
+  column-gap: 1070px;
 }
 
 .controls {
@@ -44,7 +45,7 @@
   justify-content: space-between;
   width: 1024px;
   margin-top: 20px;
-
+  /* kol sita chaltura issiaiskinau...*/
   flex: 0 1 auto;
   position: absolute;
   /* new */
@@ -68,6 +69,7 @@
   border: 2px solid white;
   outline: 2px solid black;
   outline-offset: 0px;
+  width: 200px;
 }
 .command:hover {
   background-color: rgba(128, 128, 128, 0.462);

@@ -1,4 +1,5 @@
-﻿using TowerDefense.Api.Models;
+﻿using TowerDefense.Api.GameLogic.GameState;
+using TowerDefense.Api.Models;
 using TowerDefense.Api.Models.Items;
 
 namespace TowerDefense.Api.GameLogic.Handlers
@@ -12,20 +13,20 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class InventoryHandler : IInventoryHandler
     {
-        private readonly GameState _gameState;
+        private readonly GameOriginator _game;
         public InventoryHandler()
         {
-            _gameState = GameState.Instance;
+            _game = GameOriginator.Instance;
         }
         public Inventory GetPlayerInventory(string playerName)
         {
-            var player = _gameState.Players.First(x => x.Name == playerName);
+            var player = _game.State.Players.First(x => x.Name == playerName);
             return player.Inventory;
         }
 
         public IItem GetItemFromPlayerInventory(string playerName, string inventoryItemId)
         {
-            var player = _gameState.Players.First(x => x.Name == playerName);
+            var player = _game.State.Players.First(x => x.Name == playerName);
 
             var inventoryItem = player.Inventory.Items.FirstOrDefault(x => x.Id == inventoryItemId);
 
@@ -34,7 +35,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
         public void RemoveItemFromPlayerInventory(string playerName, string inventoryItemId)
         {
-            var player = _gameState.Players.First(x => x.Name == playerName);
+            var player = _game.State.Players.First(x => x.Name == playerName);
 
             var inventoryItem = GetItemFromPlayerInventory(playerName, inventoryItemId);
 

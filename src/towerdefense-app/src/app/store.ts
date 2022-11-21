@@ -4,6 +4,7 @@ import enemyReducer from '../features/player/EnemySlice';
 import shopReducer from '../features/shop/ShopSlice';
 import inventoryReducer from '../features/inventory/InventorySlice';
 import gridReducer from '../features/grid/GridSlice';
+import perkStorageReducer from '../features/perks/PerkStorageSlice';
 import { apiSlice } from '../features/player/PlayerSlice';
 import { shopApiSlice } from '../features/shop/ShopSlice';
 import { gridApiSlice } from '../features/grid/GridSlice';
@@ -24,6 +25,7 @@ export const store = configureStore({
 		shop: shopReducer,
 		inventory: inventoryReducer,
 		grid: gridReducer,
+		perkStorage: perkStorageReducer,
 		[apiSlice.reducerPath]: apiSlice.reducer,
 		[shopApiSlice.reducerPath]: shopApiSlice.reducer,
 		[gridApiSlice.reducerPath]: gridApiSlice.reducer,

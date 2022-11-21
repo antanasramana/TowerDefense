@@ -1,6 +1,8 @@
 ﻿using TowerDefense.Api.GameLogic.Factories;
 using TowerDefense.Api.Constants;
 using TowerDefense.Api.Enums;
+using TowerDefense.Api.GameLogic.GameState;
+using TowerDefense.Api.GameLogic.Memento;
 using TowerDefense.Api.Hubs;
 using TowerDefense.Api.Models.Player;
 
@@ -12,65 +14,83 @@ namespace TowerDefense.Api.GameLogic.Handlers
         IPlayer AddNewPlayerToGame(string playerName, IAbstractLevelFactory abstractLevelFactory);
         void SetArenaGridForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory);
         void SetShopForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory);
+        void SetPerkStorageForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory);
         void SetLevel(Level level);
         Task TryStartGame();
     }
 
     public class InitialGameSetupHandler : IInitialGameSetupHandler
     {
-        private readonly GameState _gameState;
+        private readonly GameOriginator _game;
         private readonly INotificationHub _notificationHub;
+        private readonly ICaretaker _caretaker;
 
-        public InitialGameSetupHandler(INotificationHub notificationHub)
+        public InitialGameSetupHandler(INotificationHub notificationHub, ICaretaker caretaker)
         {
-            _gameState = GameState.Instance;
+            _game = GameOriginator.Instance;
             _notificationHub = notificationHub;
+            _caretaker = caretaker;
         }
 
         public void SetConnectionIdForPlayer(string playerName, string connectionId)
         {
-            var player = _gameState.Players.First(x => x.Name == playerName);
+            var player = _game.State.Players.First(x => x.Name == playerName);
             player.ConnectionId = connectionId;
         }
 
         public async Task TryStartGame()
         {
-            if (_gameState.ActivePlayers != Game.MaxNumberOfPlayers) return;
+            if (_game.State.ActivePlayers != Constants.TowerDefense.MaxNumberOfPlayers) return;
 
-            await _notificationHub.NotifyGameStart(_gameState.Players[0], _gameState.Players[1]);
+            SaveInitialSnapshot();
+
+            await _notificationHub.NotifyGameStart(_game.State.Players[0], _game.State.Players[1]);
         }
 
         public void SetArenaGridForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory)
         {
-            var player = _gameState.Players.First(x => x.Name == playerName);
+            var player = _game.State.Players.First(x => x.Name == playerName);
             var arenaGrid = abstractLevelFactory.CreateArenaGrid();
             player.ArenaGrid = arenaGrid;
         }
 
         public void SetShopForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory)
         {
-            var player = _gameState.Players.First(x => x.Name == playerName);
+            var player = _game.State.Players.First(x => x.Name == playerName);
             var shop = abstractLevelFactory.CreateShop();
             player.Shop = shop;
         }
 
+        public void SetPerkStorageForPlayer(string playerName, IAbstractLevelFactory abstractLevelFactory)
+        {
+            var player = _game.State.Players.First(x => x.Name == playerName);
+            var perkStorage = abstractLevelFactory.CreatePerkStorage();
+            player.PerkStorage = perkStorage;
+        }
+
         public void SetLevel(Level level)
         {
-            _gameState.Level = level;
+            _game.State.Level = level;
         }
 
         public IPlayer AddNewPlayerToGame(string playerName, IAbstractLevelFactory abstractLevelFactory)
         {
-            if (_gameState.ActivePlayers == Game.MaxNumberOfPlayers)
+            if (_game.State.ActivePlayers == Constants.TowerDefense.MaxNumberOfPlayers)
             {
                 throw new ArgumentException();
             }
 
-            var currentNewPlayerId = _gameState.ActivePlayers;
+            var currentNewPlayerId = _game.State.ActivePlayers;
             var newPlayer = abstractLevelFactory.CreatePlayer(playerName);
-            _gameState.Players[currentNewPlayerId] = newPlayer;
+            _game.State.Players[currentNewPlayerId] = newPlayer;
 
             return newPlayer;
+        }
+
+        private void SaveInitialSnapshot()
+        {
+            var snapshot = _game.SaveSnapshot();
+            _caretaker.AddSnapshot(snapshot);
         }
     }
 }

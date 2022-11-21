@@ -1,4 +1,7 @@
-﻿using TowerDefense.Api.Models.Items;
+﻿using TowerDefense.Api.GameLogic.ChainOfResponsibility;
+using TowerDefense.Api.GameLogic.ChainOfResponsibility.ActionHandlers;
+using TowerDefense.Api.GameLogic.ChainOfResponsibility.ValidationHandlers;
+using TowerDefense.Api.Models.Items;
 using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.GameLogic.Commands
@@ -7,7 +10,8 @@ namespace TowerDefense.Api.GameLogic.Commands
     {
         private readonly string _inventoryItemId;
         private readonly int _gridItemId;
-        private IItem previousItem;
+        private IItem _previousItem;
+        private IHandler _handlerChain;
         public PlaceCommand(string inventoryItemId, int gridItemId)
         {
             _inventoryItemId = inventoryItemId;
@@ -16,17 +20,13 @@ namespace TowerDefense.Api.GameLogic.Commands
 
         public bool Execute(IPlayer player)
         {
-            var inventory = player.Inventory;
-            var inventoryItem = inventory.Items.FirstOrDefault(x => x.Id == _inventoryItemId);
+            _handlerChain = CreateChain();
+            var chainRequest = CreateChainRequest(player);
 
-            if (inventoryItem == null) return false;
-            inventory.Items.Remove(inventoryItem);
+            var previousItem = _handlerChain.Handle(chainRequest);
+            if (previousItem == null) return false;
 
-            var selectedGridItem = player.ArenaGrid.GridItems[_gridItemId];
-            previousItem = selectedGridItem.Item;
-            selectedGridItem.Item = inventoryItem;
-
-            player.Publisher.Attach(selectedGridItem);
+            _previousItem = previousItem;
             return true;
         }
 
@@ -37,7 +37,29 @@ namespace TowerDefense.Api.GameLogic.Commands
 
             player.Inventory.Items.Add(selectedGridItem.Item);
 
-            selectedGridItem.Item = previousItem;
+            selectedGridItem.Item = _previousItem;
+        }
+
+        private static IHandler CreateChain()
+        {
+            var inventoryValidationHandler = new InventoryItemValidationHandler();
+            var gridItemValidationHandler = new GridItemValidationHandler();
+            var placeActionHandler = new PlaceActionHandler();
+
+            inventoryValidationHandler.NextHandler = gridItemValidationHandler;
+            gridItemValidationHandler.NextHandler = placeActionHandler;
+
+            return inventoryValidationHandler;
+        }
+
+        private Request CreateChainRequest(IPlayer player)
+        {
+            return new Request
+            {
+                GridItemId = _gridItemId,
+                InventoryId = _inventoryItemId,
+                Player = player
+            };
         }
     }
 }
