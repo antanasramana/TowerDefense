@@ -1,5 +1,6 @@
 ﻿using TowerDefense.Api.GameLogic.ArenaAdapter;
 using TowerDefense.Api.GameLogic.Grid;
+using TowerDefense.Api.GameLogic.Iterator;
 using static TowerDefense.Api.GameLogic.Strategies.StrategyHelper;
 
 namespace TowerDefense.Api.GameLogic.Strategies
@@ -10,10 +11,9 @@ namespace TowerDefense.Api.GameLogic.Strategies
         {
             var affectedRow = GetAttackingItemRow(attackingGridItemId);
 
-            IMatrix opponentsMatrix = new ArenaGridAdapter(opponentsArenaGrid);
-            var affectedFirstGridItem = GetAffectedGridItems(opponentsMatrix, affectedRow - 1);
-            var affectedSecondGridItem = GetAffectedGridItems(opponentsMatrix, affectedRow);
-            var affectedThirdGridItem = GetAffectedGridItems(opponentsMatrix, affectedRow + 1);
+            var affectedFirstGridItem = GetAffectedGridItems(opponentsArenaGrid, affectedRow - 1);
+            var affectedSecondGridItem = GetAffectedGridItems(opponentsArenaGrid, affectedRow);
+            var affectedThirdGridItem = GetAffectedGridItems(opponentsArenaGrid, affectedRow + 1);
 
 
             var affectedGridItems = new List<int>();
@@ -24,19 +24,21 @@ namespace TowerDefense.Api.GameLogic.Strategies
             return affectedGridItems;
         }
 
-        private static int? GetAffectedGridItems(IMatrix opponentsArenaGrid, int targetRow)
+        private static int? GetAffectedGridItems(IArenaGrid opponentsArenaGrid, int targetRow)
         {
             int? affectedItemId = null;
-            var opponentsAffectedGridItems = opponentsArenaGrid.GetItemsByRow(targetRow)
-                                                               .OrderByDescending(x => x.Id);
 
-            foreach (var gridItem in opponentsAffectedGridItems)
+            IIterator opponentsItems = opponentsArenaGrid.GetIterator(targetRow);
+
+            while (opponentsItems.HasMore())
             {
+                var gridItem = opponentsItems.GetNext();
                 if (IsItemDamageable(gridItem))
                 {
                     return gridItem.Id;
                 }
             }
+
             return affectedItemId;
         }
 

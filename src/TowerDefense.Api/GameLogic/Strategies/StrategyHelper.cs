@@ -11,6 +11,11 @@ namespace TowerDefense.Api.GameLogic.Strategies
             return attackingGridItemId / Constants.TowerDefense.MaxGridGridItemsInRow;
         }
 
+        public static int GetAttackingItemColumn(int attackingGridItemId)
+        {
+            return attackingGridItemId % Constants.TowerDefense.MaxGridGridItemsInRow;
+        }
+
         public static bool IsItemDamageable(GridItem gridItem)
         {
             if (gridItem == null) return false;
