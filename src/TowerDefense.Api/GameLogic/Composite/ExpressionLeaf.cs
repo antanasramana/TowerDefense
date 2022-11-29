@@ -5,7 +5,7 @@ using TowerDefense.Api.GameLogic.Interpreter;
 
 namespace TowerDefense.Api.GameLogic.Composite
 {
-    public class ExpressionLeaf : ExpressionComponent
+    public class ExpressionLeaf : IExpressionComponent
     {
         private readonly ICommandInterpreter _commandInterpreter;
         private readonly IPlayerHandler _playerHandler;

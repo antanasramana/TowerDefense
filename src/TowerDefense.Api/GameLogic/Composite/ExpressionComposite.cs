@@ -1,8 +1,8 @@
 ﻿namespace TowerDefense.Api.GameLogic.Composite
 {
-    public class ExpressionComposite : ExpressionComponent
+    public class ExpressionComposite : IExpressionComponent
     {
-        private List<ExpressionComponent> expressionList { get; set; } = new List<ExpressionComponent>();
+        private List<IExpressionComponent> expressionList { get; set; } = new List<IExpressionComponent>();
 
         public void Execute(string playerName)
         {
@@ -17,17 +17,17 @@
             return true;
         }
 
-        public void Add(ExpressionComponent expressionComponent)
+        public void Add(IExpressionComponent expressionComponent)
         {
             expressionList.Add(expressionComponent);
         }
 
-        public void Remove(ExpressionComponent expressionComponent)
+        public void Remove(IExpressionComponent expressionComponent)
         {
             expressionList.Remove(expressionComponent);
         }
 
-        public ExpressionComponent GetChild(int index)
+        public IExpressionComponent GetChild(int index)
         {
             return expressionList[index];
         }
