@@ -1,6 +1,7 @@
 ﻿using TowerDefense.Api.GameLogic.Commands;
 using TowerDefense.Api.Contracts.Command;
 using TowerDefense.Api.GameLogic.Interpreter;
+using TowerDefense.Api.GameLogic.Composite;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
@@ -31,13 +32,27 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
         public void InterpretCommand(InterpretCommandRequest interpretCommandRequest)
         {
-            var command = _commandInterpreter.InterpretText(interpretCommandRequest.CommandText);
-            if (command == null)
+            // Constructing tree
+            var expressionTree = new ExpressionComposite();
+            var expressions = interpretCommandRequest.CommandText.Split(';');
+            foreach (var expression in expressions)
             {
-                return;
+                var expressionBranch = new ExpressionComposite();
+                var expressionValues = expression.Split(':').Select(s => s.Trim()).ToList();
+                if (expressionValues.Count() == 2)
+                {
+                    var commands = expressionValues[1].Split(',').Select(s => s.Trim());
+                    foreach (var command in commands)
+                    {
+                        var constructedCommand = expressionValues[0] + ' ' +string.Join(' ', command);
+                        expressionBranch.Add(new ExpressionLeaf(constructedCommand, _playerHandler, _commandExecutor, _commandInterpreter));
+                    }
+                }
+
+                expressionTree.Add(expressionBranch);
             }
-            var player = _playerHandler.GetPlayer(interpretCommandRequest.PlayerName);
-            _commandExecutor.Execute(player, command);
+
+            expressionTree.Execute(interpretCommandRequest.PlayerName);
         }
 
         public ICommand InterpretCommandFromRequest(ExecuteCommandRequest commandRequest)
