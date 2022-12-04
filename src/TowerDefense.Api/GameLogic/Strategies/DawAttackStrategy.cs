@@ -2,6 +2,7 @@
 using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Constants;
 using static TowerDefense.Api.GameLogic.Strategies.StrategyHelper;
+using TowerDefense.Api.GameLogic.Iterator;
 
 namespace TowerDefense.Api.GameLogic.Strategies
 {
@@ -11,14 +12,15 @@ namespace TowerDefense.Api.GameLogic.Strategies
         {
             var attackingItemRow = GetAttackingItemRow(attackingGridItemId);
             IMatrix opponentsMatrix = new ArenaGridAdapter(opponentsArenaGrid);
-            var possiblyAffectedGridItems = opponentsMatrix.GetItemsByRow(attackingItemRow)
-                                                           .OrderByDescending(x => x.Id);
+
+            IIterator opponentsItems = opponentsMatrix.GetIterator(attackingItemRow);
             
             var affectedGridItems = new List<int>();
             var centerOfDaw = -1;
 
-            foreach (var gridItem in possiblyAffectedGridItems)
+            while (opponentsItems.HasMore())
             {
+                var gridItem = opponentsItems.GetNext();
                 if (IsItemDamageable(gridItem))
                 {
                     affectedGridItems.Add(gridItem.Id);

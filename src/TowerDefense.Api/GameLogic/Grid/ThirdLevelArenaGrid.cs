@@ -1,4 +1,5 @@
 ﻿using TowerDefense.Api.Constants;
+using TowerDefense.Api.GameLogic.Iterator;
 using TowerDefense.Api.GameLogic.Visitor;
 
 namespace TowerDefense.Api.GameLogic.Grid
@@ -25,6 +26,11 @@ namespace TowerDefense.Api.GameLogic.Grid
         public void Accept(IVisitor visitor)
         {
             visitor.Visit(this);
+        }
+
+        public IIterator GetIterator(int rowId)
+        {
+            return new ArrayIterator(this, rowId);
         }
     }
 }

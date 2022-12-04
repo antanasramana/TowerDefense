@@ -2,6 +2,7 @@
 using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.Constants;
 using static TowerDefense.Api.GameLogic.Strategies.StrategyHelper;
+using TowerDefense.Api.GameLogic.Iterator;
 
 namespace TowerDefense.Api.GameLogic.Strategies
 {
@@ -9,13 +10,20 @@ namespace TowerDefense.Api.GameLogic.Strategies
     {
         protected override sealed IEnumerable<int> AttackStrategy(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
-            var attackingItemRow = attackingGridItemId / Constants.TowerDefense.MaxGridGridItemsInRow;
-            IMatrix opponentsMatrix = new ArenaGridAdapter(opponentsArenaGrid);
-            var affectedGridItems = opponentsMatrix.GetItemsByRow(attackingItemRow)
-                                                    .Where(x => IsItemDamageable(x))
-                                                    .OrderByDescending(x => x.Id);
+            var attackingItemRow = GetAttackingItemRow(attackingGridItemId);
+            IIterator opponentsItems = opponentsArenaGrid.GetIterator(attackingItemRow);
 
-            return affectedGridItems.Select(x => x.Id);
+            var affectedGridItems = new List<int>();
+            while (opponentsItems.HasMore())
+            {
+                var gridItem = opponentsItems.GetNext();
+                if (IsItemDamageable(gridItem))
+                {
+                    affectedGridItems.Add(gridItem.Id);
+                }
+            }
+
+            return affectedGridItems;
         }
 
         protected sealed override bool isItemOffensive()

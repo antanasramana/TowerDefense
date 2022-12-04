@@ -9,7 +9,7 @@ namespace TowerDefense.Api.GameLogic.Interpreter
 
         public ICommand Evaluate()
         {
-            return new GiveItemCommand(ItemTypeExpression.ItemType, NumberExpression.Ammount);
+            return new GiveItemCommand(ItemTypeExpression.ItemType, NumberExpression.Amount);
         }
 
         public bool Interpret(List<string> words)
