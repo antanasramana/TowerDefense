@@ -11,7 +11,7 @@ namespace TowerDefense.Api.Models.Items
         public ItemType ItemType { get; set; } = ItemType.Plane;
         public IItemStats Stats { get; set; } = new SpecialItemStats();
         public ICollection<string> PowerUps { get; set; } = new List<string>();
-        public IAttackStrategy AttackStrategy { get; set; } = new HorizontalLineAttackStrategy();
+        public BaseAttackStrategy AttackStrategy { get; set; } = new HorizontalLineAttackStrategy();
 
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
