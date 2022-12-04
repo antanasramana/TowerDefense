@@ -2,13 +2,13 @@
 {
     public class NumberExpression : IExpression
     {
-        public int Ammount { get; set; }
+        public int Amount { get; set; }
         public bool Interpret(List<string> words)
         {
             bool isNumber = int.TryParse(words[0], out int result);
             if (isNumber)
             {
-                Ammount = result;
+                Amount = result;
                 return true;
             }
 
