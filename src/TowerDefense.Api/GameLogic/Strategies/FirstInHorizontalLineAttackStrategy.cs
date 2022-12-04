@@ -1,5 +1,5 @@
-﻿using TowerDefense.Api.GameLogic.ArenaAdapter;
-using TowerDefense.Api.GameLogic.Grid;
+﻿using TowerDefense.Api.GameLogic.Grid;
+using TowerDefense.Api.GameLogic.Iterator;
 using static TowerDefense.Api.GameLogic.Strategies.StrategyHelper;
 
 namespace TowerDefense.Api.GameLogic.Strategies
@@ -9,14 +9,12 @@ namespace TowerDefense.Api.GameLogic.Strategies
         public IEnumerable<int> AttackedGridItems(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
             var attackingItemRow = GetAttackingItemRow(attackingGridItemId);
-            IMatrix opponentsMatrix = new ArenaGridAdapter(opponentsArenaGrid);
-            var possiblyAffectedGridItems = opponentsMatrix.GetItemsByRow(attackingItemRow)
-                                                           .OrderByDescending(x => x.Id);
+            IIterator opponentsItems = opponentsArenaGrid.GetIterator(attackingItemRow);
             
             var affectedGridItems = new List<int>();
-
-            foreach (var gridItem in possiblyAffectedGridItems)
+            while (opponentsItems.HasMore())
             {
+                var gridItem = opponentsItems.GetNext();
                 if (IsItemDamageable(gridItem))
                 {
                     affectedGridItems.Add(gridItem.Id);
