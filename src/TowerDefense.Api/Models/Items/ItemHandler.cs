@@ -15,6 +15,7 @@
                 ItemType.Shield => new Shield(),
                 ItemType.Placeholder => new Placeholder(),
                 ItemType.Rock => new Rock(),
+                ItemType.Atomicbomb => new AtomicBomb(),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

@@ -25,6 +25,7 @@ namespace TowerDefense.Api.Bootstrap
             serviceCollection.AddTransient<IAttackHandler, AttackHandler>();
             serviceCollection.AddTransient<IGameMediator, GameMediator>();
             serviceCollection.AddTransient<IPerkHandler, PerkHandler>();
+            serviceCollection.AddTransient<IAtomicBombHandler, AtomicBombHandler>();
             serviceCollection.AddSingleton<ICaretaker, Caretaker>();
         }
     }

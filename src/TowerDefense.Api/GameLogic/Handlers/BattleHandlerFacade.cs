@@ -20,13 +20,15 @@ namespace TowerDefense.Api.GameLogic.Handlers
         private IGameMediator _gameMediator;
         private readonly IPerkHandler _perkHandler;
         private readonly ICaretaker _caretaker;
+        private readonly IAtomicBombHandler _atomicBombHandler;
 
-        public BattleHandlerFacade(IAttackHandler attackHandler, IPerkHandler perkHandler, ICaretaker caretaker)
+        public BattleHandlerFacade(IAttackHandler attackHandler, IPerkHandler perkHandler, ICaretaker caretaker, IAtomicBombHandler atomicBombHandler)
         {
             _game = GameOriginator.Instance;
             _attackHandler = attackHandler;
             _perkHandler = perkHandler;
             _caretaker = caretaker;
+            _atomicBombHandler = atomicBombHandler;
         }
         public void SetMediator(IGameMediator gameMediator)
         {
@@ -48,6 +50,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
             if (!wasBackInTimeApplied)
             {
+
                 // Get all AttackDeclarations
 
                 var player1AttackDeclarations = _attackHandler.HandlePlayerAttacks(player1ArenaGrid, player2ArenaGrid);
@@ -61,6 +64,8 @@ namespace TowerDefense.Api.GameLogic.Handlers
                 // Notify opposing players grid items to receive attack
                 player1AttackResults = player2.Publisher.Notify(player1AttackDeclarations);
                 player2AttackResults = player1.Publisher.Notify(player2AttackDeclarations);
+
+
             }
 
             var player1TurnOutcome = new EndTurnResponse { 
@@ -83,6 +88,10 @@ namespace TowerDefense.Api.GameLogic.Handlers
             _caretaker.AddSnapshot(snapshot);
 
             _gameMediator.Notify(this, MediatorEvent.TurnResultsCreated, responses);
+            
+            //Preperate atomic bombs for next round
+            _atomicBombHandler.UpdateState(player1ArenaGrid);
+            _atomicBombHandler.UpdateState(player2ArenaGrid);
         }
     }
 }

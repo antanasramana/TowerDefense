@@ -97,4 +97,37 @@
             return new RegularDefaultItemStats { Damage = Damage, Price = Price, Health = Health };
         }
     }
+    public class SmallDefenseItemStats : IItemStats
+    {
+        public int Price { get; set; } = 0;
+        public int Health { get; set; } = 1;
+        public int Damage { get; set; } = 0;
+
+        public IItemStats Clone()
+        {
+            return new BasicDefenseItemStats { Damage = Damage, Price = Price, Health = Health };
+        }
+    }
+    public class AtomicBombItemStats : IItemStats
+    {
+        public int Price { get; set; } = 0;
+        public int Health { get; set; } = 0;
+        public int Damage { get; set; } = 500;
+
+        public IItemStats Clone()
+        {
+            return new BasicDefenseItemStats { Damage = Damage, Price = Price, Health = Health };
+        }
+    }
+    public class InvinsibleDefenseItemStats : IItemStats
+    {
+        public int Price { get; set; } = 0;
+        public int Health { get; set; } = int.MaxValue;
+        public int Damage { get; set; } = 0;
+
+        public IItemStats Clone()
+        {
+            return new DefaultZeroItemStats { Damage = Damage, Price = Price, Health = Health };
+        }
+    }
 }
