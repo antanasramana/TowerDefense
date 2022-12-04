@@ -6,7 +6,7 @@ namespace TowerDefense.Api.GameLogic.StatePattern
     {
         void SetContext(AtomicBomb atomicBomb);
         void GoNext();
-        void GoPrevious();
+        bool GoPrevious();
         void SetConfiguration();
     }
 }

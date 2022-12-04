@@ -19,11 +19,12 @@ namespace TowerDefense.Api.GameLogic.StatePattern
             atomicBomb.SetState(nextState);
         }
 
-        public void GoPrevious()
+        public bool GoPrevious()
         {
-            IAtomicBombState previousState = new HiddingAtomicBombStateIAtomicBombState();
+            IAtomicBombState previousState = new BuildingAtomicBombState();
             previousState.SetContext(atomicBomb);
             atomicBomb.SetState(previousState);
+            return true;
         }
 
         public void SetConfiguration()

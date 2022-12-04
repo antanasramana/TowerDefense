@@ -25,7 +25,17 @@ namespace TowerDefense.Api.GameLogic.Grid
 
             if (isDestroyed)
             {
-                this.Item = new Blank();
+                if(this.Item is AtomicBomb)
+                {
+                    if (!((AtomicBomb)this.Item).PreviousState())
+                    {
+                        this.Item = new Blank();
+                    }
+                }
+                else
+                {
+                    this.Item = new Blank();
+                }
             }
 
             IDamageBuilder damageBuilder = null;

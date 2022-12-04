@@ -30,9 +30,9 @@ namespace TowerDefense.Api.Models.Items
             this.state.GoNext();
         }
 
-        public void PreviousState()
+        public bool PreviousState()
         {
-            this.state.GoPrevious();
+            return this.state.GoPrevious();
         }
 
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)

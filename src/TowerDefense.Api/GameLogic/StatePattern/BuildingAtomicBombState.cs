@@ -16,8 +16,9 @@ namespace TowerDefense.Api.GameLogic.StatePattern
             atomicBomb.SetState(nextState);
         }
 
-        public void GoPrevious()
+        public bool GoPrevious()
         {
+            return false;
         }
 
         public void SetConfiguration()
