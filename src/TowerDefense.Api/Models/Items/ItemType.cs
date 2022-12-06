@@ -10,6 +10,10 @@
         Plane,
         Soldier,
         Bomb,
-        Rock
+        Rock,
+        Atomicbomb,
+        Hiddingatomicbomb,
+        Loadingatomicbomb,
+        Attackingatomicbomb
     }
 }

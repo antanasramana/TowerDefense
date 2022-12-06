@@ -8,6 +8,10 @@ import PlaneSource from '../assets/plane.png';
 import SoldierSource from '../assets/soldier.png';
 import BombSource from '../assets/bomb.png';
 import RockSource from '../assets/rock.png';
+import Atomicbomb from '../assets/atomicbomb.png';
+import Hiddingatomicbomb from '../assets/hiddingatomicbomb.png';
+import Loadingatomicbomb from '../assets/loadingatomicbomb.png';
+import Attackingatomicbomb from '../assets/attackingatomicbomb.png';
 
 class TileImage {
 	static sourceMap = new Map<TileType, string>([
@@ -20,6 +24,10 @@ class TileImage {
 		[TileType.Soldier, SoldierSource],
 		[TileType.Bomb, BombSource],
 		[TileType.Rock, RockSource],
+		[TileType.Atomicbomb, Atomicbomb],
+		[TileType.Hiddingatomicbomb, Hiddingatomicbomb],
+		[TileType.Loadingatomicbomb, Loadingatomicbomb],
+		[TileType.Attackingatomicbomb, Attackingatomicbomb],
 	]);
 }
 
