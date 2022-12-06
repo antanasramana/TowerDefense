@@ -9,7 +9,7 @@ namespace TowerDefense.Api.Models.Items
         int Level { get; set; }
         IItemStats Stats { get; set; }
         ItemType ItemType { get; set; }
-        IAttackStrategy AttackStrategy { get; set; }
+        BaseAttackStrategy AttackStrategy { get; set; }
         IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId);
 
         /// <summary>

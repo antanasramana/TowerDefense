@@ -6,9 +6,9 @@ using TowerDefense.Api.GameLogic.Iterator;
 
 namespace TowerDefense.Api.GameLogic.Strategies
 {
-    public class DawAttackStrategy : IAttackStrategy
+    public class DawAttackStrategy : BaseAttackStrategy
     {
-        public IEnumerable<int> AttackedGridItems(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
+        protected override sealed IEnumerable<int> AttackStrategy(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
             var attackingItemRow = GetAttackingItemRow(attackingGridItemId);
             IMatrix opponentsMatrix = new ArenaGridAdapter(opponentsArenaGrid);
@@ -47,6 +47,10 @@ namespace TowerDefense.Api.GameLogic.Strategies
             {
                 affectedGridItems.Add(uperRightGridItem.Id);
             }
+        }
+        protected sealed override bool isItemOffensive()
+        {
+            return true;
         }
     }
 }

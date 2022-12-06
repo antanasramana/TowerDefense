@@ -6,9 +6,9 @@ using TowerDefense.Api.GameLogic.Iterator;
 
 namespace TowerDefense.Api.GameLogic.Strategies
 {
-    public class HorizontalLineAttackStrategy : IAttackStrategy
+    public class HorizontalLineAttackStrategy : BaseAttackStrategy
     {
-        public IEnumerable<int> AttackedGridItems(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
+        protected override sealed IEnumerable<int> AttackStrategy(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
             var attackingItemRow = GetAttackingItemRow(attackingGridItemId);
             IIterator opponentsItems = opponentsArenaGrid.GetIterator(attackingItemRow);
@@ -24,6 +24,11 @@ namespace TowerDefense.Api.GameLogic.Strategies
             }
 
             return affectedGridItems;
+        }
+
+        protected sealed override bool isItemOffensive()
+        {
+            return true;
         }
     }
 }

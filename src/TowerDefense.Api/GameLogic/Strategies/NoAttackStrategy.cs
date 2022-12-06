@@ -2,11 +2,11 @@
 
 namespace TowerDefense.Api.GameLogic.Strategies
 {
-    public class NoAttackStrategy : IAttackStrategy
+    public class NoAttackStrategy : BaseAttackStrategy
     {
-        public IEnumerable<int> AttackedGridItems(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
+        protected sealed override bool isItemOffensive()
         {
-            return new List<int>();
+            return false;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace TowerDefense.Api.Models.Items
         public ItemType ItemType { get; set; } = ItemType.Soldier;
         public IItemStats Stats { get; set; } = new RegularDefaultItemStats();
         public ICollection<string> PowerUps { get; set; } = new List<string>();
-        public IAttackStrategy AttackStrategy { get; set; } = new FirstInHorizontalLineAttackStrategy();
+        public BaseAttackStrategy AttackStrategy { get; set; } = new FirstInHorizontalLineAttackStrategy();
 
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {

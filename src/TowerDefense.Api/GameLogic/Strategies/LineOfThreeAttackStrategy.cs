@@ -5,9 +5,9 @@ using static TowerDefense.Api.GameLogic.Strategies.StrategyHelper;
 
 namespace TowerDefense.Api.GameLogic.Strategies
 {
-    public class LineOfThreeAttackStrategy : IAttackStrategy
+    public class LineOfThreeAttackStrategy : BaseAttackStrategy
     {
-        public IEnumerable<int> AttackedGridItems(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
+        protected override sealed IEnumerable<int> AttackStrategy(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
             var affectedRow = GetAttackingItemRow(attackingGridItemId);
 
@@ -47,6 +47,10 @@ namespace TowerDefense.Api.GameLogic.Strategies
             if (!affectedGridItemId.HasValue) return;
 
             affectedGridItems.Add(affectedGridItemId.Value);
+        }
+        protected sealed override bool isItemOffensive()
+        {
+            return true;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace TowerDefense.Api.GameLogic.Decorator
         public int Level { get; set; }
         public IItemStats Stats { get; set; }
         public ItemType ItemType { get; set; }
-        public IAttackStrategy AttackStrategy { get; set; }
+        public BaseAttackStrategy AttackStrategy { get; set; }
         public ICollection<string> PowerUps { get; set; }
         protected IItem _item { get; set; }
         protected abstract string _powerUpName { get; }
