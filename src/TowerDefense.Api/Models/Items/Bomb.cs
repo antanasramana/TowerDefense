@@ -1,4 +1,7 @@
-﻿using TowerDefense.Api.GameLogic.Grid;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using TowerDefense.Api.GameLogic.GameState;
+using TowerDefense.Api.GameLogic.Grid;
+using TowerDefense.Api.GameLogic.Handlers;
 using TowerDefense.Api.GameLogic.Strategies;
 
 namespace TowerDefense.Api.Models.Items
@@ -10,7 +13,7 @@ namespace TowerDefense.Api.Models.Items
         public ItemType ItemType { get; set; } = ItemType.Bomb;
         public IItemStats Stats { get; set; } = new HighCostNoHealthItemStats();
         public ICollection<string> PowerUps { get; set; } = new List<string>();
-        public BaseAttackStrategy AttackStrategy { get; set; } = new FirstInHorizontalLineAttackStrategy();
+        public BaseAttackStrategy AttackStrategy { get; set; } = GameOriginator.Instance.FlyweightFactory.GetStrategy(new FirstInHorizontalLineAttackStrategy());
 
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
@@ -20,7 +23,7 @@ namespace TowerDefense.Api.Models.Items
 
         public IItem Clone()
         {
-            return new Bomb
+            return new Bomb()
             {
                 Id = Guid.NewGuid().ToString()
             };

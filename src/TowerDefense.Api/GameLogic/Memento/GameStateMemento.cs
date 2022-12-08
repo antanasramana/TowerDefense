@@ -1,4 +1,5 @@
 ﻿using TowerDefense.Api.GameLogic.GameState;
+using TowerDefense.Api.GameLogic.Strategies;
 
 namespace TowerDefense.Api.GameLogic.Memento
 {
@@ -6,6 +7,7 @@ namespace TowerDefense.Api.GameLogic.Memento
     {
         private readonly GameOriginator _game;
         private readonly State _state;
+
 
         public GameStateMemento(GameOriginator game, State state)
         {

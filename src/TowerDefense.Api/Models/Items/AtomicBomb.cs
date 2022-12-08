@@ -1,4 +1,5 @@
 ﻿using TowerDefense.Api.GameLogic.Builders;
+using TowerDefense.Api.GameLogic.GameState;
 using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.GameLogic.StatePattern;
 using TowerDefense.Api.GameLogic.Strategies;
@@ -11,14 +12,10 @@ namespace TowerDefense.Api.Models.Items
         public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Atomicbomb;
         public IItemStats Stats { get; set; } = new SmallDefenseItemStats();
-        public IAttackStrategy AttackStrategy { get; set; } = new NoAttackStrategy();
+        public BaseAttackStrategy AttackStrategy { get; set; } = GameOriginator.Instance.FlyweightFactory.GetStrategy(new NoAttackStrategy());
         public ICollection<string> PowerUps { get; set; } = new List<string>();
 
         private IAtomicBombState state = new BuildingAtomicBombState();
-        public AtomicBomb()
-        {
-            state.SetContext(this);
-        }
 
         public void SetState(IAtomicBombState state)
         {

@@ -4,6 +4,7 @@ using TowerDefense.Api.GameLogic.Mediator;
 using TowerDefense.Api.GameLogic.Interpreter;
 using TowerDefense.Api.GameLogic.Memento;
 using TowerDefense.Api.Hubs;
+using TowerDefense.Api.GameLogic.Strategies;
 
 namespace TowerDefense.Api.Bootstrap
 {
@@ -27,6 +28,7 @@ namespace TowerDefense.Api.Bootstrap
             serviceCollection.AddTransient<IPerkHandler, PerkHandler>();
             serviceCollection.AddTransient<IAtomicBombHandler, AtomicBombHandler>();
             serviceCollection.AddSingleton<ICaretaker, Caretaker>();
+            serviceCollection.AddSingleton<IStrategyFlyweightFactory, StrategyFlyweightFactory>();
         }
     }
 }
