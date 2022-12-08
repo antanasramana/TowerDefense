@@ -17,7 +17,7 @@
         {
             foreach (var strategy in _attackStrategies) 
             {
-                if (strategy == requestedStrategy)
+                if (strategy.GetType() == requestedStrategy.GetType()) // change to == for memory tests
                 {
                     System.Diagnostics.Debug.WriteLine("Found same");
                     return strategy;
