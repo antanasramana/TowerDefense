@@ -17,7 +17,7 @@ namespace TowerDefense.Api.Bootstrap
             serviceCollection.AddTransient<IBattleHandlerFacade, BattleHandlerFacade>();
             serviceCollection.AddTransient<IInitialGameSetupHandler, InitialGameSetupHandler>();
             serviceCollection.AddTransient<IInventoryHandler, InventoryHandler>();
-            serviceCollection.AddTransient<INotificationHub, NotificationHub>();
+            serviceCollection.AddTransient<INotificationHub, NotificationHubLoggerProxy>(); // NotificationHub
             serviceCollection.AddTransient<IGridHandler, GridHandler>();
             serviceCollection.AddTransient<IPlayerHandler, PlayerHandler>();
             serviceCollection.AddTransient<ICommandHandler, CommandHandler>();
