@@ -17,6 +17,10 @@ namespace TowerDefense.Api.Models.Items
 
         private IAtomicBombState state = new BuildingAtomicBombState();
 
+        public AtomicBomb()
+        {
+            state.SetContext(this);
+        }
         public void SetState(IAtomicBombState state)
         {
             this.state = state;

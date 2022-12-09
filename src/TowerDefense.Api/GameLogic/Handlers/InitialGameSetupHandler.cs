@@ -92,6 +92,5 @@ namespace TowerDefense.Api.GameLogic.Handlers
             var snapshot = _game.SaveSnapshot();
             _caretaker.AddSnapshot(snapshot);
         }
-
     }
 }

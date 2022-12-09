@@ -8,7 +8,6 @@ namespace TowerDefense.Api.GameLogic.Memento
         private readonly GameOriginator _game;
         private readonly State _state;
 
-
         public GameStateMemento(GameOriginator game, State state)
         {
             _game = game;

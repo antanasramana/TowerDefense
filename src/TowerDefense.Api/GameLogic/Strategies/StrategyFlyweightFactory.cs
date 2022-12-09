@@ -19,14 +19,14 @@
             {
                 if (strategy.GetType() == requestedStrategy.GetType()) // change to == for memory tests
                 {
-                    System.Diagnostics.Debug.WriteLine("Found same");
+                    //System.Diagnostics.Debug.WriteLine("Found same");
                     return strategy;
                 } 
             }
 
             // If Strategy is not found
             this._attackStrategies.Add(requestedStrategy);
-            System.Diagnostics.Debug.WriteLine("added new");
+            //System.Diagnostics.Debug.WriteLine("added new");
             return _attackStrategies.Last();
         }
     }

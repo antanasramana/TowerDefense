@@ -23,7 +23,7 @@ namespace TowerDefense.Api.Models.Items
 
         public IItem Clone()
         {
-            return new Bomb()
+            return new Bomb
             {
                 Id = Guid.NewGuid().ToString()
             };
