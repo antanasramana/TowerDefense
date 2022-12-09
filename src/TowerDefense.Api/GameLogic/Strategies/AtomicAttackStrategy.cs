@@ -2,9 +2,9 @@
 
 namespace TowerDefense.Api.GameLogic.Strategies
 {
-    public class AtomicAttackStrategy : IAttackStrategy
+    public class AtomicAttackStrategy : BaseAttackStrategy
     {
-        public IEnumerable<int> AttackedGridItems(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
+        protected override sealed IEnumerable<int> AttackStrategy(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
             return opponentsArenaGrid.GridItems.Select(x => x.Id);
         }

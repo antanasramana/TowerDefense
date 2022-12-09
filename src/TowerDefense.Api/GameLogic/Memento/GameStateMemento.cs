@@ -1,4 +1,5 @@
 ﻿using TowerDefense.Api.GameLogic.GameState;
+using TowerDefense.Api.GameLogic.Strategies;
 
 namespace TowerDefense.Api.GameLogic.Memento
 {

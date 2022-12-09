@@ -1,4 +1,5 @@
 ﻿using TowerDefense.Api.GameLogic.Builders;
+using TowerDefense.Api.GameLogic.GameState;
 using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.GameLogic.Strategies;
 
@@ -10,7 +11,7 @@ namespace TowerDefense.Api.Models.Items
         public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Rockets;
         public IItemStats Stats { get; set; } = new MediumCostHighDamageItemStats();
-        public BaseAttackStrategy AttackStrategy { get; set; } = new DawAttackStrategy();
+        public BaseAttackStrategy AttackStrategy { get; set; } = GameOriginator.Instance.FlyweightFactory.GetStrategy(new DawAttackStrategy());
         public ICollection<string> PowerUps { get; set; } = new List<string>();
 
         public IEnumerable<AttackDeclaration> Attack(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
