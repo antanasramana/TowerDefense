@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="BenchmarkDotNet.Annotations" Version="0.13.2" />
     <PackageReference Include="DeepCloner" Version="0.10.4" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />

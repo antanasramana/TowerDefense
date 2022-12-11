@@ -12,7 +12,7 @@ namespace TowerDefense.Api.Models.Items
         public int Level { get; set; } = 0;
         public ItemType ItemType { get; set; } = ItemType.Atomicbomb;
         public IItemStats Stats { get; set; } = new SmallDefenseItemStats();
-        public BaseAttackStrategy AttackStrategy { get; set; } = GameOriginator.Instance.FlyweightFactory.GetStrategy(new NoAttackStrategy());
+        public BaseAttackStrategy AttackStrategy { get; set; } = GameOriginator.Instance.FlyweightFactory.GetStrategy<NoAttackStrategy>();
         public ICollection<string> PowerUps { get; set; } = new List<string>();
 
         private IAtomicBombState state = new BuildingAtomicBombState();
