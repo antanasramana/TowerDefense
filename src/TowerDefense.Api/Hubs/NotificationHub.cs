@@ -7,14 +7,7 @@ using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.Hubs
 {
-    public interface INotificationHub: IComponent
-    {
-        Task NotifyGameResult(Dictionary<string, EndTurnResponse> responses);
-        Task NotifyGameStart(IPlayer firstPlayer, IPlayer secondPlayer);
-        Task SendEndTurnInfo(IPlayer player, EndTurnResponse turnOutcome);
-    }
-
-    public class NotificationHub : INotificationHub
+   public class NotificationHub : INotificationHub
     {
         private readonly IHubContext<GameHub> _gameHubContext;
         private IGameMediator _gameMediator;
