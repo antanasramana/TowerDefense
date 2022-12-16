@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/tower-defense/static/css/main.e2f841e4.css",
+    "main.js": "/tower-defense/static/js/main.b4c1d9d6.js",
+    "static/js/787.81d37e32.chunk.js": "/tower-defense/static/js/787.81d37e32.chunk.js",
+    "static/media/WelcomeBackground.png": "/tower-defense/static/media/WelcomeBackground.a77c78c8bbf191ffecd0.png",
+    "static/media/arena-populated.png": "/tower-defense/static/media/arena-populated.0925b8d6668b2f145ecc.png",
+    "static/media/money.png": "/tower-defense/static/media/money.2d20faebc7aac3dddfcb.png",
+    "static/media/health.png": "/tower-defense/static/media/health.c841b014290e92481450.png",
+    "static/media/tower.png": "/tower-defense/static/media/tower.6d3a46ef094cafe2ccde.png",
+    "static/media/tower-enemy.png": "/tower-defense/static/media/tower-enemy.9f793a674cbb6bc17ede.png",
+    "static/media/shield.png": "/tower-defense/static/media/shield.32113867e6245b8747ee.png",
+    "static/media/Fire_Big.png": "/tower-defense/static/media/Fire_Big.6eb666bb3c6f3eca3ace.png",
+    "static/media/Projectile_Big.png": "/tower-defense/static/media/Projectile_Big.81e6b3715e29f05535fe.png",
+    "static/media/shop.png": "/tower-defense/static/media/shop.739346d9ff1d909d5aea.png",
+    "static/media/Projectile_Small.png": "/tower-defense/static/media/Projectile_Small.4fecb55b529b54ff7fac.png",
+    "static/media/Quadrit.ttf": "/tower-defense/static/media/Quadrit.2b6c44f14a7b4829a987.ttf",
+    "static/media/inventory.png": "/tower-defense/static/media/inventory.95df1a610881ec8220e0.png",
+    "index.html": "/tower-defense/index.html",
+    "main.e2f841e4.css.map": "/tower-defense/static/css/main.e2f841e4.css.map",
+    "main.b4c1d9d6.js.map": "/tower-defense/static/js/main.b4c1d9d6.js.map",
+    "787.81d37e32.chunk.js.map": "/tower-defense/static/js/787.81d37e32.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e2f841e4.css",
+    "static/js/main.b4c1d9d6.js"
+  ]
+}
