@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/tower-defense/static/css/main.e2f841e4.css",
-    "main.js": "/tower-defense/static/js/main.3977cb4c.js",
+    "main.js": "/tower-defense/static/js/main.1aa732fc.js",
     "static/js/787.81d37e32.chunk.js": "/tower-defense/static/js/787.81d37e32.chunk.js",
     "static/media/WelcomeBackground.png": "/tower-defense/static/media/WelcomeBackground.a77c78c8bbf191ffecd0.png",
     "static/media/arena-populated.png": "/tower-defense/static/media/arena-populated.0925b8d6668b2f145ecc.png",
@@ -18,11 +18,11 @@
     "static/media/inventory.png": "/tower-defense/static/media/inventory.95df1a610881ec8220e0.png",
     "index.html": "/tower-defense/index.html",
     "main.e2f841e4.css.map": "/tower-defense/static/css/main.e2f841e4.css.map",
-    "main.3977cb4c.js.map": "/tower-defense/static/js/main.3977cb4c.js.map",
+    "main.1aa732fc.js.map": "/tower-defense/static/js/main.1aa732fc.js.map",
     "787.81d37e32.chunk.js.map": "/tower-defense/static/js/787.81d37e32.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e2f841e4.css",
-    "static/js/main.3977cb4c.js"
+    "static/js/main.1aa732fc.js"
   ]
 }
