@@ -1,6 +1,7 @@
 ﻿using TowerDefense.Api.Contracts.Turn;
 using TowerDefense.Api.GameLogic.Handlers;
 using TowerDefense.Api.Hubs;
+using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.GameLogic.Mediator
 {
@@ -52,6 +53,11 @@ namespace TowerDefense.Api.GameLogic.Mediator
                 case MediatorEvent.ResetGame:
                     // need to send notification first and clear state after
                     await _notificationHub.ResetGame();
+                    _turnHandler.ResetGame();
+                    break;
+                case MediatorEvent.GameFinished:
+                    var winnerPlayer = (IPlayer)data;
+                    await _notificationHub.NotifyGameFinished(winnerPlayer);
                     _turnHandler.ResetGame();
                     break;
             }

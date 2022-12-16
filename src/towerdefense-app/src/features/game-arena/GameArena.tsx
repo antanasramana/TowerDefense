@@ -90,6 +90,18 @@ const GameArena: React.FC = () => {
 
 						navigate('/');				
 					});
+					connection.on('GameFinished', (winnerName) => {
+						const currentName = player.name;
+
+						// reset everything
+						dispatch(setEnemyToInitial());
+						dispatch(setPlayerToInitial());
+						dispatch(setGridToInitial());
+						dispatch(setInventoryToInitial());
+						dispatch(setShopToInitial());
+
+						navigate('/game-finished', { state: { winnerName: winnerName, playerName: currentName, level: player.level }});				
+					});
 				})
 				.catch((e) => console.log('Connection failed: ', e));
 		}

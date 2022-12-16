@@ -20,7 +20,7 @@ const TowerArmor: React.FC<Props> = (props) => {
 
 	return (
 		<div className='tower-armor-container'>
-			{props.value}
+			<h2 className='armor-header' >{props.value}</h2>
 		</div>
 	);
 };

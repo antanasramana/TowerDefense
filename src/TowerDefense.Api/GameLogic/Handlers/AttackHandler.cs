@@ -5,19 +5,29 @@ namespace TowerDefense.Api.GameLogic.Handlers
 {
     public interface IAttackHandler
     {
-        IEnumerable<AttackDeclaration> HandlePlayerAttacks(IArenaGrid playerArenaGrid, IArenaGrid opponentArenaGrid);
+        Attack HandlePlayerAttacks(IArenaGrid playerArenaGrid, IArenaGrid opponentArenaGrid);
         int PlayerEarnedMoneyAfterAttack(IEnumerable<AttackDeclaration> attackDeclarations);
     }
     public class AttackHandler: IAttackHandler
     {
-        public IEnumerable<AttackDeclaration> HandlePlayerAttacks(IArenaGrid playerArenaGrid, IArenaGrid opponentArenaGrid)
+        public Attack HandlePlayerAttacks(IArenaGrid playerArenaGrid, IArenaGrid opponentArenaGrid)
         {
-            var result = new List<AttackDeclaration>();
+            var directAttacks = new List<AttackDeclaration>();
+            var itemAttacks = new List<AttackDeclaration>();
             foreach (GridItem gridItem in playerArenaGrid.GridItems)
             {
-                result.AddRange(gridItem.Item.Attack(opponentArenaGrid, gridItem.Id));
+                var attacks = gridItem.Item.Attack(opponentArenaGrid, gridItem.Id);
+
+                if (attacks.Any())
+                {
+                    itemAttacks.AddRange(gridItem.Item.Attack(opponentArenaGrid, gridItem.Id));
+                }
+                else
+                {
+                    directAttacks.Add(new AttackDeclaration { PlayerWasHit = true, Damage = gridItem.Item.Stats.Damage });
+                }
             }
-            return result;
+            return new Attack{DirectAttackDeclarations = directAttacks, ItemAttackDeclarations = itemAttacks };
         }
 
         public int PlayerEarnedMoneyAfterAttack(IEnumerable<AttackDeclaration> attackDeclarations)

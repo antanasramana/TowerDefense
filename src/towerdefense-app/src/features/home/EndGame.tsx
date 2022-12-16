@@ -5,34 +5,26 @@ import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import { AddNewPlayerRequest } from '../../contracts/AddNewPlayerRequest';
 import Level from '../player/enums/Levels';
+import {useLocation} from 'react-router-dom';
 
-const Home: React.FC = () => {
+const EndGame: React.FC = () => {
+	const location = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [addNewPlayer] = useAddNewPlayerMutation();
 
-	const [playerName, setPlayerName] = useState<string>('');
-	const [level, setGameLevel] = useState<Level>(Level.First);
-
-	function handleNameChange(name: string) {
-		setPlayerName(name);
-	}
-
-	function handleLevelChange(level: Level){
-		setGameLevel(level);
-	}
-
 	function startGame() {
+
 		const addNewPlayerRequest: AddNewPlayerRequest = {
-			playerName: playerName,
-			level: level
+			playerName: location.state.playerName,
+			level: location.state.level+1
 		};
 
 		addNewPlayer(addNewPlayerRequest)
 			.unwrap()
 			.then((res) => {
-				dispatch(setName(playerName));
-				dispatch(setLevel(level));
+				dispatch(setName(location.state.playerName));
+				dispatch(setLevel(location.state.level+1));
 				dispatch(setHealth(res.health));
 				dispatch(setArmor(res.armor));
 				dispatch(setMoney(res.money));
@@ -46,15 +38,17 @@ const Home: React.FC = () => {
 	return (
 		<div className='Home'>
 			<div className='Home-welcome'>
-				<h1 className='Home-header'>Tower Defense</h1>
-				<input className='Home-name-input' onChange={(e) => handleNameChange(e.target.value)} />
+				<h1 className='Game-end-header'>{ location.state.winnerName + ' won the round!'}</h1>
 				<br />
-				<button className='Home-start-button' onClick={startGame} disabled={!playerName}>
-          			Start game
-				</button>
+				{  
+					location.state.level < 2 &&
+                	<button className='Home-start-button' onClick={startGame} >
+						Rematch
+                	</button>
+				}
 			</div>
 		</div>
 	);
 };
 
-export default Home;
+export default EndGame;

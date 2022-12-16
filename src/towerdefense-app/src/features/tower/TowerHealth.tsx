@@ -20,7 +20,7 @@ const TowerHealth: React.FC<Props> = (props) => {
 
 	return (
 		<div className='tower-health-container'>
-			{props.value}
+			<h2 className='health-header' >{props.value}</h2>
 		</div>
 	);
 };

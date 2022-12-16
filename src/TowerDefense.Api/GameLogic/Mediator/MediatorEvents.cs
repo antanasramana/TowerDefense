@@ -6,6 +6,7 @@
         AllPlayersEndedTurn,
         TurnResultsCreated,
         TurnResponsesSent,
+        GameFinished,
         ResetGame
     }
 }

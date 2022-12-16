@@ -16,7 +16,7 @@ const initialState: Enemy = {
 	armor: 100,
 };
 
-export const getEnemyInfo = createAsyncThunk<GetPlayerInfoResponse>('player/getPlayerInfo', async () => {
+export const getEnemyInfo = createAsyncThunk<GetPlayerInfoResponse>('enemy/getPlayerInfo', async () => {
 	const reduxStore = store.getState();
 	const response = await axios.get<GetPlayerInfoResponse>(`${API_URL}/players/${reduxStore.enemy.name}`);
 	console.log(response.data);

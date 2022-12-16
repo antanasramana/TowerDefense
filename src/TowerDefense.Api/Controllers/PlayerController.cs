@@ -13,19 +13,16 @@ namespace TowerDefense.Api.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
-        private readonly IBattleHandlerFacade _battleHandler;
         private readonly IInitialGameSetupHandler _initialGameSetupHandler;
         private readonly IPlayerHandler _playerHandler;
         private readonly IMapper _mapper;
         private readonly IGameMediator _gameMediator;
 
-        public PlayerController (IBattleHandlerFacade battleHandler, 
-            IGameMediator gameMediator,
+        public PlayerController (IGameMediator gameMediator,
             IInitialGameSetupHandler initialGameSetupHandler, 
             IPlayerHandler playerHandler, 
             IMapper mapper)
         {
-            _battleHandler = battleHandler;
             _gameMediator = gameMediator;
             _initialGameSetupHandler = initialGameSetupHandler;
             _playerHandler = playerHandler;

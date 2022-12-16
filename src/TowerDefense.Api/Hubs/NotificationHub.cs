@@ -53,5 +53,14 @@ namespace TowerDefense.Api.Hubs
                 await _gameHubContext.Clients.Client(player.ConnectionId).SendAsync("ResetGame");
             }
         }
+
+        public async Task NotifyGameFinished(IPlayer winner)
+        {
+            var players = _playerHandler.GetPlayers().Where(x => x != null);
+            foreach (var player in players)
+            {
+                await _gameHubContext.Clients.Client(player.ConnectionId).SendAsync("GameFinished", winner.Name);
+            }
+        }
     }
 }

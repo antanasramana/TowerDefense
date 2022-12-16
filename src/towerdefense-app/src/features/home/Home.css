@@ -24,6 +24,13 @@
   color: white;
 }
 
+.Game-end-header {
+  font-family: Quadrit;
+  font-size: 6em;
+  -webkit-text-stroke: 5px black;
+  color: white;
+}
+
 .Home-start-button {
   font-family: Quadrit;
   font-size: 3em;
