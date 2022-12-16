@@ -18,12 +18,12 @@ namespace TowerDefense.Api.GameLogic.Mediator
 
         public GameMediator(IBattleHandlerFacade battleHandlerFacade, ITurnHandler turnHandler, INotificationHub notificationHub)
         {
-            this._turnHandler = turnHandler;
-            this._turnHandler.SetMediator(this);
-            this._battleHandlerFacade = battleHandlerFacade;
-            this._battleHandlerFacade.SetMediator(this);
-            this._notificationHub = notificationHub;
-            this._notificationHub.SetMediator(this);
+            _turnHandler = turnHandler;
+            _turnHandler.SetMediator(this);
+            _battleHandlerFacade = battleHandlerFacade;
+            _battleHandlerFacade.SetMediator(this);
+            _notificationHub = notificationHub;
+            _notificationHub.SetMediator(this);
         }
 
         public async Task Notify(object sender, MediatorEvent _event)
@@ -45,10 +45,14 @@ namespace TowerDefense.Api.GameLogic.Mediator
                 case MediatorEvent.TurnResultsCreated:
                     Dictionary<string, EndTurnResponse> responses = (Dictionary<string, EndTurnResponse>)data;
                     await _notificationHub.NotifyGameResult(responses);
-                    _turnHandler.ResetTurn();
                     break;
                 case MediatorEvent.TurnResponsesSent:
                     _turnHandler.ResetTurn();
+                    break;
+                case MediatorEvent.ResetGame:
+                    // need to send notification first and clear state after
+                    await _notificationHub.ResetGame();
+                    _turnHandler.ResetGame();
                     break;
             }
         }

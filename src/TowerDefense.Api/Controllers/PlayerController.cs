@@ -69,5 +69,11 @@ namespace TowerDefense.Api.Controllers
             _gameMediator.Notify(this, MediatorEvent.PlayerEndedTurn, endTurnRequest.PlayerName);
             return Ok();
         }
+        [HttpPost("reset")]
+        public ActionResult Reset()
+        {
+            _gameMediator.Notify(this, MediatorEvent.ResetGame, null);
+            return Ok();
+        }
     }
 }

@@ -9,11 +9,12 @@ import Inventory from '../inventory/Inventory';
 import Grid from '../grid/Grid';
 import EndTurnButton from '../end-turn-button/EndTurnButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getEnemyInfo, setName } from '../player/EnemySlice';
-import { getEnemyGridItems, getPlayerGridItems, executeCommand, setSelectedGridItemId, interpretCommand } from '../grid/GridSlice';
-import { getPlayerInfo, useEndTurnMutation } from '../player/PlayerSlice';
+import { getEnemyInfo, setName, setEnemyToInitial } from '../player/EnemySlice';
+import { setGridToInitial, getEnemyGridItems, getPlayerGridItems, executeCommand, setSelectedGridItemId, interpretCommand } from '../grid/GridSlice';
+import { getPlayerInfo, setPlayerToInitial, useEndTurnMutation } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
-import { getInventoryItems } from '../inventory/InventorySlice';
+import { getInventoryItems, setInventoryToInitial } from '../inventory/InventorySlice';
+import { useNavigate } from 'react-router-dom';
 
 const SIGNALR_URL = `${process.env.REACT_APP_BACKEND}/gameHub`;
 
@@ -24,9 +25,11 @@ import { AttackResult } from '../../models/AttackResult';
 import CommandType from '../../models/CommandType';
 import ItemInfo from '../info/ItemInfo';
 import PerkStorage from '../perks/PerkStorage';
+import { setShopToInitial } from '../shop/ShopSlice';
 
 const GameArena: React.FC = () => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 
 	// useState
 	const [connection, setConnection] = useState<signalR.HubConnection>();
@@ -37,8 +40,8 @@ const GameArena: React.FC = () => {
 	const [enemyAttackResult, setEnemyAttackResult] = useState<AttackResult[]>([]);
 
 	// redux State
-	const playerName = useAppSelector((state) => state.player.name);
-	const enemyName = useAppSelector((state) => state.enemy.name);
+	const player = useAppSelector((state) => state.player);
+	const enemy = useAppSelector((state) => state.enemy);
 
 	// redux api
 	const [endTurn] = useEndTurnMutation();
@@ -59,7 +62,7 @@ const GameArena: React.FC = () => {
 				.start()
 				.then(() => {
 					console.log('Connected!');
-					connection.invoke('JoinGame', playerName);
+					connection.invoke('JoinGame', player.name);
 
 					connection.on('EnemyInfo', (message) => {
 						dispatch(setName(message.name));
@@ -76,11 +79,21 @@ const GameArena: React.FC = () => {
 						dispatch(getPlayerInfo());
 						dispatch(getInventoryItems());
 						setEndTurnText('End Turn');
+					});				
+					connection.on('ResetGame', () => {
+						// reset everything
+						dispatch(setEnemyToInitial());
+						dispatch(setPlayerToInitial());
+						dispatch(setGridToInitial());
+						dispatch(setInventoryToInitial());
+						dispatch(setShopToInitial());
+
+						navigate('/');				
 					});
 				})
 				.catch((e) => console.log('Connection failed: ', e));
 		}
-	}, [connection, dispatch, playerName]);
+	}, [connection, dispatch, player.name]);
 
 	useEffect(() => {
 		dispatch(getPlayerGridItems());
@@ -89,7 +102,7 @@ const GameArena: React.FC = () => {
 	// methods
 	function onEndTurnClick() {
 		const endTurnRequest: EndTurnRequest = {
-			playerName: playerName,
+			playerName: player.name,
 		};
 		setEndTurnText('Waiting...');
 		endTurn(endTurnRequest);
@@ -118,17 +131,17 @@ const GameArena: React.FC = () => {
 			</div>
 			<div className='body'>
 				<div className='tower-container'>
-					<h1 className='name-header'>{playerName}</h1>
-					<TowerArmor isEnemy={false}/>
-					<TowerHealth isEnemy={false}/>
+					<h1 className='name-header'>{player.name}</h1>
+					<TowerArmor isEnemy={false} value={player.armor} />
+					<TowerHealth isEnemy={false} value={player.health}/>
 					<Tower isEnemy={false} />
 				</div>
 				<Grid isEnemy={false} attackResults={playerAttackResult} />
 				<Grid isEnemy={true} attackResults={enemyAttackResult} />
 				<div className='tower-container'>
-					<h1 className='name-header'>{enemyName}</h1>
-					<TowerArmor isEnemy={true}/>
-					<TowerHealth isEnemy={true}/>
+					<h1 className='name-header'>{enemy.name}</h1>
+					<TowerArmor isEnemy={true} value={enemy.armor}/>
+					<TowerHealth isEnemy={true} value={enemy.health}/>
 					<Tower isEnemy={true} />
 				</div>
 			</div>

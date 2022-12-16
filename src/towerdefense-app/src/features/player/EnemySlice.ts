@@ -27,6 +27,11 @@ const enemySlice = createSlice({
 	name: 'enemy',
 	initialState,
 	reducers: {
+		setEnemyToInitial(state, action: PayloadAction) {
+			state.name = initialState.name;
+			state.health = initialState.health;
+			state.armor = initialState.armor;
+		},
 		setName(state, action: PayloadAction<string>) {
 			state.name = action.payload;
 		},
@@ -48,5 +53,5 @@ const enemySlice = createSlice({
 	},
 });
 
-export const { setName, setHealth, setArmor } = enemySlice.actions;
+export const { setName, setHealth, setArmor, setEnemyToInitial } = enemySlice.actions;
 export default enemySlice.reducer;

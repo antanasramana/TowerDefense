@@ -31,6 +31,12 @@ namespace TowerDefense.Api.Hubs
             return _hub.NotifyGameStart(firstPlayer, secondPlayer);
         }
 
+        public Task ResetGame()
+        {
+            Log("BYBYS KIAUŠAI ŠŪDŲ PADAŽE");
+            return _hub.ResetGame();
+        }
+
         public Task SendEndTurnInfo(IPlayer player, EndTurnResponse turnOutcome)
         {
             Log("Sending End Turn info. Player: " + player.Name);

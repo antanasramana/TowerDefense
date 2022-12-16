@@ -5,6 +5,7 @@ import './TowerHealth.css';
 
 interface Props{
 	isEnemy: boolean;
+	value: number;
 }
 
 const TowerHealth: React.FC<Props> = (props) => {
@@ -19,7 +20,7 @@ const TowerHealth: React.FC<Props> = (props) => {
 
 	return (
 		<div className='tower-health-container'>
-			{hearts}
+			{props.value}
 		</div>
 	);
 };
