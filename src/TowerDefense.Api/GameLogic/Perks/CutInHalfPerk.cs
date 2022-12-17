@@ -1,6 +1,6 @@
 ﻿namespace TowerDefense.Api.Models.Perks
 {
-    public class CutInHalfPerkDto : IPerkDto
+    public class CutInHalfPerk : IPerk
     {
         public int Id { get; init; }
         public string Name => "Cut Everything in Half!";

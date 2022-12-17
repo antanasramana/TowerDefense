@@ -1,7 +1,5 @@
-﻿using TowerDefense.Api.Enums;
-using TowerDefense.Api.GameLogic.GameState;
+﻿using TowerDefense.Api.GameLogic.GameState;
 using TowerDefense.Api.GameLogic.Grid;
-using TowerDefense.Api.GameLogic.Memento;
 using TowerDefense.Api.GameLogic.PerkStorage;
 using TowerDefense.Api.GameLogic.Shop;
 using TowerDefense.Api.Hubs;
@@ -16,7 +14,6 @@ namespace TowerDefense.Api.GameLogic.Handlers
         void SetArenaGridForPlayer(string playerName);
         void SetShopForPlayer(string playerName);
         void SetPerkStorageForPlayer(string playerName);
-        void SetLevel(Level level);
         Task TryStartGame();
     }
 
@@ -24,13 +21,10 @@ namespace TowerDefense.Api.GameLogic.Handlers
     {
         private readonly GameOriginator _game;
         private readonly INotificationHub _notificationHub;
-        private readonly ICaretaker _caretaker;
-
-        public InitialGameSetupHandler(INotificationHub notificationHub, ICaretaker caretaker)
+        public InitialGameSetupHandler(INotificationHub notificationHub)
         {
             _game = GameOriginator.Instance;
             _notificationHub = notificationHub;
-            _caretaker = caretaker;
         }
 
         public void SetConnectionIdForPlayer(string playerName, string connectionId)
@@ -42,8 +36,6 @@ namespace TowerDefense.Api.GameLogic.Handlers
         public async Task TryStartGame()
         {
             if (_game.State.ActivePlayers != Constants.TowerDefense.MaxNumberOfPlayers) return;
-
-            SaveInitialSnapshot();
 
             await _notificationHub.NotifyGameStart(_game.State.Players[0], _game.State.Players[1]);
         }
@@ -69,11 +61,6 @@ namespace TowerDefense.Api.GameLogic.Handlers
             player.PerkStorage = perkStorage;
         }
 
-        public void SetLevel(Level level)
-        {
-            _game.State.Level = level;
-        }
-
         public IPlayer AddNewPlayerToGame(string playerName)
         {
             if (_game.State.ActivePlayers == Constants.TowerDefense.MaxNumberOfPlayers)
@@ -86,12 +73,6 @@ namespace TowerDefense.Api.GameLogic.Handlers
             _game.State.Players[currentNewPlayerId] = newPlayer;
 
             return newPlayer;
-        }
-
-        private void SaveInitialSnapshot()
-        {
-            var snapshot = _game.SaveSnapshot();
-            _caretaker.AddSnapshot(snapshot);
         }
     }
 }

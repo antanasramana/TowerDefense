@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using TowerDefense.Api.GameLogic.Handlers;
 using TowerDefense.Api.Contracts.Player;
 using TowerDefense.Api.Contracts.Turn;
-using TowerDefense.Api.Enums;
 using TowerDefense.Api.GameLogic.Mediator;
 
 namespace TowerDefense.Api.Controllers
@@ -35,7 +34,6 @@ namespace TowerDefense.Api.Controllers
             _initialGameSetupHandler.SetArenaGridForPlayer(addPlayerRequest.PlayerName);
             _initialGameSetupHandler.SetShopForPlayer(addPlayerRequest.PlayerName);
             _initialGameSetupHandler.SetPerkStorageForPlayer(addPlayerRequest.PlayerName);
-            _initialGameSetupHandler.SetLevel(addPlayerRequest.Level);
 
             var addNewPlayerResponse = _mapper.Map<AddNewPlayerResponse>(player);
 
@@ -57,6 +55,11 @@ namespace TowerDefense.Api.Controllers
             _gameMediator.Notify(this, MediatorEvent.PlayerEndedTurn, endTurnRequest.PlayerName);
             return Ok();
         }
+
+        /// <summary>
+        /// Clears game state and restarts game
+        /// </summary>
+        /// <returns></returns>
         [HttpPost("reset")]
         public ActionResult Reset()
         {

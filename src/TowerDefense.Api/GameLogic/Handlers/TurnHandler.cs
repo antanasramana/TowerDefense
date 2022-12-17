@@ -1,8 +1,5 @@
-﻿using TowerDefense.Api.Constants;
-using TowerDefense.Api.GameLogic.GameState;
+﻿using TowerDefense.Api.GameLogic.GameState;
 using TowerDefense.Api.GameLogic.Mediator;
-using TowerDefense.Api.GameLogic.Memento;
-using TowerDefense.Api.GameLogic.Strategies;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
@@ -16,12 +13,10 @@ namespace TowerDefense.Api.GameLogic.Handlers
     public class TurnHandler : ITurnHandler
     {
         private readonly GameOriginator _game;
-        private readonly ICaretaker _caretaker;
         private IGameMediator _gameMediator;
 
-        public TurnHandler(ICaretaker caretaker)
+        public TurnHandler()
         {
-            _caretaker = caretaker;
             _game = GameOriginator.Instance;
         }
 

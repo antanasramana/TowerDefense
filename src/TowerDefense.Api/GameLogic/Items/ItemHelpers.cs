@@ -17,7 +17,15 @@ namespace TowerDefense.Api.GameLogic.Items
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
+        public static int GetAttackingItemRow(int attackingGridItemId)
+        {
+            return attackingGridItemId / Constants.TowerDefense.MaxGridGridItemsInRow;
+        }
 
+        public static int GetAttackingItemColumn(int attackingGridItemId)
+        {
+            return attackingGridItemId % Constants.TowerDefense.MaxGridGridItemsInRow;
+        }
         public static IEnumerable<int> GetAttackedGridItems(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
             /*

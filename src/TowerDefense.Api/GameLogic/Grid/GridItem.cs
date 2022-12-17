@@ -1,12 +1,10 @@
-﻿using TowerDefense.Api.GameLogic.Builders;
+﻿using TowerDefense.Api.GameLogic.Attacks;
 using TowerDefense.Api.GameLogic.Items;
 using TowerDefense.Api.GameLogic.Items.Models;
-using TowerDefense.Api.GameLogic.Observer;
-using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.GameLogic.Grid
 {
-    public class GridItem : IAttackSubscriber
+    public class GridItem
     {
         private const int SmallDamage = 50;
 
@@ -31,7 +29,7 @@ namespace TowerDefense.Api.GameLogic.Grid
 
             }
 
-            Damage damage = new FireDamage { Size = 1, Intensity = 1, Time = 2 };
+            IDamage damage = new FireDamage { Size = 1, Intensity = 1, Time = 2 };
 
             return new AttackResult { GridId = this.Id, Damage = damage };
         }

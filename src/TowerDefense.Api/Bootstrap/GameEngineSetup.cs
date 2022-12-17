@@ -1,6 +1,5 @@
 using TowerDefense.Api.GameLogic.Handlers;
 using TowerDefense.Api.GameLogic.Mediator;
-using TowerDefense.Api.GameLogic.Memento;
 
 namespace TowerDefense.Api.Bootstrap
 {
@@ -19,7 +18,6 @@ namespace TowerDefense.Api.Bootstrap
             serviceCollection.AddTransient<IAttackHandler, AttackHandler>();
             serviceCollection.AddTransient<IGameMediator, GameMediator>();
             serviceCollection.AddTransient<IPerkHandler, PerkHandler>();
-            serviceCollection.AddSingleton<ICaretaker, Caretaker>();
         }
     }
 }

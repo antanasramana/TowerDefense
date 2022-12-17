@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using TowerDefense.Api.Contracts.Inventory;
-using TowerDefense.Api.Models;
+using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.Bootstrap.AutoMapper
 {

@@ -1,7 +1,7 @@
-﻿using TowerDefense.Api.GameLogic.GameState;
+﻿using TowerDefense.Api.GameLogic.Attacks;
+using TowerDefense.Api.GameLogic.GameState;
 using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.GameLogic.Strategies;
-using TowerDefense.Api.Models;
 
 namespace TowerDefense.Api.GameLogic.Items.Models
 {

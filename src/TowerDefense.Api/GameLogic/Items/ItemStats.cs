@@ -1,4 +1,4 @@
-﻿namespace TowerDefense.Api.Models
+﻿namespace TowerDefense.Api.GameLogic.Items
 {
     public interface IItemStats
     {
@@ -53,7 +53,7 @@
             return new SpecialItemStats { Damage = Damage, Price = Price, Health = Health };
         }
     }
-    public class HighHealthItemStats  : IItemStats
+    public class HighHealthItemStats : IItemStats
     {
         public int Price { get; set; } = 20;
         public int Health { get; set; } = 150;

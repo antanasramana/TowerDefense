@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.GameLogic.GameState;
 using TowerDefense.Api.GameLogic.Items;
-using TowerDefense.Api.Models;
+using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {

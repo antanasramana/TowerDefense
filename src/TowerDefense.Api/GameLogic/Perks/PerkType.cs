@@ -3,8 +3,5 @@
     public enum PerkType
     {
         CutInHalf,
-        BackInTime,
-        RemoveEverything,
-        Restore
     }
 }

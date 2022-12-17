@@ -44,7 +44,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
         private void RemoveUsedPerks()
         {
-            _game.State.PerksUsedOnPlayer = new List<(string PlayerName, IPerkDto Perk)>();
+            _game.State.PerksUsedOnPlayer = new List<(string PlayerName, IPerk Perk)>();
         }
     }
 }
