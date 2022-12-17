@@ -16,7 +16,7 @@ const initialState: Enemy = {
 	armor: 100,
 };
 
-export const getEnemyInfo = createAsyncThunk<GetPlayerInfoResponse>('player/getPlayerInfo', async () => {
+export const getEnemyInfo = createAsyncThunk<GetPlayerInfoResponse>('enemy/getPlayerInfo', async () => {
 	const reduxStore = store.getState();
 	const response = await axios.get<GetPlayerInfoResponse>(`${API_URL}/players/${reduxStore.enemy.name}`);
 	console.log(response.data);
@@ -27,6 +27,11 @@ const enemySlice = createSlice({
 	name: 'enemy',
 	initialState,
 	reducers: {
+		setEnemyToInitial(state, action: PayloadAction) {
+			state.name = initialState.name;
+			state.health = initialState.health;
+			state.armor = initialState.armor;
+		},
 		setName(state, action: PayloadAction<string>) {
 			state.name = action.payload;
 		},
@@ -48,5 +53,5 @@ const enemySlice = createSlice({
 	},
 });
 
-export const { setName, setHealth, setArmor } = enemySlice.actions;
+export const { setName, setHealth, setArmor, setEnemyToInitial } = enemySlice.actions;
 export default enemySlice.reducer;

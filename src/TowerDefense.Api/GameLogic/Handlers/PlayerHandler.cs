@@ -6,6 +6,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
     public interface IPlayerHandler
     {
         IPlayer GetPlayer(string playerName);
+        IEnumerable<IPlayer> GetPlayers();
     }
 
     public class PlayerHandler : IPlayerHandler
@@ -20,6 +21,10 @@ namespace TowerDefense.Api.GameLogic.Handlers
         public IPlayer GetPlayer(string playerName)
         {
             return _game.State.Players.First(player => player.Name == playerName);
+        }
+        public IEnumerable<IPlayer> GetPlayers()
+        {
+            return _game.State.Players;
         }
     }
 }

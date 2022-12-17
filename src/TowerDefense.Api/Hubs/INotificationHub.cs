@@ -8,6 +8,8 @@ namespace TowerDefense.Api.Hubs
     {
         Task NotifyGameResult(Dictionary<string, EndTurnResponse> responses);
         Task NotifyGameStart(IPlayer firstPlayer, IPlayer secondPlayer);
+        Task ResetGame();
         Task SendEndTurnInfo(IPlayer player, EndTurnResponse turnOutcome);
+        Task NotifyGameFinished(IPlayer winner);
     }
 }

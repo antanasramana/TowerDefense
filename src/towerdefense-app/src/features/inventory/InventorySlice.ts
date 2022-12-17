@@ -24,6 +24,10 @@ const inventorySlice = createSlice({
 	name: 'inventory',
 	initialState,
 	reducers: {
+		setInventoryToInitial(state, action: PayloadAction) {
+			state.selectedItem = initialState.selectedItem;
+			state.inventoryItems = initialState.inventoryItems;
+		},
 		setSelectedItem(state, action: PayloadAction<string>) {
 			state.selectedItem = action.payload;
 		},
@@ -42,5 +46,5 @@ const inventorySlice = createSlice({
 	},
 });
 
-export const { setSelectedItem, setInventoryItems } = inventorySlice.actions;
+export const { setSelectedItem, setInventoryItems, setInventoryToInitial } = inventorySlice.actions;
 export default inventorySlice.reducer;

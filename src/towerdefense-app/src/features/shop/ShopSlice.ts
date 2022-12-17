@@ -26,6 +26,10 @@ const shopSlice = createSlice({
 	name: 'shop',
 	initialState,
 	reducers: {
+		setShopToInitial(state, action: PayloadAction) {
+			state.selectedItem = initialState.selectedItem;
+			state.shopItems = initialState.shopItems;
+		},
 		setSelectedItem(state, action: PayloadAction<string>) {
 			state.selectedItem = action.payload;
 		},
@@ -68,5 +72,5 @@ export const shopApiSlice = createApi({
 });
 
 export const { useBuyShopItemMutation } = shopApiSlice;
-export const { setSelectedItem, setShopItems } = shopSlice.actions;
+export const { setSelectedItem, setShopItems, setShopToInitial } = shopSlice.actions;
 export default shopSlice.reducer;

@@ -5,10 +5,11 @@ using TowerDefense.Api.GameLogic.Memento;
 using TowerDefense.Api.Hubs;
 using TowerDefense.Api.Models;
 using TowerDefense.Api.Models.Perks;
+using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
-    public interface IBattleHandlerFacade: IComponent
+    public interface IBattleHandlerFacade : IComponent
     {
         void HandleEndTurn();
     }
@@ -53,24 +54,40 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
                 // Get all AttackDeclarations
 
-                var player1AttackDeclarations = _attackHandler.HandlePlayerAttacks(player1ArenaGrid, player2ArenaGrid);
-                var player2AttackDeclarations = _attackHandler.HandlePlayerAttacks(player2ArenaGrid, player1ArenaGrid);
+                var player1Attack = _attackHandler.HandlePlayerAttacks(player1ArenaGrid, player2ArenaGrid);
+                var player2Attack = _attackHandler.HandlePlayerAttacks(player2ArenaGrid, player1ArenaGrid);
 
                 // Calculate players earned money 
 
-                player1.Money += _attackHandler.PlayerEarnedMoneyAfterAttack(player1AttackDeclarations);
-                player2.Money += _attackHandler.PlayerEarnedMoneyAfterAttack(player2AttackDeclarations);
+                player1.Money += _attackHandler.PlayerEarnedMoneyAfterAttack(player1Attack.ItemAttackDeclarations);
+                player2.Money += _attackHandler.PlayerEarnedMoneyAfterAttack(player2Attack.ItemAttackDeclarations);
 
                 // Notify opposing players grid items to receive attack
-                player1AttackResults = player2.Publisher.Notify(player1AttackDeclarations);
-                player2AttackResults = player1.Publisher.Notify(player2AttackDeclarations);
+                player1AttackResults = player2.Publisher.Notify(player1Attack.ItemAttackDeclarations);
+                player2AttackResults = player1.Publisher.Notify(player2Attack.ItemAttackDeclarations);
 
+                // Calculate Damage
+
+                DoDamageToPlayer(player1, player2Attack.DirectAttackDeclarations);
+                DoDamageToPlayer(player2, player1Attack.DirectAttackDeclarations);
+
+                if (player1.Health <= 0)
+                {
+                    _gameMediator.Notify(this, MediatorEvent.GameFinished, player2);
+                    return;
+                }
+                else if (player2.Health <= 0)
+                {
+                    _gameMediator.Notify(this, MediatorEvent.GameFinished, player1);
+                    return;
+                }
 
             }
 
-            var player1TurnOutcome = new EndTurnResponse { 
-                GridItems = player2ArenaGrid.GridItems, 
-                PlayerAttackResults = player2AttackResults, 
+            var player1TurnOutcome = new EndTurnResponse
+            {
+                GridItems = player2ArenaGrid.GridItems,
+                PlayerAttackResults = player2AttackResults,
                 EnemyAttackResults = player1AttackResults
             };
             var player2TurnOutcome = new EndTurnResponse
@@ -88,10 +105,29 @@ namespace TowerDefense.Api.GameLogic.Handlers
             _caretaker.AddSnapshot(snapshot);
 
             _gameMediator.Notify(this, MediatorEvent.TurnResultsCreated, responses);
-            
+
             //Preperate atomic bombs for next round
             _atomicBombHandler.UpdateState(player1ArenaGrid);
             _atomicBombHandler.UpdateState(player2ArenaGrid);
+        }
+
+        private void DoDamageToPlayer(IPlayer player, IEnumerable<AttackDeclaration> attackDeclarations)
+        {
+            foreach (var attack in attackDeclarations)
+            {
+                player.Armor -= attack.Damage;
+                if (player.Armor < 0)
+                {
+                    var damageToHealth = -player.Armor;
+                    player.Armor = 0;
+                    player.Health -= damageToHealth;
+                }
+
+                if (player.Health < 0)
+                {
+                    player.Health = 0;
+                }
+            }
         }
     }
 }

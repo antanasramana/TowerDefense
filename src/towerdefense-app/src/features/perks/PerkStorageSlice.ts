@@ -25,6 +25,9 @@ const perksSlice = createSlice({
 	name: 'perks',
 	initialState,
 	reducers: {
+		setPerksToInitial(state, action: PayloadAction) {
+			state.perks = initialState.perks;
+		},
 		setPerks(state, action: PayloadAction<Perk[]>) {
 			state.perks = action.payload;
 		},
@@ -66,5 +69,5 @@ export const perksApiSlice = createApi({
 
 export const { useApplyPerkMutation } = perksApiSlice;
 
-export const { setPerks } = perksSlice.actions;
+export const { setPerks, setPerksToInitial } = perksSlice.actions;
 export default perksSlice.reducer;

@@ -13,19 +13,16 @@ namespace TowerDefense.Api.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
-        private readonly IBattleHandlerFacade _battleHandler;
         private readonly IInitialGameSetupHandler _initialGameSetupHandler;
         private readonly IPlayerHandler _playerHandler;
         private readonly IMapper _mapper;
         private readonly IGameMediator _gameMediator;
 
-        public PlayerController (IBattleHandlerFacade battleHandler, 
-            IGameMediator gameMediator,
+        public PlayerController (IGameMediator gameMediator,
             IInitialGameSetupHandler initialGameSetupHandler, 
             IPlayerHandler playerHandler, 
             IMapper mapper)
         {
-            _battleHandler = battleHandler;
             _gameMediator = gameMediator;
             _initialGameSetupHandler = initialGameSetupHandler;
             _playerHandler = playerHandler;
@@ -67,6 +64,12 @@ namespace TowerDefense.Api.Controllers
         public ActionResult EndTurn(EndTurnRequest endTurnRequest)
         {
             _gameMediator.Notify(this, MediatorEvent.PlayerEndedTurn, endTurnRequest.PlayerName);
+            return Ok();
+        }
+        [HttpPost("reset")]
+        public ActionResult Reset()
+        {
+            _gameMediator.Notify(this, MediatorEvent.ResetGame, null);
             return Ok();
         }
     }

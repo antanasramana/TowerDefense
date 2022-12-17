@@ -15,6 +15,12 @@ namespace TowerDefense.Api.Hubs
             _hub = new NotificationHub(gameHubContext, playerHandler);
         }
 
+        public async Task NotifyGameFinished(IPlayer winner)
+        {
+            Log($"PLayer {winner.Name} won the game");
+            await _hub.NotifyGameFinished(winner);
+        }
+
         public Task NotifyGameResult(Dictionary<string, EndTurnResponse> responses)
         {    
             foreach (var response in responses)
@@ -29,6 +35,12 @@ namespace TowerDefense.Api.Hubs
         {
             Log("Starting game. Players: " + firstPlayer.Name + " | " + secondPlayer.Name);
             return _hub.NotifyGameStart(firstPlayer, secondPlayer);
+        }
+
+        public Task ResetGame()
+        {
+            Log("Reset Game");
+            return _hub.ResetGame();
         }
 
         public Task SendEndTurnInfo(IPlayer player, EndTurnResponse turnOutcome)

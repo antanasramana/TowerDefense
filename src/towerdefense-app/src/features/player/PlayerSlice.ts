@@ -37,6 +37,13 @@ const playerSlice = createSlice({
 	name: 'player',
 	initialState,
 	reducers: {
+		setPlayerToInitial(state, action: PayloadAction) {
+			state.name = initialState.name;
+			state.level = initialState.level;
+			state.health = initialState.health;
+			state.armor = initialState.armor;
+			state.money = initialState.money;
+		},
 		setName(state, action: PayloadAction<string>) {
 			state.name = action.payload;
 		},
@@ -101,5 +108,5 @@ export const apiSlice = createApi({
 });
 
 export const { useAddNewPlayerMutation, useEndTurnMutation } = apiSlice;
-export const { setName, setLevel, setHealth, setArmor, setMoney } = playerSlice.actions;
+export const { setName, setLevel, setHealth, setArmor, setMoney, setPlayerToInitial } = playerSlice.actions;
 export default playerSlice.reducer;

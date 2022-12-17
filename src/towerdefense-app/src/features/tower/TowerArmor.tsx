@@ -5,6 +5,7 @@ import './TowerArmor.css';
 
 interface Props{
 	isEnemy: boolean;
+	value: number
 }
 
 const TowerArmor: React.FC<Props> = (props) => {
@@ -19,7 +20,7 @@ const TowerArmor: React.FC<Props> = (props) => {
 
 	return (
 		<div className='tower-armor-container'>
-			{armorPlates}
+			<h2 className='armor-header' >{props.value}</h2>
 		</div>
 	);
 };

@@ -75,6 +75,11 @@ const gridSlice = createSlice({
 	name: 'playerGrid',
 	initialState,
 	reducers: {
+		setGridToInitial(state, action: PayloadAction) {
+			state.playerGridItems = initialState.playerGridItems;
+			state.enemyGridItems = initialState.enemyGridItems;
+			state.selectedGridItemId = initialState.selectedGridItemId;
+		},
 		setPlayerGridItems(state, action: PayloadAction<GridItem[]>) {
 			state.playerGridItems = action.payload;
 		},
@@ -126,5 +131,5 @@ export const gridApiSlice = createApi({
 });
 
 export const { useAddGridItemMutation } = gridApiSlice;
-export const { setEnemyGridItems, setPlayerGridItems, setSelectedGridItemId } = gridSlice.actions;
+export const { setEnemyGridItems, setPlayerGridItems, setSelectedGridItemId, setGridToInitial } = gridSlice.actions;
 export default gridSlice.reducer;
