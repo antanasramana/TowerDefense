@@ -22,17 +22,21 @@ const GridTile: React.FC<Props> = (props) => {
 	const selectedGridItemId = useAppSelector((state) => state.grid.selectedGridItemId);
 
 	function onGridItemClick() {
+		console.log('test4');
 		if (props.isEnemy) {
 			return;
 		}
+		console.log('test4');
 		dispatch(setSelectedGridItemId(-1));
 		if (props.id == selectedGridItemId) {
 			return;
 		}
+		console.log('test4');
 		if (props.tileType == TileType.Blank || props.tileType == TileType.Placeholder) {
 			props.onTileClick(props.id, props.tileType);
 			return;
 		}
+		console.log('test4');
 		dispatch(setSelectedGridItemId(props.id));
 	}
 

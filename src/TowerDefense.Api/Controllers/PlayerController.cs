@@ -75,6 +75,11 @@ namespace TowerDefense.Api.Controllers
             var inventory = player.Inventory;
             var requestedItem = inventory.Items.FirstOrDefault(x => x.Id == request.InventoryItemId);
 
+            if (requestedItem == null)
+            {
+                return Ok();
+            }
+
             var playersGridItems = player.ArenaGrid.GridItems;
             var selectedGridItem = playersGridItems[request.GridItemId.Value];
 

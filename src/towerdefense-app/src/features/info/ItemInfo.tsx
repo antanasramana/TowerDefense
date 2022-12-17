@@ -5,9 +5,9 @@ import './ItemInfo.css';
 
 const ItemInfo: React.FC = () => {
 
-	const playerGrid = useAppSelector((state) => state.grid);
+	const playerGrid = useAppSelector((state) => state.grid); 
 
-	function getGridItem(id: number): GridItem | undefined{
+	function getGridItem(id: number): GridItem | undefined {
 		return playerGrid.playerGridItems.find( i => i.id == id);
 	}
 	return (    
@@ -17,10 +17,6 @@ const ItemInfo: React.FC = () => {
 					<div className='properties'>
 						<h3>Health: {getGridItem(playerGrid.selectedGridItemId)?.health}</h3>
 						<h3>Damage: {getGridItem(playerGrid.selectedGridItemId)?.damage}</h3>
-						<h3>Level: {getGridItem(playerGrid.selectedGridItemId)?.level}</h3>
-					</div>
-					<div className='power-ups'>
-						{getGridItem(playerGrid.selectedGridItemId)?.powerUps.map((powerUp, i) => <h4 className='power-up' key={i}>{powerUp}</h4>)}
 					</div>
 				</>
 			}
