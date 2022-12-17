@@ -1,30 +1,26 @@
 ﻿using TowerDefense.Api.Contracts.Turn;
 using TowerDefense.Api.GameLogic.Attacks;
 using TowerDefense.Api.GameLogic.GameState;
-using TowerDefense.Api.GameLogic.Mediator;
 using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
-    public interface IBattleHandlerFacade : IComponent
+    public interface IBattleHandler
     {
         void HandleEndTurn();
     }
 
-    public class BattleHandlerFacade : IBattleHandlerFacade
+    public class BattleHandler : IBattleHandler
     {
         private readonly GameOriginator _game;
         private readonly IAttackHandler _attackHandler;
-        private IGameMediator _gameMediator;
+        private IGameHandler _gameHandler;
 
-        public BattleHandlerFacade(IAttackHandler attackHandler, IPerkHandler perkHandler)
+        public BattleHandler(IAttackHandler attackHandler, IPerkHandler perkHandler, IGameHandler gameHandler)
         {
             _game = GameOriginator.Instance;
             _attackHandler = attackHandler;
-        }
-        public void SetMediator(IGameMediator gameMediator)
-        {
-            _gameMediator = gameMediator;
+            _gameHandler = gameHandler;
         }
 
         public void HandleEndTurn()
@@ -49,19 +45,19 @@ namespace TowerDefense.Api.GameLogic.Handlers
             var player1AttackResults = NotifyPlayerGridItems(player2, player1Attack.ItemAttackDeclarations);
             var player2AttackResults = NotifyPlayerGridItems(player1, player2Attack.ItemAttackDeclarations);
 
-            // Calculate IDamage
+            // Calculate damage
 
             DoDamageToPlayer(player1, player2Attack.DirectAttackDeclarations);
             DoDamageToPlayer(player2, player1Attack.DirectAttackDeclarations);
 
             if (player1.Health <= 0)
             {
-                _gameMediator.Notify(this, MediatorEvent.GameFinished, player2);
+                _gameHandler.FinishGame(player2);
                 return;
             }
             else if (player2.Health <= 0)
             {
-                _gameMediator.Notify(this, MediatorEvent.GameFinished, player1);
+                _gameHandler.FinishGame(player1);
                 return;
             }
 
@@ -82,7 +78,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
             responses.Add(player1.Name, player1TurnOutcome);
             responses.Add(player2.Name, player2TurnOutcome);
 
-            _gameMediator.Notify(this, MediatorEvent.TurnResultsCreated, responses);
+            _gameHandler.FinishTurn(responses);
         }
 
         private List<AttackResult> NotifyPlayerGridItems(IPlayer player, IEnumerable<AttackDeclaration> attackDeclarations)

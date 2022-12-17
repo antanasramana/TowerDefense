@@ -1,5 +1,4 @@
 using TowerDefense.Api.GameLogic.Handlers;
-using TowerDefense.Api.GameLogic.Mediator;
 
 namespace TowerDefense.Api.Bootstrap
 {
@@ -9,14 +8,14 @@ namespace TowerDefense.Api.Bootstrap
         {
             serviceCollection.AddTransient<IShopHandler, ShopHandler>();
             serviceCollection.AddTransient<ITurnHandler, TurnHandler>();
-            serviceCollection.AddTransient<IBattleHandlerFacade, BattleHandlerFacade>();
+            serviceCollection.AddTransient<IBattleHandler, BattleHandler>();
             serviceCollection.AddTransient<IInitialGameSetupHandler, InitialGameSetupHandler>();
             serviceCollection.AddTransient<IInventoryHandler, InventoryHandler>();
             serviceCollection.AddTransient<IGridHandler, GridHandler>();
             serviceCollection.AddTransient<IPlayerHandler, PlayerHandler>();
             serviceCollection.AddTransient<ICommandHandler, CommandHandler>();
             serviceCollection.AddTransient<IAttackHandler, AttackHandler>();
-            serviceCollection.AddTransient<IGameMediator, GameMediator>();
+            serviceCollection.AddTransient<IGameHandler, GameHandler>();
             serviceCollection.AddTransient<IPerkHandler, PerkHandler>();
         }
     }

@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.GameLogic.Items;
 
-namespace TowerDefense.Api.Models.Player
+namespace TowerDefense.Api.GameLogic.Player
 {
     public class Inventory
     {

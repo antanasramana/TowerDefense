@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using TowerDefense.Api.GameLogic.Handlers;
 using TowerDefense.Api.Contracts.Player;
 using TowerDefense.Api.Contracts.Turn;
-using TowerDefense.Api.GameLogic.Mediator;
 
 namespace TowerDefense.Api.Controllers
 {
@@ -14,14 +13,14 @@ namespace TowerDefense.Api.Controllers
         private readonly IInitialGameSetupHandler _initialGameSetupHandler;
         private readonly IPlayerHandler _playerHandler;
         private readonly IMapper _mapper;
-        private readonly IGameMediator _gameMediator;
+        private readonly IGameHandler _gameHandler;
 
-        public PlayerController (IGameMediator gameMediator,
+        public PlayerController (IGameHandler gameHandler,
             IInitialGameSetupHandler initialGameSetupHandler, 
             IPlayerHandler playerHandler, 
             IMapper mapper)
         {
-            _gameMediator = gameMediator;
+            _gameHandler = gameHandler;
             _initialGameSetupHandler = initialGameSetupHandler;
             _playerHandler = playerHandler;
             _mapper = mapper;
@@ -52,7 +51,7 @@ namespace TowerDefense.Api.Controllers
         [HttpPost("endturn")]
         public ActionResult EndTurn(EndTurnRequest endTurnRequest)
         {
-            _gameMediator.Notify(this, MediatorEvent.PlayerEndedTurn, endTurnRequest.PlayerName);
+            _gameHandler.PlayerEndedTurn(endTurnRequest.PlayerName);
             return Ok();
         }
 
@@ -63,7 +62,7 @@ namespace TowerDefense.Api.Controllers
         [HttpPost("reset")]
         public ActionResult Reset()
         {
-            _gameMediator.Notify(this, MediatorEvent.ResetGame, null);
+            _gameHandler.ResetGame();
             return Ok();
         }
     }

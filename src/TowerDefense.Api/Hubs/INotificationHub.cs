@@ -1,15 +1,13 @@
 ﻿using TowerDefense.Api.Contracts.Turn;
-using TowerDefense.Api.GameLogic.Mediator;
 using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.Hubs
 {
-    public interface INotificationHub : IComponent
+    public interface INotificationHub
     {
-        Task NotifyGameResult(Dictionary<string, EndTurnResponse> responses);
+        Task SendPlayersTurnResult(Dictionary<string, EndTurnResponse> responses);
         Task NotifyGameStart(IPlayer firstPlayer, IPlayer secondPlayer);
         Task ResetGame();
-        Task SendEndTurnInfo(IPlayer player, EndTurnResponse turnOutcome);
         Task NotifyGameFinished(IPlayer winner);
     }
 }

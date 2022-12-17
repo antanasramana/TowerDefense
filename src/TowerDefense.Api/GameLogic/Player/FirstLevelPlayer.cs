@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.GameLogic.Grid;
-using TowerDefense.Api.GameLogic.Observer;
 using TowerDefense.Api.GameLogic.PerkStorage;
+using TowerDefense.Api.GameLogic.Player;
 using TowerDefense.Api.GameLogic.Shop;
 
 namespace TowerDefense.Api.Models.Player
@@ -12,10 +12,9 @@ namespace TowerDefense.Api.Models.Player
         public int Health { get; set; } = 100;
         public int Armor { get; set; } = 100;
         public int Money { get; set; } = 1000;
-        public Inventory Inventory { get; set; } = new Inventory();
+        public Inventory Inventory { get; set; } = new();
         public IArenaGrid ArenaGrid { get; set; } = null;
         public IShop Shop { get; set; } = null;
-        public IGridPublisher Publisher { get; set; } = new GridPublisher();
         public IPerkStorage PerkStorage { get; set; } = null;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using TowerDefense.Api.GameLogic.GameState;
-using TowerDefense.Api.GameLogic.Memento;
 using TowerDefense.Api.GameLogic.PerkStorage;
 using TowerDefense.Api.Models.Perks;
 
@@ -15,11 +14,9 @@ namespace TowerDefense.Api.GameLogic.Handlers
     public class PerkHandler : IPerkHandler
     {
         private readonly GameOriginator _game;
-        private readonly ICaretaker _caretaker;
-        public PerkHandler(ICaretaker caretaker)
+        public PerkHandler()
         {
             _game = GameOriginator.Instance;
-            _caretaker = caretaker;
         }
 
         public IPerkStorage GetPerks(string playerName)

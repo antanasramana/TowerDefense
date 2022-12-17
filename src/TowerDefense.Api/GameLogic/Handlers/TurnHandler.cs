@@ -1,9 +1,8 @@
 ﻿using TowerDefense.Api.GameLogic.GameState;
-using TowerDefense.Api.GameLogic.Mediator;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
-    public interface ITurnHandler : IComponent
+    public interface ITurnHandler
     {   
         void ResetGame();
         bool TryEndTurn(string playerName);
@@ -13,16 +12,16 @@ namespace TowerDefense.Api.GameLogic.Handlers
     public class TurnHandler : ITurnHandler
     {
         private readonly GameOriginator _game;
-        private IGameMediator _gameMediator;
+        private IGameHandler _gameHandler;
 
         public TurnHandler()
         {
             _game = GameOriginator.Instance;
         }
 
-        public void SetMediator(IGameMediator gameMediator)
+        public void SetMediator(IGameHandler gameHandler)
         {
-            _gameMediator = gameMediator;
+            _gameHandler = gameHandler;
         }
 
         public bool TryEndTurn(string playerName)
@@ -32,7 +31,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
             if (_game.State.PlayersFinishedTurn.Count != Constants.TowerDefense.MaxNumberOfPlayers) return false;
 
-            _gameMediator.Notify(this, MediatorEvent.AllPlayersEndedTurn);
+            _gameHandler.AllPlayersEndedTurn();
 
             return true;
         }
