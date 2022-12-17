@@ -13,23 +13,23 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class PerkHandler : IPerkHandler
     {
-        private readonly GameOriginator _game;
+        private readonly State _gameState;
         public PerkHandler()
         {
-            _game = GameOriginator.Instance;
+            _gameState = GameOriginator.GameState;
         }
 
         public IPerkStorage GetPerks(string playerName)
         {
-            var player = _game.State.Players.First(x => x.Name == playerName);
+            var player = _gameState.Players.First(x => x.Name == playerName);
 
             return player.PerkStorage;
         }
 
         public void UsePerk(string perkUsingPlayerName, int perkId)
         {
-            var player = _game.State.Players.First(x => x.Name == perkUsingPlayerName);
-            var enemyPlayer = _game.State.Players.First(x => x.Name != perkUsingPlayerName);
+            var player = _gameState.Players.First(x => x.Name == perkUsingPlayerName);
+            var enemyPlayer = _gameState.Players.First(x => x.Name != perkUsingPlayerName);
 
             var perk = player.PerkStorage.Perks.Where(x => x.Id == perkId).FirstOrDefault();
 
@@ -52,7 +52,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
         private void RemoveUsedPerks()
         {
-            _game.State.PerksUsedOnPlayer = new List<(string PlayerName, IPerk Perk)>();
+            _gameState.PerksUsedOnPlayer = new List<(string PlayerName, IPerk Perk)>();
         }
     }
 }

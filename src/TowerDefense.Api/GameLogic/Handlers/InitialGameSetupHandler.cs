@@ -20,12 +20,12 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class InitialGameSetupHandler : IInitialGameSetupHandler
     {
-        private readonly GameOriginator _game;
+        private readonly State _gameState;
         private readonly INotificationHub _notificationHub;
 
         public InitialGameSetupHandler(INotificationHub notificationHub)
         {
-            _game = GameOriginator.Instance;
+            _gameState = GameOriginator.GameState;
             _notificationHub = notificationHub;
         }
         public IPlayer AddNewPlayer(string playerName)
@@ -39,15 +39,15 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
         public void SetConnectionIdForPlayer(string playerName, string connectionId)
         {
-            var player = _game.State.Players.First(x => x.Name == playerName);
+            var player = _gameState.Players.First(x => x.Name == playerName);
             player.ConnectionId = connectionId;
         }
 
         public async Task TryStartGame()
         {
-            if (_game.State.ActivePlayers != Constants.TowerDefense.MaxNumberOfPlayers) return;
+            if (_gameState.ActivePlayers != Constants.TowerDefense.MaxNumberOfPlayers) return;
 
-            await _notificationHub.NotifyGameStart(_game.State.Players[0], _game.State.Players[1]);
+            await _notificationHub.NotifyGameStart(_gameState.Players[0], _gameState.Players[1]);
         }
 
         public void SetArenaGridForPlayer(IPlayer player)
@@ -70,14 +70,14 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
         public IPlayer AddPlayerToGame(string playerName)
         {
-            if (_game.State.ActivePlayers == Constants.TowerDefense.MaxNumberOfPlayers)
+            if (_gameState.ActivePlayers == Constants.TowerDefense.MaxNumberOfPlayers)
             {
                 throw new ArgumentException();
             }
 
-            var currentNewPlayerId = _game.State.ActivePlayers;
+            var currentNewPlayerId = _gameState.ActivePlayers;
             var newPlayer = new FirstLevelPlayer { Name = playerName };
-            _game.State.Players[currentNewPlayerId] = newPlayer;
+            _gameState.Players[currentNewPlayerId] = newPlayer;
 
             return newPlayer;
         }

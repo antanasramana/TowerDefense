@@ -12,23 +12,23 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class ShopHandler : IShopHandler
     {
-        private readonly GameOriginator _game;
+        private readonly State _gameState;
 
         public ShopHandler()
         {
-            _game = GameOriginator.Instance;
+            _gameState = GameOriginator.GameState;
         }
 
         public IShop GetPlayerShop(string playerName)
         {
-            var player = _game.State.Players.First(player => player.Name == playerName);
+            var player = _gameState.Players.First(player => player.Name == playerName);
 
             return player.Shop;
         }
 
         public bool TryBuyItem(string playerName, string identifier)
         {
-            var player = _game.State.Players.First(player => player.Name == playerName);
+            var player = _gameState.Players.First(player => player.Name == playerName);
             var item = player.Shop.Items.First(item => item.Id == identifier);
 
             if (item == null) return false;

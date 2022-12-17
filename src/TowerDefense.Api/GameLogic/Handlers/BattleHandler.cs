@@ -13,14 +13,14 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class BattleHandler : IBattleHandler
     {
-        private readonly GameOriginator _game;
+        private readonly State _gameState;
         private readonly IAttackHandler _attackHandler;
         private readonly INotificationHub _notificationHub;
         private IGameHandler _gameHandler;
 
         public BattleHandler(IAttackHandler attackHandler, IPerkHandler perkHandler, IGameHandler gameHandler, INotificationHub notificationHub)
         {
-            _game = GameOriginator.Instance;
+            _gameState = GameOriginator.GameState;
             _attackHandler = attackHandler;
             _gameHandler = gameHandler;
             _notificationHub = notificationHub;
@@ -28,8 +28,8 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
         public async Task HandleEndTurn()
         {
-            var player1 = _game.State.Players[0];
-            var player2 = _game.State.Players[1];
+            var player1 = _gameState.Players[0];
+            var player2 = _gameState.Players[1];
 
             var player1ArenaGrid = player1.ArenaGrid;
             var player2ArenaGrid = player2.ArenaGrid;

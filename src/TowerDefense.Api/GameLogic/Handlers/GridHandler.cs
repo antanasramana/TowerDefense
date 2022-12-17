@@ -10,15 +10,15 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     public class GridHandler : IGridHandler
     {
-        private readonly GameOriginator _game;
+        private readonly State _gameState;
 
         public GridHandler()
         {
-            _game = GameOriginator.Instance;
+            _gameState = GameOriginator.GameState;
         }
         public IArenaGrid GetGridItems(string playerName)
         {
-            var player = _game.State.Players.First(x => x.Name == playerName);
+            var player = _gameState.Players.First(x => x.Name == playerName);
             return player.ArenaGrid;
         }
     }

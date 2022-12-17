@@ -14,12 +14,12 @@ namespace TowerDefense.Api.GameLogic.Handlers
     class GameHandler : IGameHandler
     {
         private INotificationHub _notificationHub;
-        private readonly GameOriginator _game;
+        private readonly State _gameState;
 
         public GameHandler(INotificationHub notificationHub)
         {
             _notificationHub = notificationHub;
-            _game = GameOriginator.Instance;
+            _gameState = GameOriginator.GameState;
         }
 
         public async Task ResetGame()
@@ -36,7 +36,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
         private void ClearGameState()
         {
-            _game.State = new State();
+            GameOriginator.GameState = new State();
         }
     }
 }
