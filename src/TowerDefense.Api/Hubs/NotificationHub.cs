@@ -8,12 +8,10 @@ namespace TowerDefense.Api.Hubs
     public class NotificationHub : INotificationHub
     {
         private readonly IHubContext<GameHub> _gameHubContext;
-        private IGameHandler _gameHandler;
         private readonly IPlayerHandler _playerHandler;
-        public NotificationHub(IHubContext<GameHub> gameHubContext, IPlayerHandler playerHandler, IGameHandler gameHandler)
+        public NotificationHub(IHubContext<GameHub> gameHubContext, IPlayerHandler playerHandler)
         {
             _playerHandler = playerHandler;
-            _gameHandler = gameHandler;
             _gameHubContext = gameHubContext;
         }
 

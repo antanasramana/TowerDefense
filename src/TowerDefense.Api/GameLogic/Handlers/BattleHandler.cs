@@ -1,29 +1,32 @@
 ﻿using TowerDefense.Api.Contracts.Turn;
 using TowerDefense.Api.GameLogic.Attacks;
 using TowerDefense.Api.GameLogic.GameState;
+using TowerDefense.Api.Hubs;
 using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
     public interface IBattleHandler
     {
-        void HandleEndTurn();
+        Task HandleEndTurn();
     }
 
     public class BattleHandler : IBattleHandler
     {
         private readonly GameOriginator _game;
         private readonly IAttackHandler _attackHandler;
+        private readonly INotificationHub _notificationHub;
         private IGameHandler _gameHandler;
 
-        public BattleHandler(IAttackHandler attackHandler, IPerkHandler perkHandler, IGameHandler gameHandler)
+        public BattleHandler(IAttackHandler attackHandler, IPerkHandler perkHandler, IGameHandler gameHandler, INotificationHub notificationHub)
         {
             _game = GameOriginator.Instance;
             _attackHandler = attackHandler;
             _gameHandler = gameHandler;
+            _notificationHub = notificationHub;
         }
 
-        public void HandleEndTurn()
+        public async Task HandleEndTurn()
         {
             var player1 = _game.State.Players[0];
             var player2 = _game.State.Players[1];
@@ -50,14 +53,15 @@ namespace TowerDefense.Api.GameLogic.Handlers
             DoDamageToPlayer(player1, player2Attack.DirectAttackDeclarations);
             DoDamageToPlayer(player2, player1Attack.DirectAttackDeclarations);
 
+            
             if (player1.Health <= 0)
             {
-                _gameHandler.FinishGame(player2);
+                await _gameHandler.FinishGame(player2);
                 return;
             }
             else if (player2.Health <= 0)
             {
-                _gameHandler.FinishGame(player1);
+                await _gameHandler.FinishGame(player1);
                 return;
             }
 
@@ -78,7 +82,9 @@ namespace TowerDefense.Api.GameLogic.Handlers
             responses.Add(player1.Name, player1TurnOutcome);
             responses.Add(player2.Name, player2TurnOutcome);
 
-            _gameHandler.FinishTurn(responses);
+            await _notificationHub.SendPlayersTurnResult(responses);
+
+            return;
         }
 
         private List<AttackResult> NotifyPlayerGridItems(IPlayer player, IEnumerable<AttackDeclaration> attackDeclarations)

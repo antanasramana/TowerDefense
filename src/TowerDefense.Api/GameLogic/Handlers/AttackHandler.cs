@@ -1,5 +1,6 @@
 ﻿using TowerDefense.Api.GameLogic.Attacks;
 using TowerDefense.Api.GameLogic.Grid;
+using TowerDefense.Api.GameLogic.Items.Models;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
@@ -14,7 +15,13 @@ namespace TowerDefense.Api.GameLogic.Handlers
         {
             var directAttacks = new List<AttackDeclaration>();
             var itemAttacks = new List<AttackDeclaration>();
-            foreach (GridItem gridItem in playerArenaGrid.GridItems)
+
+            var items = playerArenaGrid.GridItems
+                .Where(x => x.Item is not Blank)
+                .Where(x => x.Item is not Placeholder)
+                .ToList();
+
+            foreach (GridItem gridItem in items)
             {
                 var attacks = gridItem.Item.Attack(opponentArenaGrid, gridItem.Id);
 

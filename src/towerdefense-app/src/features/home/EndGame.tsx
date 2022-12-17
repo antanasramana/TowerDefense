@@ -17,7 +17,7 @@ const EndGame: React.FC = () => {
 
 		const addNewPlayerRequest: AddNewPlayerRequest = {
 			playerName: location.state.playerName,
-			level: location.state.level+1
+			level: location.state.level
 		};
 
 		addNewPlayer(addNewPlayerRequest)

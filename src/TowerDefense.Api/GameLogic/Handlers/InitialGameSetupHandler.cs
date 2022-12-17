@@ -9,11 +9,12 @@ namespace TowerDefense.Api.GameLogic.Handlers
 {
     public interface IInitialGameSetupHandler
     {
+        IPlayer AddNewPlayer(string playerName);
         void SetConnectionIdForPlayer(string playerName, string connectionId);
-        IPlayer AddNewPlayerToGame(string playerName);
-        void SetArenaGridForPlayer(string playerName);
-        void SetShopForPlayer(string playerName);
-        void SetPerkStorageForPlayer(string playerName);
+        IPlayer AddPlayerToGame(string playerName);
+        void SetArenaGridForPlayer(IPlayer player);
+        void SetShopForPlayer(IPlayer player);
+        void SetPerkStorageForPlayer(IPlayer player);
         Task TryStartGame();
     }
 
@@ -21,10 +22,19 @@ namespace TowerDefense.Api.GameLogic.Handlers
     {
         private readonly GameOriginator _game;
         private readonly INotificationHub _notificationHub;
+
         public InitialGameSetupHandler(INotificationHub notificationHub)
         {
             _game = GameOriginator.Instance;
             _notificationHub = notificationHub;
+        }
+        public IPlayer AddNewPlayer(string playerName)
+        {
+            var player = AddPlayerToGame(playerName);
+            SetArenaGridForPlayer(player);
+            SetShopForPlayer(player);
+            SetPerkStorageForPlayer(player);
+            return player;
         }
 
         public void SetConnectionIdForPlayer(string playerName, string connectionId)
@@ -40,28 +50,25 @@ namespace TowerDefense.Api.GameLogic.Handlers
             await _notificationHub.NotifyGameStart(_game.State.Players[0], _game.State.Players[1]);
         }
 
-        public void SetArenaGridForPlayer(string playerName)
+        public void SetArenaGridForPlayer(IPlayer player)
         {
-            var player = _game.State.Players.First(x => x.Name == playerName);
             var arenaGrid = new FirstLevelArenaGrid();
             player.ArenaGrid = arenaGrid;
         }
 
-        public void SetShopForPlayer(string playerName)
+        public void SetShopForPlayer(IPlayer player)
         {
-            var player = _game.State.Players.First(x => x.Name == playerName);
             var shop = new FirstLevelShop();
             player.Shop = shop;
         }
 
-        public void SetPerkStorageForPlayer(string playerName)
+        public void SetPerkStorageForPlayer(IPlayer player)
         {
-            var player = _game.State.Players.First(x => x.Name == playerName);
             var perkStorage = new FirstLevelPerkStorage();
             player.PerkStorage = perkStorage;
         }
 
-        public IPlayer AddNewPlayerToGame(string playerName)
+        public IPlayer AddPlayerToGame(string playerName)
         {
             if (_game.State.ActivePlayers == Constants.TowerDefense.MaxNumberOfPlayers)
             {
@@ -69,7 +76,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
             }
 
             var currentNewPlayerId = _game.State.ActivePlayers;
-            var newPlayer = new FirstLevelPlayer();
+            var newPlayer = new FirstLevelPlayer { Name = playerName };
             _game.State.Players[currentNewPlayerId] = newPlayer;
 
             return newPlayer;

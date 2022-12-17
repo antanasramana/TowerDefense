@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TowerDefense.Api.GameLogic.Handlers;
 using TowerDefense.Api.Contracts.Player;
 using TowerDefense.Api.Contracts.Turn;
+using TowerDefense.Api.Contracts.Command;
 
 namespace TowerDefense.Api.Controllers
 {
@@ -14,25 +15,25 @@ namespace TowerDefense.Api.Controllers
         private readonly IPlayerHandler _playerHandler;
         private readonly IMapper _mapper;
         private readonly IGameHandler _gameHandler;
+        private readonly ITurnHandler _turnHandler;
 
         public PlayerController (IGameHandler gameHandler,
             IInitialGameSetupHandler initialGameSetupHandler, 
             IPlayerHandler playerHandler, 
+            ITurnHandler turnHandler,
             IMapper mapper)
         {
             _gameHandler = gameHandler;
             _initialGameSetupHandler = initialGameSetupHandler;
             _playerHandler = playerHandler;
+            _turnHandler = turnHandler;
             _mapper = mapper;
         }
 
         [HttpPost]
         public ActionResult<AddNewPlayerResponse> Register([FromBody] AddNewPlayerRequest addPlayerRequest)
         {
-            var player = _initialGameSetupHandler.AddNewPlayerToGame(addPlayerRequest.PlayerName);
-            _initialGameSetupHandler.SetArenaGridForPlayer(addPlayerRequest.PlayerName);
-            _initialGameSetupHandler.SetShopForPlayer(addPlayerRequest.PlayerName);
-            _initialGameSetupHandler.SetPerkStorageForPlayer(addPlayerRequest.PlayerName);
+            var player = _initialGameSetupHandler.AddNewPlayer(addPlayerRequest.PlayerName);
 
             var addNewPlayerResponse = _mapper.Map<AddNewPlayerResponse>(player);
 
@@ -51,7 +52,7 @@ namespace TowerDefense.Api.Controllers
         [HttpPost("endturn")]
         public ActionResult EndTurn(EndTurnRequest endTurnRequest)
         {
-            _gameHandler.PlayerEndedTurn(endTurnRequest.PlayerName);
+            _turnHandler.TryEndTurn(endTurnRequest.PlayerName);
             return Ok();
         }
 
@@ -63,6 +64,34 @@ namespace TowerDefense.Api.Controllers
         public ActionResult Reset()
         {
             _gameHandler.ResetGame();
+            return Ok();
+        }
+
+        [HttpPost("place-item")]
+        public ActionResult PlaceItemOnGrid(ExecuteCommandRequest request)
+        {
+            var player = _playerHandler.GetPlayer(request.PlayerName);
+
+            var inventory = player.Inventory;
+            var requestedItem = inventory.Items.FirstOrDefault(x => x.Id == request.InventoryItemId);
+
+            var playersGridItems = player.ArenaGrid.GridItems;
+            var selectedGridItem = playersGridItems[request.GridItemId.Value];
+
+            inventory.Items.Remove(requestedItem);
+            selectedGridItem.Item = requestedItem;
+            return Ok();
+        }
+
+        [HttpPost("command")]
+        public ActionResult ExecuteCommand(ExecuteCommandRequest commandRequest)
+        {
+            return Ok();
+        }
+
+        [HttpPost("command/text")]
+        public ActionResult InterpretCommand(InterpretCommandRequest commandRequest)
+        {
             return Ok();
         }
     }

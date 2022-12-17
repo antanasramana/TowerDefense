@@ -1,4 +1,5 @@
 using TowerDefense.Api.GameLogic.Handlers;
+using TowerDefense.Api.Hubs;
 
 namespace TowerDefense.Api.Bootstrap
 {
@@ -6,6 +7,7 @@ namespace TowerDefense.Api.Bootstrap
     {
         public static void SetupGameEngine(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddTransient<INotificationHub, NotificationHub>();
             serviceCollection.AddTransient<IShopHandler, ShopHandler>();
             serviceCollection.AddTransient<ITurnHandler, TurnHandler>();
             serviceCollection.AddTransient<IBattleHandler, BattleHandler>();
@@ -13,7 +15,6 @@ namespace TowerDefense.Api.Bootstrap
             serviceCollection.AddTransient<IInventoryHandler, InventoryHandler>();
             serviceCollection.AddTransient<IGridHandler, GridHandler>();
             serviceCollection.AddTransient<IPlayerHandler, PlayerHandler>();
-            serviceCollection.AddTransient<ICommandHandler, CommandHandler>();
             serviceCollection.AddTransient<IAttackHandler, AttackHandler>();
             serviceCollection.AddTransient<IGameHandler, GameHandler>();
             serviceCollection.AddTransient<IPerkHandler, PerkHandler>();

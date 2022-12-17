@@ -138,7 +138,6 @@ const GameArena: React.FC = () => {
 	return (
 		<div className='root-container'>
 			<div className='header'>
-				<Level />
 				<Money />
 			</div>
 			<div className='body'>

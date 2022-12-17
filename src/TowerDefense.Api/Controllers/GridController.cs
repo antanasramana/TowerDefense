@@ -13,12 +13,11 @@ namespace TowerDefense.Api.Controllers
     {
         private readonly IGridHandler _gridHandler;
         private readonly IMapper _mapper;
-        private readonly ICommandHandler _commandHandler;
-        public GridController(IGridHandler gridHandler, IMapper mapper, ICommandHandler commandHandler)
+
+        public GridController(IGridHandler gridHandler, IMapper mapper)
         {
             _gridHandler = gridHandler;
             _mapper = mapper;
-            _commandHandler = commandHandler;
         }
         
         [HttpGet("{playerName}")]
@@ -29,22 +28,6 @@ namespace TowerDefense.Api.Controllers
             var getGridResponse = _mapper.Map<GetGridResponse>(arenaGrid);
 
             return Ok(getGridResponse);
-        }
-
-        [HttpPost("command")]
-        public ActionResult ExecuteCommand(ExecuteCommandRequest commandRequest)
-        {
-            _commandHandler.ExecuteCommandForPlayer(commandRequest);
-
-            return Ok();
-        }
-
-        [HttpPost("command/text")]
-        public ActionResult InterpretCommand(InterpretCommandRequest commandRequest)
-        {
-            _commandHandler.InterpretCommand(commandRequest);
-
-            return Ok();
         }
     }
 }

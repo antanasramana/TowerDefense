@@ -11,12 +11,10 @@ namespace TowerDefense.Api.GameLogic.Handlers
     public class GridHandler : IGridHandler
     {
         private readonly GameOriginator _game;
-        private readonly IInventoryHandler _inventoryHandler;
 
-        public GridHandler(IInventoryHandler inventoryHandler)
+        public GridHandler()
         {
             _game = GameOriginator.Instance;
-            _inventoryHandler = inventoryHandler;
         }
         public IArenaGrid GetGridItems(string playerName)
         {

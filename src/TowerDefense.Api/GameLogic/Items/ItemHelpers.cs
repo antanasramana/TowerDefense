@@ -17,25 +17,34 @@ namespace TowerDefense.Api.GameLogic.Items
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
-        public static int GetAttackingItemRow(int attackingGridItemId)
+        public static int GetAttackingItemRowId(int attackingGridItemId)
         {
             return attackingGridItemId / Constants.TowerDefense.MaxGridGridItemsInRow;
         }
 
-        public static int GetAttackingItemColumn(int attackingGridItemId)
+        public static int GetAttackingItemColumnId(int attackingGridItemId)
         {
             return attackingGridItemId % Constants.TowerDefense.MaxGridGridItemsInRow;
         }
+
+        public static List<GridItem> GetAttackedRowItems(this IArenaGrid arenaGrid, int rowId)
+        {
+            return arenaGrid.GridItems
+                .Where(x => (int)(x.Id / Constants.TowerDefense.MaxGridGridItemsInRow) == rowId)
+                .ToList();
+        }
+
         public static IEnumerable<int> GetAttackedGridItems(IArenaGrid opponentsArenaGrid, int attackingGridItemId)
         {
-            /*
-            var attackingItemRow = GetAttackingItemRow(attackingGridItemId);
-            IIterator opponentsItems = opponentsArenaGrid.GetIterator(attackingItemRow);
+
+            var attackerRowId = GetAttackingItemRowId(attackingGridItemId);
 
             var affectedGridItems = new List<int>();
-            while (opponentsItems.HasMore())
+
+            var row = opponentsArenaGrid.GetAttackedRowItems(attackerRowId);
+
+            foreach (var gridItem in row)
             {
-                var gridItem = opponentsItems.GetNext();
                 if (IsItemDamageable(gridItem))
                 {
                     affectedGridItems.Add(gridItem.Id);
@@ -44,8 +53,11 @@ namespace TowerDefense.Api.GameLogic.Items
             }
 
             return affectedGridItems;
-            */
-            return null;
+        }
+        public static bool IsItemDamageable(GridItem gridItem)
+        {
+            if (gridItem == null) return false;
+            return gridItem.Item is not Blank && gridItem.Item is not Placeholder;
         }
     }
 }

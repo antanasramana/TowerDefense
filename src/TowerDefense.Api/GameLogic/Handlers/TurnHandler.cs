@@ -4,45 +4,29 @@ namespace TowerDefense.Api.GameLogic.Handlers
 {
     public interface ITurnHandler
     {   
-        void ResetGame();
-        bool TryEndTurn(string playerName);
-        void ResetTurn();
+        Task TryEndTurn(string playerName);
     }
 
     public class TurnHandler : ITurnHandler
     {
         private readonly GameOriginator _game;
-        private IGameHandler _gameHandler;
+        private readonly IBattleHandler _battleHandler;
 
-        public TurnHandler()
+        public TurnHandler(IBattleHandler battleHandler)
         {
             _game = GameOriginator.Instance;
+            _battleHandler = battleHandler;
         }
 
-        public void SetMediator(IGameHandler gameHandler)
+        public async Task TryEndTurn(string playerName)
         {
-            _gameHandler = gameHandler;
-        }
-
-        public bool TryEndTurn(string playerName)
-        {
-            if (_game.State.PlayersFinishedTurn.ContainsKey(playerName)) return false;
+            if (_game.State.PlayersFinishedTurn.ContainsKey(playerName)) return;
             _game.State.PlayersFinishedTurn.Add(playerName, true);
 
-            if (_game.State.PlayersFinishedTurn.Count != Constants.TowerDefense.MaxNumberOfPlayers) return false;
+            if (_game.State.PlayersFinishedTurn.Count != Constants.TowerDefense.MaxNumberOfPlayers) return;
 
-            _gameHandler.AllPlayersEndedTurn();
+            await _battleHandler.HandleEndTurn();
 
-            return true;
-        }
-
-        public void ResetGame()
-        {
-            _game.State = new State();
-        }
-
-        public void ResetTurn()
-        {
             _game.State.PlayersFinishedTurn.Clear();
         }
     }

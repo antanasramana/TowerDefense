@@ -3,7 +3,6 @@
     public static class TowerDefense
     {
         public const int MaxNumberOfPlayers = 2;
-        public const int MaxGridItemsInColumn = 8;
         public const int MaxGridItemsInColumnFixed = 9;
         public const int MaxGridGridItemsInRow = 8;
         public const int MaxGridGridItemsForPlayer = 72;

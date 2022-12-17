@@ -31,7 +31,7 @@ export const interpretCommand = createAsyncThunk('grid/command', async (commandt
 		playerName: reduxStore.player.name,
 		commandText: commandtext,
 	};
-	await axios.post(`${API_URL}/grid/command/text`, interpretCommandRequest);
+	await axios.post(`${API_URL}/players/command/text`, interpretCommandRequest);
 });
 
 export const executeCommand = createAsyncThunk('grid/command', async (commandType: CommandType) => {
@@ -43,7 +43,7 @@ export const executeCommand = createAsyncThunk('grid/command', async (commandTyp
 		inventoryItemId: reduxStore.inventory.selectedItem,
 		commandType: commandType
 	};
-	await axios.post(`${API_URL}/grid/command`, executeCommandRequest);
+	await axios.post(`${API_URL}/players/command`, executeCommandRequest);
 });
 
 export const executePlaceCommand = createAsyncThunk('grid/command', async (selectedGridItemId: number) => {
@@ -55,7 +55,7 @@ export const executePlaceCommand = createAsyncThunk('grid/command', async (selec
 		inventoryItemId: reduxStore.inventory.selectedItem,
 		commandType: CommandType.Place
 	};
-	await axios.post(`${API_URL}/grid/command`, executeCommandRequest);
+	await axios.post(`${API_URL}/players/place-item`, executeCommandRequest);
 });
 
 export const getPlayerGridItems = createAsyncThunk<GridItem[]>('grid/getPlayerGrid', async () => {
