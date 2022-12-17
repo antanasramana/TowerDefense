@@ -1,4 +1,4 @@
-﻿using TowerDefense.Api.Models.Items;
+﻿using TowerDefense.Api.GameLogic.Items;
 
 namespace TowerDefense.Api.GameLogic.Grid
 {
@@ -16,7 +16,7 @@ namespace TowerDefense.Api.GameLogic.Grid
                 gridItems[i] = new GridItem
                 {
                     Id = i,
-                    Item = ItemHandler.CreateItem(type)
+                    Item = ItemHelpers.CreateItemByType(type)
                 };
             }
         }

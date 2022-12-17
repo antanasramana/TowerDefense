@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TowerDefense.Api.GameLogic.Factories;
 using TowerDefense.Api.GameLogic.Handlers;
 using TowerDefense.Api.Contracts.Player;
 using TowerDefense.Api.Contracts.Turn;
@@ -32,18 +31,10 @@ namespace TowerDefense.Api.Controllers
         [HttpPost]
         public ActionResult<AddNewPlayerResponse> Register([FromBody] AddNewPlayerRequest addPlayerRequest)
         {
-            IAbstractLevelFactory abstractLevelFactory = addPlayerRequest.Level switch
-            {
-                Level.First => new FirstLevelFactory(),
-                Level.Second => new SecondLevelFactory(),
-                Level.Third => new ThirdLevelFactory(),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-            var player = _initialGameSetupHandler.AddNewPlayerToGame(addPlayerRequest.PlayerName, abstractLevelFactory);
-            _initialGameSetupHandler.SetArenaGridForPlayer(addPlayerRequest.PlayerName, abstractLevelFactory);
-            _initialGameSetupHandler.SetShopForPlayer(addPlayerRequest.PlayerName, abstractLevelFactory);
-            _initialGameSetupHandler.SetPerkStorageForPlayer(addPlayerRequest.PlayerName, abstractLevelFactory);
+            var player = _initialGameSetupHandler.AddNewPlayerToGame(addPlayerRequest.PlayerName);
+            _initialGameSetupHandler.SetArenaGridForPlayer(addPlayerRequest.PlayerName);
+            _initialGameSetupHandler.SetShopForPlayer(addPlayerRequest.PlayerName);
+            _initialGameSetupHandler.SetPerkStorageForPlayer(addPlayerRequest.PlayerName);
             _initialGameSetupHandler.SetLevel(addPlayerRequest.Level);
 
             var addNewPlayerResponse = _mapper.Map<AddNewPlayerResponse>(player);

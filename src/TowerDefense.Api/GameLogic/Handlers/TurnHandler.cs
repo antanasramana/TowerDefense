@@ -45,8 +45,6 @@ namespace TowerDefense.Api.GameLogic.Handlers
         public void ResetGame()
         {
             _game.State = new State();
-            _caretaker.Clear();
-
         }
 
         public void ResetTurn()

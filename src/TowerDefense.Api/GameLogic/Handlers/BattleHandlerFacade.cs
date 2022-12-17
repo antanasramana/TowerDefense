@@ -21,15 +21,13 @@ namespace TowerDefense.Api.GameLogic.Handlers
         private IGameMediator _gameMediator;
         private readonly IPerkHandler _perkHandler;
         private readonly ICaretaker _caretaker;
-        private readonly IAtomicBombHandler _atomicBombHandler;
 
-        public BattleHandlerFacade(IAttackHandler attackHandler, IPerkHandler perkHandler, ICaretaker caretaker, IAtomicBombHandler atomicBombHandler)
+        public BattleHandlerFacade(IAttackHandler attackHandler, IPerkHandler perkHandler, ICaretaker caretaker)
         {
             _game = GameOriginator.Instance;
             _attackHandler = attackHandler;
             _perkHandler = perkHandler;
             _caretaker = caretaker;
-            _atomicBombHandler = atomicBombHandler;
         }
         public void SetMediator(IGameMediator gameMediator)
         {
@@ -105,10 +103,6 @@ namespace TowerDefense.Api.GameLogic.Handlers
             _caretaker.AddSnapshot(snapshot);
 
             _gameMediator.Notify(this, MediatorEvent.TurnResultsCreated, responses);
-
-            //Preperate atomic bombs for next round
-            _atomicBombHandler.UpdateState(player1ArenaGrid);
-            _atomicBombHandler.UpdateState(player2ArenaGrid);
         }
 
         private void DoDamageToPlayer(IPlayer player, IEnumerable<AttackDeclaration> attackDeclarations)

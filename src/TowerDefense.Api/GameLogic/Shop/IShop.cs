@@ -1,4 +1,4 @@
-﻿using TowerDefense.Api.Models.Items;
+﻿using TowerDefense.Api.GameLogic.Items;
 
 namespace TowerDefense.Api.GameLogic.Shop
 {

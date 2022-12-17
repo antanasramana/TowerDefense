@@ -1,13 +1,11 @@
-﻿using TowerDefense.Api.GameLogic.Commands;
-using TowerDefense.Api.GameLogic.Grid;
+﻿using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.GameLogic.Observer;
 using TowerDefense.Api.GameLogic.PerkStorage;
 using TowerDefense.Api.GameLogic.Shop;
-using TowerDefense.Api.GameLogic.Visitor;
 
 namespace TowerDefense.Api.Models.Player;
 
-public interface IPlayer : IAcceptingVisitor
+public interface IPlayer
 {
     string ConnectionId { get; set; }
     string Name { get; set; }
@@ -18,6 +16,5 @@ public interface IPlayer : IAcceptingVisitor
     IArenaGrid ArenaGrid { get; set; }
     IGridPublisher Publisher { get; set; }
     IShop Shop { get; set; }
-    ICommandHistory CommandHistory { get; set; }
     IPerkStorage PerkStorage { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using TowerDefense.Api.GameLogic.GameState;
+using TowerDefense.Api.GameLogic.Items;
 using TowerDefense.Api.GameLogic.Shop;
 
 namespace TowerDefense.Api.GameLogic.Handlers
@@ -37,8 +38,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
             player.Money -= item.Stats.Price;
 
-            //PROTOTYPE DESIGN PATTERN!!!!!! WE DONT WANT TO EXPOSE EXACT ITEM ONLY ITS PROPERTIES
-            var inventoryItem = item.Clone();
+            var inventoryItem = ItemHelpers.CreateItemByType(item.ItemType);
             player.Inventory.Items.Add(inventoryItem);
 
             return true;

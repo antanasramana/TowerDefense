@@ -1,16 +1,10 @@
-﻿using TowerDefense.Api.GameLogic.Factories.ItemFactories;
-using TowerDefense.Api.Models.Items;
+﻿using TowerDefense.Api.GameLogic.Items;
+using TowerDefense.Api.GameLogic.Items.Models;
 
 namespace TowerDefense.Api.GameLogic.Shop
 {
     public class FirstLevelShop : IShop
     {
-        private readonly IEnumerable<IItemFactory> _itemFactories = new List<IItemFactory>
-        {
-            new RocketsItemFactory(),
-            new ShieldItemFactory()
-        };
-
-        public IEnumerable<IItem> Items => _itemFactories.Select(x => x.CreateItem()).ToList();
+        public IEnumerable<IItem> Items => new List<IItem> { new Rockets(), new Shield(), new Plane() };
     }
 }

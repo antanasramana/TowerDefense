@@ -1,9 +1,6 @@
-﻿using TowerDefense.Api.GameLogic.Iterator;
-using TowerDefense.Api.GameLogic.Visitor;
+﻿namespace TowerDefense.Api.GameLogic.Grid;
 
-namespace TowerDefense.Api.GameLogic.Grid;
-
-public interface IArenaGrid : IAcceptingVisitor, IIterableCollection
+public interface IArenaGrid 
 {
     GridItem[] GridItems { get; set; }
 }

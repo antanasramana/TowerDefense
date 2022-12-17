@@ -1,7 +1,4 @@
-﻿using TowerDefense.Api.GameLogic.Commands;
-using TowerDefense.Api.Contracts.Command;
-using TowerDefense.Api.GameLogic.Interpreter;
-using TowerDefense.Api.GameLogic.Composite;
+﻿using TowerDefense.Api.Contracts.Command;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
@@ -12,9 +9,8 @@ namespace TowerDefense.Api.GameLogic.Handlers
     }
     public class CommandHandler : ICommandHandler
     {
+        /*
         private readonly IPlayerHandler _playerHandler;
-        private readonly ICommandExecutor _commandExecutor;
-        private readonly ICommandInterpreter _commandInterpreter;
 
         public CommandHandler (IPlayerHandler playerHandler, ICommandExecutor commandExecutor, ICommandInterpreter commandInterpreter)
         {
@@ -65,6 +61,15 @@ namespace TowerDefense.Api.GameLogic.Handlers
                 CommandType.Undo => new UndoCommand(),
                 _ => throw new ArgumentOutOfRangeException()
             };
+        }*/
+        public void ExecuteCommandForPlayer(ExecuteCommandRequest commandRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InterpretCommand(InterpretCommandRequest interpretCommandRequest)
+        {
+            throw new NotImplementedException();
         }
     }
 }

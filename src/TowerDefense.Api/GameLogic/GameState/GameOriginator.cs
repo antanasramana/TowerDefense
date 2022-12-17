@@ -10,8 +10,6 @@ namespace TowerDefense.Api.GameLogic.GameState
         public static GameOriginator Instance { get; } = new();
         public State State { get; set; } = new();
 
-        public IStrategyFlyweightFactory FlyweightFactory { get; } = new StrategyFlyweightFactory();
-
         public IMemento SaveSnapshot()
         {
             return new GameStateMemento(Instance, State.DeepClone());

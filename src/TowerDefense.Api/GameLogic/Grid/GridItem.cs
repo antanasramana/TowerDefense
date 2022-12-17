@@ -1,7 +1,8 @@
 ﻿using TowerDefense.Api.GameLogic.Builders;
+using TowerDefense.Api.GameLogic.Items;
+using TowerDefense.Api.GameLogic.Items.Models;
 using TowerDefense.Api.GameLogic.Observer;
 using TowerDefense.Api.Models;
-using TowerDefense.Api.Models.Items;
 
 namespace TowerDefense.Api.GameLogic.Grid
 {
@@ -25,43 +26,12 @@ namespace TowerDefense.Api.GameLogic.Grid
 
             if (isDestroyed)
             {
-                if(this.Item is AtomicBomb)
-                {
-                    if (!((AtomicBomb)this.Item).PreviousState())
-                    {
-                        this.Item = new Blank();
-                    }
-                }
-                else
-                {
-                    this.Item = new Blank();
-                }
+
+                this.Item = new Blank();
+
             }
 
-            IDamageBuilder damageBuilder = null;
-
-            switch (attackDeclaration.DamageType)
-            {
-                case DamageType.Fire:
-                    damageBuilder = new FireDamageBuilder();
-                    break;
-                case DamageType.Projectile:
-                    damageBuilder = new ProjectileDamageBuilder();
-                    break;
-            }
-
-            DamageBuilderDirector director = new DamageBuilderDirector();
-
-            if (attackDeclaration.Damage <= SmallDamage)
-            {
-                director.MakeSmallDamage(damageBuilder);
-            }
-            else
-            {
-                director.MakeBigDamage(damageBuilder);
-            }
-
-            Damage damage = damageBuilder.GetResult();
+            Damage damage = new FireDamage { Size = 1, Intensity = 1, Time = 2 };
 
             return new AttackResult { GridId = this.Id, Damage = damage };
         }

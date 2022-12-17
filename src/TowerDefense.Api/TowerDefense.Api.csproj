@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="GameLogic\Factories\NewFolder\**" />
-    <Content Remove="GameLogic\Factories\NewFolder\**" />
-    <EmbeddedResource Remove="GameLogic\Factories\NewFolder\**" />
-    <None Remove="GameLogic\Factories\NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="DeepCloner" Version="0.10.4" />

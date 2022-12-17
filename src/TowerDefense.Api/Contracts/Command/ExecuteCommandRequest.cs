@@ -1,6 +1,4 @@
-﻿using TowerDefense.Api.GameLogic.Commands;
-
-namespace TowerDefense.Api.Contracts.Command
+﻿namespace TowerDefense.Api.Contracts.Command
 {
     public class ExecuteCommandRequest
     {
@@ -8,6 +6,5 @@ namespace TowerDefense.Api.Contracts.Command
         public string InventoryItemId { get; set; }
         public string ShopItemId { get; set; }
         public int? GridItemId { get; set; }
-        public CommandType CommandType { get; set; }
     }
 }

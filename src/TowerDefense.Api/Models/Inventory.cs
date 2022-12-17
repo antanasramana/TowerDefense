@@ -1,14 +1,9 @@
-﻿using TowerDefense.Api.GameLogic.Visitor;
-using TowerDefense.Api.Models.Items;
+﻿using TowerDefense.Api.GameLogic.Items;
 
 namespace TowerDefense.Api.Models
 {
-    public class Inventory : IAcceptingVisitor
+    public class Inventory
     {
         public List<IItem> Items = new();
-        public void Accept(IVisitor visitor)
-        {
-            visitor.Visit(this);
-        }
     }
 }
