@@ -31,7 +31,18 @@ namespace TowerDefense.Api.GameLogic.Handlers
             var player = _game.State.Players.First(x => x.Name == perkUsingPlayerName);
             var enemyPlayer = _game.State.Players.First(x => x.Name != perkUsingPlayerName);
 
-            var perks = player.PerkStorage.Perks;
+            var perk = player.PerkStorage.Perks.Where(x => x.Id == perkId).FirstOrDefault();
+
+            if (perk == null)
+            {
+                return;
+            }
+
+            if (perk.Type == PerkType.CutInHalf)
+            {
+                enemyPlayer.Money /= 2;
+                player.PerkStorage.Perks = player.PerkStorage.Perks.Where(x => x.Id != perkId);
+            }
         }
 
         public bool ApplyPerks()

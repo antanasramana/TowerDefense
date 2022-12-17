@@ -139,6 +139,7 @@ const GameArena: React.FC = () => {
 		<div className='root-container'>
 			<div className='header'>
 				<Money />
+				<Money />
 			</div>
 			<div className='body'>
 				<div className='tower-container'>

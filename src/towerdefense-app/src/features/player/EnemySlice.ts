@@ -8,12 +8,14 @@ interface Enemy {
   name: string;
   health: number;
   armor: number;
+  money: number;
 }
 
 const initialState: Enemy = {
 	name: 'Waiting ...',
 	health: 100,
 	armor: 100,
+	money: 1000
 };
 
 export const getEnemyInfo = createAsyncThunk<GetPlayerInfoResponse>('enemy/getPlayerInfo', async () => {

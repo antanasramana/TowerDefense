@@ -3,7 +3,7 @@
     public class CutInHalfPerk : IPerk
     {
         public int Id { get; init; }
-        public string Name => "Cut Everything in Half!";
+        public string Name => "Cut Enemy Money in Half!";
         public PerkType Type => PerkType.CutInHalf;
     }
 }
