@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ShopItem } from '../../models/ShopItem';
 import { store } from '../../app/store';
 import { BuyShopItemRequest } from '../../contracts/BuyShopItemRequest';
@@ -19,6 +18,11 @@ const initialState: Shop = {
 export const getShopItems = createAsyncThunk<ShopItem[]>('shop/getShop', async () => {
 	const reduxStore = store.getState();
 	const response = await axios.get(`${API_URL}/shop/${reduxStore.player.name}`);
+	return response.data.items;
+});
+
+export const buyShopItem = createAsyncThunk<string, BuyShopItemRequest>('shop/buyItem', async (buyShopItemRequest: BuyShopItemRequest) => {
+	const response = await axios.post(`${API_URL}/shop`, buyShopItemRequest);
 	return response.data.items;
 });
 
@@ -47,30 +51,5 @@ const shopSlice = createSlice({
 	},
 });
 
-export const shopApiSlice = createApi({
-	reducerPath: 'shopApi',
-	baseQuery: fetchBaseQuery({
-		baseUrl: API_URL,
-		prepareHeaders(headers) {
-			return headers;
-		},
-	}),
-	endpoints(builder) {
-		return {
-			buyShopItem: builder.mutation<string, BuyShopItemRequest>({
-				query: (payload: BuyShopItemRequest) => ({
-					url: '/shop',
-					method: 'POST',
-					body: payload,
-					headers: {
-						'Content-type': 'application/json; charset=UTF-8',
-					},
-				}),
-			}),
-		};
-	},
-});
-
-export const { useBuyShopItemMutation } = shopApiSlice;
 export const { setSelectedItem, setShopItems, setShopToInitial } = shopSlice.actions;
 export default shopSlice.reducer;

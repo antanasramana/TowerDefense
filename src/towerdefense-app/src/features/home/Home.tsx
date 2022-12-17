@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
-import { setName, setLevel, setHealth, setArmor, setMoney, useAddNewPlayerMutation } from '../player/PlayerSlice';
+import { addNewPlayer } from '../player/PlayerSlice';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import { AddNewPlayerRequest } from '../../contracts/AddNewPlayerRequest';
@@ -9,7 +9,6 @@ import Level from '../player/enums/Levels';
 const Home: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const [addNewPlayer] = useAddNewPlayerMutation();
 
 	const [playerName, setPlayerName] = useState<string>('');
 	const [level, setGameLevel] = useState<Level>(Level.First);
@@ -27,20 +26,8 @@ const Home: React.FC = () => {
 			playerName: playerName,
 			level: level
 		};
-
-		addNewPlayer(addNewPlayerRequest)
-			.unwrap()
-			.then((res) => {
-				dispatch(setName(playerName));
-				dispatch(setLevel(level));
-				dispatch(setHealth(res.health));
-				dispatch(setArmor(res.armor));
-				dispatch(setMoney(res.money));
-				navigate('/game-arena');
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		
+		dispatch(addNewPlayer(addNewPlayerRequest)).then( () => navigate('/game-arena'));
 	}
 
 	return (

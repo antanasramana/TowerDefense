@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Money from '../money/Money';
-import Level from '../level/Level';
 import TowerHealth from '../tower/TowerHealth';
 import TowerArmor from '../tower/TowerArmor';
 import Tower from '../tower/Tower';
@@ -9,9 +8,9 @@ import Inventory from '../inventory/Inventory';
 import Grid from '../grid/Grid';
 import EndTurnButton from '../end-turn-button/EndTurnButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getEnemyInfo, setName, setEnemyToInitial } from '../player/EnemySlice';
+import { getEnemyInfo, setEnemyToInitial, setEnemyName } from '../player/EnemySlice';
 import { setGridToInitial, getEnemyGridItems, getPlayerGridItems, executeCommand, setSelectedGridItemId, interpretCommand } from '../grid/GridSlice';
-import { getPlayerInfo, setPlayerToInitial, useEndTurnMutation } from '../player/PlayerSlice';
+import { getPlayerInfo, setPlayerToInitial, endTurn } from '../player/PlayerSlice';
 import * as signalR from '@microsoft/signalr';
 import { getInventoryItems, setInventoryToInitial } from '../inventory/InventorySlice';
 import { useNavigate } from 'react-router-dom';
@@ -43,9 +42,6 @@ const GameArena: React.FC = () => {
 	const player = useAppSelector((state) => state.player);
 	const enemy = useAppSelector((state) => state.enemy);
 
-	// redux api
-	const [endTurn] = useEndTurnMutation();
-
 	// useEffect
 	useEffect(() => {
 		const hubConnection: signalR.HubConnection = new signalR.HubConnectionBuilder()
@@ -57,6 +53,7 @@ const GameArena: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
+		// SignalR
 		if (connection) {
 			connection
 				.start()
@@ -65,7 +62,7 @@ const GameArena: React.FC = () => {
 					connection.invoke('JoinGame', player.name);
 
 					connection.on('EnemyInfo', (message) => {
-						dispatch(setName(message.name));
+						dispatch(setEnemyName(message.name));
 						dispatch(getEnemyGridItems());
 					});
 					connection.on('EndTurn', (res) => {
@@ -117,7 +114,7 @@ const GameArena: React.FC = () => {
 			playerName: player.name,
 		};
 		setEndTurnText('Waiting...');
-		endTurn(endTurnRequest);
+		dispatch(endTurn(endTurnRequest));
 	}
 
 	async function handleCommandClick(commandType: CommandType, resetGridSelection: boolean) {
@@ -138,8 +135,8 @@ const GameArena: React.FC = () => {
 	return (
 		<div className='root-container'>
 			<div className='header'>
-				<Money />
-				<Money />
+				<Money value={player.money}/>
+				<Money value={enemy.money}/>
 			</div>
 			<div className='body'>
 				<div className='tower-container'>

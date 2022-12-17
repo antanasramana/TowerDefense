@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useBuyShopItemMutation, getShopItems } from './ShopSlice';
+import { buyShopItem, getShopItems } from './ShopSlice';
 import { getInventoryItems } from '../inventory/InventorySlice';
 import { setSelectedItem } from './ShopSlice';
 
@@ -16,8 +16,6 @@ const Shop: React.FC = () => {
 	const playerName = useAppSelector((state) => state.player.name);
 	const selectedShopItem = useAppSelector((state) => state.shop.selectedItem);
 
-	const [buyShopItem] = useBuyShopItemMutation();
-
 	function onShopItemClick(id: string) {
 		dispatch(setSelectedItem(id));
 	}
@@ -28,8 +26,7 @@ const Shop: React.FC = () => {
 			playerName: playerName,
 		};
 
-		buyShopItem(buyShopItemRequest)
-			.unwrap()
+		dispatch(buyShopItem(buyShopItemRequest))
 			.then(() => {
 				dispatch(getInventoryItems());
 				dispatch(getPlayerInfo());

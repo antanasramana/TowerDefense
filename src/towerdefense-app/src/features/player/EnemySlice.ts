@@ -33,21 +33,17 @@ const enemySlice = createSlice({
 			state.name = initialState.name;
 			state.health = initialState.health;
 			state.armor = initialState.armor;
+			state.money = initialState.money;
 		},
-		setName(state, action: PayloadAction<string>) {
+		setEnemyName(state, action: PayloadAction<string>) {
 			state.name = action.payload;
-		},
-		setHealth(state, action: PayloadAction<number>){
-			state.health = action.payload;
-		},
-		setArmor(state, action: PayloadAction<number>){
-			state.armor = action.payload;
-		},
+		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(getEnemyInfo.fulfilled, (state, action: PayloadAction<GetPlayerInfoResponse>) => {
 			state.armor = action.payload.armor;
 			state.health = action.payload.health;
+			state.money = action.payload.money;
 		});
 		builder.addCase(getEnemyInfo.rejected, () => {
 			console.error('Failed to get enemy info from api!');
@@ -55,5 +51,5 @@ const enemySlice = createSlice({
 	},
 });
 
-export const { setName, setHealth, setArmor, setEnemyToInitial } = enemySlice.actions;
+export const { setEnemyName, setEnemyToInitial } = enemySlice.actions;
 export default enemySlice.reducer;

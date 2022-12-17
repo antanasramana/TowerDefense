@@ -23,8 +23,6 @@ const initialState: Grid = {
 	selectedGridItemId: -1
 };
 
-// TODO - ADD CONTRACTS
-// TODO - make it parametrized
 export const interpretCommand = createAsyncThunk('grid/command', async (commandtext: string) => {
 	const reduxStore = store.getState();
 	const interpretCommandRequest: InterpretCommandRequest = {
@@ -70,6 +68,12 @@ export const getEnemyGridItems = createAsyncThunk<GridItem[]>('grid/getEnemyGrid
 	return response.data.gridItems;
 });
 
+export const addGridItem = createAsyncThunk<AddGridItemResponse, AddGridItemRequest>('grid/addGridItem', async (addGridItemRequest: AddGridItemRequest) => {
+	const reduxStore = store.getState();
+	const response = await axios.get(`${API_URL}/grid/${reduxStore.enemy.name}`);
+	return response.data.gridItems;
+});
+
 
 const gridSlice = createSlice({
 	name: 'playerGrid',
@@ -106,30 +110,5 @@ const gridSlice = createSlice({
 	},
 });
 
-export const gridApiSlice = createApi({
-	reducerPath: 'gridApi',
-	baseQuery: fetchBaseQuery({
-		baseUrl: API_URL,
-		prepareHeaders(headers) {
-			return headers;
-		},
-	}),
-	endpoints(builder) {
-		return {
-			addGridItem: builder.mutation<AddGridItemResponse, AddGridItemRequest>({
-				query: (payload: AddGridItemRequest) => ({
-					url: '/grid/add',
-					method: 'POST',
-					body: payload,
-					headers: {
-						'Content-type': 'application/json; charset=UTF-8',
-					},
-				}),
-			}),
-		};
-	},
-});
-
-export const { useAddGridItemMutation } = gridApiSlice;
 export const { setEnemyGridItems, setPlayerGridItems, setSelectedGridItemId, setGridToInitial } = gridSlice.actions;
 export default gridSlice.reducer;

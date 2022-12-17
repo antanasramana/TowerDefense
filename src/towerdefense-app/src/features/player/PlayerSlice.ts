@@ -33,6 +33,16 @@ export const getPlayerInfo = createAsyncThunk<GetPlayerInfoResponse>('player/get
 	return response.data;
 });
 
+export const addNewPlayer = createAsyncThunk<AddNewPlayerResponse, AddNewPlayerRequest>('player/addNewPlayer', async (addNewPlayerRequest: AddNewPlayerRequest) => {
+	const response = await axios.post<AddNewPlayerResponse>(`${API_URL}/players`, addNewPlayerRequest );
+	return response.data;
+});
+
+export const endTurn = createAsyncThunk<EndTurnResponse, EndTurnRequest>('player/endTurn', async (endTurnRequest: EndTurnRequest) => {
+	const response = await axios.post<EndTurnResponse>(`${API_URL}/players/endturn`, endTurnRequest);
+	return response.data;
+});
+
 const playerSlice = createSlice({
 	name: 'player',
 	initialState,
@@ -44,21 +54,12 @@ const playerSlice = createSlice({
 			state.armor = initialState.armor;
 			state.money = initialState.money;
 		},
-		setName(state, action: PayloadAction<string>) {
-			state.name = action.payload;
+		setPlayer(state, action: PayloadAction<Player>) {
+			state.name = action.payload.name;
+			state.health = action.payload.health;
+			state.armor = action.payload.armor;
+			state.money = action.payload.money;
 		},
-		setLevel(state, action: PayloadAction<Level>){
-			state.level = action.payload;
-		},
-		setHealth(state, action: PayloadAction<number>){
-			state.health = action.payload;
-		},
-		setArmor(state, action: PayloadAction<number>){
-			state.armor = action.payload;
-		},
-		setMoney(state, action: PayloadAction<number>){
-			state.money = action.payload;
-		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(getPlayerInfo.fulfilled, (state, action: PayloadAction<GetPlayerInfoResponse>) => {
@@ -67,46 +68,15 @@ const playerSlice = createSlice({
 			state.health = action.payload.health;
 			state.money = action.payload.money;
 		});
-		builder.addCase(getPlayerInfo.rejected, () => {
-			console.error('Failed to get player info from api!');
+
+		builder.addCase(addNewPlayer.fulfilled, (state, action: PayloadAction<AddNewPlayerResponse>) => {
+			state.name = action.payload.playerName;
+			state.armor = action.payload.armor;
+			state.health = action.payload.health;
+			state.money = action.payload.money;
 		});
 	},
 });
 
-export const apiSlice = createApi({
-	reducerPath: 'api',
-	baseQuery: fetchBaseQuery({
-		baseUrl: API_URL,
-		prepareHeaders(headers) {
-			return headers;
-		},
-	}),
-	endpoints(builder) {
-		return {
-			addNewPlayer: builder.mutation<AddNewPlayerResponse, AddNewPlayerRequest>({
-				query: (payload: AddNewPlayerRequest) => ({
-					url: '/players',
-					method: 'POST',
-					body: payload,
-					headers: {
-						'Content-type': 'application/json; charset=UTF-8',
-					},
-				}),
-			}),
-			endTurn: builder.mutation<EndTurnResponse, EndTurnRequest>({
-				query: (payload: EndTurnRequest) => ({
-					url: '/players/endturn',
-					method: 'POST',
-					body: payload,
-					headers: {
-						'Content-type': 'application/json; charset=UTF-8',
-					},
-				}),
-			}),
-		};
-	}
-});
-
-export const { useAddNewPlayerMutation, useEndTurnMutation } = apiSlice;
-export const { setName, setLevel, setHealth, setArmor, setMoney, setPlayerToInitial } = playerSlice.actions;
+export const { setPlayer, setPlayerToInitial } = playerSlice.actions;
 export default playerSlice.reducer;

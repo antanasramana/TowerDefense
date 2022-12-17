@@ -7,6 +7,7 @@ import { setSelectedGridItemId } from './GridSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { GridItem } from '../../models/GridItem';
 import './Grid.css';
+
 interface Props {
   id: number;
   onTileClick: (id: number, tileType: TileType) => void;

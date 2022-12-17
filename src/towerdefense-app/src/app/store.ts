@@ -5,9 +5,6 @@ import shopReducer from '../features/shop/ShopSlice';
 import inventoryReducer from '../features/inventory/InventorySlice';
 import gridReducer from '../features/grid/GridSlice';
 import perkStorageReducer from '../features/perks/PerkStorageSlice';
-import { apiSlice } from '../features/player/PlayerSlice';
-import { shopApiSlice } from '../features/shop/ShopSlice';
-import { gridApiSlice } from '../features/grid/GridSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
@@ -25,10 +22,7 @@ export const store = configureStore({
 		shop: shopReducer,
 		inventory: inventoryReducer,
 		grid: gridReducer,
-		perkStorage: perkStorageReducer,
-		[apiSlice.reducerPath]: apiSlice.reducer,
-		[shopApiSlice.reducerPath]: shopApiSlice.reducer,
-		[gridApiSlice.reducerPath]: gridApiSlice.reducer,
+		perkStorage: perkStorageReducer
 	},
 	devTools: process.env.NODE_ENV !== 'production',
 });

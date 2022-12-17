@@ -1,15 +1,17 @@
 import React from 'react';
-import { useAppSelector } from '../../app/hooks';
 
 import './Money.css';
 
-const Money: React.FC = () => {
-	const money = useAppSelector((state) => state.player.money);
+interface Props {
+	value: number;
+}
+
+const Money: React.FC<Props> = (props) => {
 	return (
 		<div className='money-container'>
 			<div className='money-tile' />
 			<div className='money-amount-container'>
-				<p className='money-amount'>{money}</p>
+				<p className='money-amount'>{props.value}</p>
 			</div>
 		</div>
 	);
