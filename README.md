@@ -188,6 +188,122 @@ In the profile itself we specify how the object and the contract should be mappe
     }
 ```
 
+### Controllers
+
+Controllers directory is used for storing all of the REST controllers of the API. You can see the controller diagram down below.
+
+![image](https://user-images.githubusercontent.com/54746064/208298430-31f46134-dcb7-498b-89b5-5d0f83aa69e9.png)
+
+Controllers are responsible as mentioned for REST communication. In simple terms they get the contract, pass it to a certain handler, then get a domain object back and map it to (using AutoMapper as defined previously) the contract and return a response. That is the main responsibility for it.
+
+We can take a look at inventory controller
+```Csharp
+    [Route("api/inventory")]
+    [ApiController]
+    public class InventoryController : ControllerBase
+    {
+        private readonly IInventoryHandler _inventoryHandler;
+        private readonly IMapper _mapper;
+        public InventoryController(IInventoryHandler inventoryHandler, IMapper mapper)
+        {
+            _inventoryHandler = inventoryHandler;
+            _mapper = mapper;
+        }
+
+        [HttpGet("{playerName}")]
+        public ActionResult<GetInventoryItemsResponse> GetItems(string playerName)
+        {
+            var inventory = _inventoryHandler.GetPlayerInventory(playerName);
+
+            var getInventoryItemsResponse = _mapper.Map<GetInventoryItemsResponse>(inventory);
+
+            return Ok(getInventoryItemsResponse);
+        }
+    }
+```
+We can see that this controller can be accessed by `api/inventory` path and it has only one http method which is GET. Also you will need to supply the playerName for it. So in order to call it you will need to use GET request and point it to `api/inventory/playerName`.
+As we can see it just calls one of his dependencies (injected using Dependency Injection) `IInventoryHandler` which does all of the logic and returns domain object inventory. We mentioned earlier that we do not want to expose our inner objects to the outside so using `Automapper` we map it back to the contract and return it in the response.
+
+### Hubs
+
+Hubs is a directory for yet another communication logic. This directory is used to store hubs that are required for SignalR realtime communication.
+There are two classes that define how SignalR communication works in this game skeleton.
+
+![image](https://user-images.githubusercontent.com/54746064/208298757-f405a373-251c-423d-9d81-5a316a2f3f8f.png)
+
+```Csharp
+    public class GameHub : Hub
+    {
+        private readonly IInitialGameSetupHandler _initialGameSetup;
+
+        public GameHub(IInitialGameSetupHandler initialGameSetup)
+        {
+            _initialGameSetup = initialGameSetup;
+        }
+        
+        public async Task JoinGame(string playerName)
+        {       
+            _initialGameSetup.SetConnectionIdForPlayer(playerName, Context.ConnectionId);
+            await _initialGameSetup.TryStartGame();
+        }
+    }
+```
+`GameHub` class is responsible for incoming messages. So it has the endpoint for `JoinGame` and waits for this message. As soon as it gets it it executes what is written in the method body. 
+If you want to add more realtime functionality just add another method here with required parameters and it will listed to that endpoint on SignalR.
+
+`NotificationHub` class is responsible for outgoing messages. We are using it to send messages to the frontend.
+
+```Csharp
+    public class NotificationHub : INotificationHub
+    {
+        private readonly IHubContext<GameHub> _gameHubContext;
+        private readonly IPlayerHandler _playerHandler;
+        public NotificationHub(IHubContext<GameHub> gameHubContext, IPlayerHandler playerHandler)
+        {
+            _playerHandler = playerHandler;
+            _gameHubContext = gameHubContext;
+        }
+
+        public async Task NotifyGameStart(IPlayer firstPlayer, IPlayer secondPlayer)
+        {
+            await _gameHubContext.Clients.Client(firstPlayer.ConnectionId).SendAsync("EnemyInfo", secondPlayer);
+            await _gameHubContext.Clients.Client(secondPlayer.ConnectionId).SendAsync("EnemyInfo", firstPlayer);
+        }
+```
+We can see that we have a method `NotifyGameStart` which is used to tell frontend that the game is going to start. We just call `_gameHubContext` to send that info to our players frontend. If you want to add more functionality - just add another method and call `_gameHubContext` with your unique method identifier name. In this example we can see that the identifier is `EnemyInfo`. You will need to note these identifiers so you can accept the messages in the front end ❗
+
+### GameLogic
+
+![image](https://user-images.githubusercontent.com/54746064/208299017-19e71372-90d5-462e-93d3-64e71cc4f60b.png)
+
+Game logic is the main place where all of the domain logic is happening. We are not going to go through each class but we are going to specify a few that are the most important.
+
+Game logic is based on the state of the game. There is a static class `GameOriginator` which holds static property `State`
+
+```Csharp
+    public class State
+    {
+        public IPlayer[] Players { get; } = new IPlayer[Constants.TowerDefense.MaxNumberOfPlayers];
+        public Dictionary<string, bool> PlayersFinishedTurn { get; } = new();
+        public int ActivePlayers => Players.Count(player => player != null);
+        public List<(string PlayerName, IPerk Perk)> PerksUsedOnPlayer { get; set; } = new();
+    }
+```
+This state is being preserved throughout the whole time the players are playing a match. It holds information about the player, the arena grid, what perks are used and etc. This is a central point of data storage.
+
+For most of the logic on how the battle is happening the `BattleHandler` class is responsible for it.
+
+![image](https://user-images.githubusercontent.com/54746064/208299161-3093c417-c60f-40f8-a58c-efb07bfe4d77.png)
+
+`HandleEndTurn` method is responsible for handling how the game plays out after players have ended their turns. It calculates how the game tiles are being affected, whether they attacked and how many health does the player have after the turn.
+
+## Notes on backend
+
+Be aware that no security measures were implemented for the backend. So if you are playing against an enemy and he decides to do something in your name - he is able to send requests with your playername to the backend and they will get executed!
+
+
+
+
 
 
 
