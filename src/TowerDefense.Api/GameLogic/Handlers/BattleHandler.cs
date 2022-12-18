@@ -18,7 +18,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
         private readonly INotificationHub _notificationHub;
         private IGameHandler _gameHandler;
 
-        public BattleHandler(IAttackHandler attackHandler, IPerkHandler perkHandler, IGameHandler gameHandler, INotificationHub notificationHub)
+        public BattleHandler(IAttackHandler attackHandler, IGameHandler gameHandler, INotificationHub notificationHub)
         {
             _gameState = GameOriginator.GameState;
             _attackHandler = attackHandler;
@@ -41,8 +41,8 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
             // Calculate players earned money 
 
-            player1.Money += _attackHandler.PlayerEarnedMoneyAfterAttack(player1Attack.ItemAttackDeclarations);
-            player2.Money += _attackHandler.PlayerEarnedMoneyAfterAttack(player2Attack.ItemAttackDeclarations);
+            player1.Money +=  player1Attack.ItemAttackDeclarations.Sum(x => x.EarnedMoney);
+            player2.Money += player2Attack.ItemAttackDeclarations.Sum(x => x.EarnedMoney);
 
             // NotifyPlayerGridItems opposing players grid items to receive attack
             var player1AttackResults = NotifyPlayerGridItems(player2, player1Attack.ItemAttackDeclarations);

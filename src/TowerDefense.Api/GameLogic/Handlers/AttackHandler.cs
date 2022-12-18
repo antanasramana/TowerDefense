@@ -7,7 +7,6 @@ namespace TowerDefense.Api.GameLogic.Handlers
     public interface IAttackHandler
     {
         Attack HandlePlayerAttacks(IArenaGrid playerArenaGrid, IArenaGrid opponentArenaGrid);
-        int PlayerEarnedMoneyAfterAttack(IEnumerable<AttackDeclaration> attackDeclarations);
     }
     public class AttackHandler: IAttackHandler
     {
@@ -35,11 +34,6 @@ namespace TowerDefense.Api.GameLogic.Handlers
                 }
             }
             return new Attack{DirectAttackDeclarations = directAttacks, ItemAttackDeclarations = itemAttacks };
-        }
-
-        public int PlayerEarnedMoneyAfterAttack(IEnumerable<AttackDeclaration> attackDeclarations)
-        {
-            return attackDeclarations.Sum(x => x.EarnedMoney);
         }
     }
 }

@@ -8,7 +8,6 @@ namespace TowerDefense.Api.GameLogic.Handlers
     {
         IPerkStorage GetPerks(string playerName);
         void UsePerk(string perkUsingPlayerName, int perkId);
-        bool ApplyPerks();
     }
 
     public class PerkHandler : IPerkHandler
@@ -43,16 +42,6 @@ namespace TowerDefense.Api.GameLogic.Handlers
                 enemyPlayer.Money /= 2;
                 player.PerkStorage.Perks = player.PerkStorage.Perks.Where(x => x.Id != perkId);
             }
-        }
-
-        public bool ApplyPerks()
-        {
-            return false;
-        }
-
-        private void RemoveUsedPerks()
-        {
-            _gameState.PerksUsedOnPlayer = new List<(string PlayerName, IPerk Perk)>();
         }
     }
 }

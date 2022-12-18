@@ -6,8 +6,6 @@ namespace TowerDefense.Api.GameLogic.Grid
 {
     public class GridItem
     {
-        private const int SmallDamage = 50;
-
         public int Id { get; set; }
         public IItem Item { get; set; }
 
