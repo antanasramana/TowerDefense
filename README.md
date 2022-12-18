@@ -308,7 +308,66 @@ Front end is written in React TypeScript and Redux for state management. Redux i
 
 ### Graphics
 
-Everything in the project is a 64px x 64px rectangle. So it can be easily replaced by any other image that you would like that is 64x64. All of the images (and more!) used in the game are in the `/assets` directory. So feel free to check it out and use it in the game yourself.
+Everything in the project is made up of a 64px x 64px rectangle which is called 'tile'. All of the images (and more!) used in the game are in the `/assets` directory. So what would you need to do to add another type of tile into the game. First of all you would need to add another value to `TileType.ts` enum
+```
+enum TileType {
+  Rockets,
+  Shield,
+  Placeholder,
+  Blank,
+  Machinegun,
+  Plane,
+  Soldier,
+  Bomb,
+  Rock,
+  Atomicbomb,
+  Hiddingatomicbomb,
+  Loadingatomicbomb,
+  Attackingatomicbomb
+}
+
+export default TileType;
+```
+
+Then you would need to go to the backend and find `ItemTytpe.cs` enum and update it as well
+```
+namespace TowerDefense.Api.GameLogic.Items
+{
+    public enum ItemType
+    {
+        Rockets,
+        Shield,
+        Placeholder,
+        Blank,
+        Plane,
+    }
+}
+```
+Now the backend can communicate with the frontend about new game tile. But we need to add graphics to it. In order to do that we would go to `TileImage.ts` which simply holds a map between enum value and an image path.
+
+```ts
+class TileImage {
+	static sourceMap = new Map<TileType, string>([
+		[TileType.Placeholder, PlaceholderSource],
+		[TileType.Rockets, RocketsSource],
+		[TileType.Shield, ShieldSource],
+		[TileType.Blank, BlankSource],
+		[TileType.Machinegun, MachinegunSource],
+		[TileType.Plane, PlaneSource],
+		[TileType.Soldier, SoldierSource],
+		[TileType.Bomb, BombSource],
+		[TileType.Rock, RockSource],
+		[TileType.Atomicbomb, Atomicbomb],
+		[TileType.Hiddingatomicbomb, Hiddingatomicbomb],
+		[TileType.Loadingatomicbomb, Loadingatomicbomb],
+		[TileType.Attackingatomicbomb, Attackingatomicbomb],
+	]);
+}
+
+export default TileImage;
+```
+
+You would simply add another map and you will be good to go.
 
 ### State
 
