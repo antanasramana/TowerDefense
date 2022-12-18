@@ -1,6 +1,6 @@
 ﻿using TowerDefense.Api.GameLogic.GameState;
+using TowerDefense.Api.GameLogic.Perks;
 using TowerDefense.Api.GameLogic.PerkStorage;
-using TowerDefense.Api.Models.Perks;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
@@ -30,12 +30,9 @@ namespace TowerDefense.Api.GameLogic.Handlers
             var player = _gameState.Players.First(x => x.Name == perkUsingPlayerName);
             var enemyPlayer = _gameState.Players.First(x => x.Name != perkUsingPlayerName);
 
-            var perk = player.PerkStorage.Perks.Where(x => x.Id == perkId).FirstOrDefault();
+            var perk = player.PerkStorage.Perks.FirstOrDefault(x => x.Id == perkId);
 
-            if (perk == null)
-            {
-                return;
-            }
+            if (perk == null) return;
 
             if (perk.Type == PerkType.CutInHalf)
             {

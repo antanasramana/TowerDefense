@@ -1,7 +1,6 @@
-﻿using TowerDefense.Api.Contracts.Turn;
-using TowerDefense.Api.GameLogic.GameState;
+﻿using TowerDefense.Api.GameLogic.GameState;
+using TowerDefense.Api.GameLogic.Player;
 using TowerDefense.Api.Hubs;
-using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
@@ -13,7 +12,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     class GameHandler : IGameHandler
     {
-        private INotificationHub _notificationHub;
+        private readonly INotificationHub _notificationHub;
 
         public GameHandler(INotificationHub notificationHub)
         {

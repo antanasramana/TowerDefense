@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TowerDefense.Api.GameLogic.Handlers;
-using TowerDefense.Api.Contracts.Command;
 using TowerDefense.Api.Contracts.Grid;
+using TowerDefense.Api.GameLogic.Handlers;
 
 namespace TowerDefense.Api.Controllers
 {

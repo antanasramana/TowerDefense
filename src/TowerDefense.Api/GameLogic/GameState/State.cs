@@ -1,5 +1,5 @@
-﻿using TowerDefense.Api.Models.Perks;
-using TowerDefense.Api.Models.Player;
+﻿using TowerDefense.Api.GameLogic.Perks;
+using TowerDefense.Api.GameLogic.Player;
 
 namespace TowerDefense.Api.GameLogic.GameState
 {

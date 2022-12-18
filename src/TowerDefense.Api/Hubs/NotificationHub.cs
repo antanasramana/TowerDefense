@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using TowerDefense.Api.Contracts.Turn;
 using TowerDefense.Api.GameLogic.Handlers;
-using TowerDefense.Api.Models.Player;
+using TowerDefense.Api.GameLogic.Player;
 
 namespace TowerDefense.Api.Hubs
 {

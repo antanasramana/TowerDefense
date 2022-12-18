@@ -8,7 +8,7 @@ namespace TowerDefense.Api.GameLogic.Grid
         {
             var gridLayoutRemovedWhiteSpace = gridLayout.Where(char.IsDigit).ToArray();
 
-            for (int i = 0; i < gridLayoutRemovedWhiteSpace.Count(); i++)
+            for (var i = 0; i < gridLayoutRemovedWhiteSpace.Count(); i++)
             {
                 var character = gridLayoutRemovedWhiteSpace[i].ToString();
                 var type = (ItemType)int.Parse(character);

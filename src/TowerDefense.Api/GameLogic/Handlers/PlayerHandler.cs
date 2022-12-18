@@ -1,5 +1,5 @@
 ﻿using TowerDefense.Api.GameLogic.GameState;
-using TowerDefense.Api.Models.Player;
+using TowerDefense.Api.GameLogic.Player;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
