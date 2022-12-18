@@ -1,9 +1,8 @@
 ﻿using TowerDefense.Api.GameLogic.Grid;
 using TowerDefense.Api.GameLogic.PerkStorage;
-using TowerDefense.Api.GameLogic.Player;
 using TowerDefense.Api.GameLogic.Shop;
 
-namespace TowerDefense.Api.Models.Player
+namespace TowerDefense.Api.GameLogic.Player
 {
     public class FirstLevelPlayer : IPlayer
     {

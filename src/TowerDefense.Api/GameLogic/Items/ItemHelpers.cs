@@ -22,11 +22,6 @@ namespace TowerDefense.Api.GameLogic.Items
             return attackingGridItemId / Constants.TowerDefense.MaxGridGridItemsInRow;
         }
 
-        public static int GetAttackingItemColumnId(int attackingGridItemId)
-        {
-            return attackingGridItemId % Constants.TowerDefense.MaxGridGridItemsInRow;
-        }
-
         public static List<GridItem> GetAttackedRowItems(this IArenaGrid arenaGrid, int rowId)
         {
             return arenaGrid.GridItems
@@ -45,11 +40,9 @@ namespace TowerDefense.Api.GameLogic.Items
 
             foreach (var gridItem in row)
             {
-                if (IsItemDamageable(gridItem))
-                {
-                    affectedGridItems.Add(gridItem.Id);
-                    break;
-                }
+                if (!IsItemDamageable(gridItem)) continue;
+
+                affectedGridItems.Add(gridItem.Id);
             }
 
             return affectedGridItems;

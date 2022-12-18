@@ -1,5 +1,4 @@
-﻿using TowerDefense.Api.Models;
-using TowerDefense.Api.Models.Perks;
+﻿using TowerDefense.Api.GameLogic.Perks;
 
 namespace TowerDefense.Api.GameLogic.PerkStorage
 {

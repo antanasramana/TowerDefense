@@ -1,4 +1,4 @@
-﻿namespace TowerDefense.Api.Models.Perks
+﻿namespace TowerDefense.Api.GameLogic.Perks
 {
     public enum PerkType
     {

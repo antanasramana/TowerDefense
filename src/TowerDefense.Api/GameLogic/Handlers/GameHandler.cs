@@ -1,7 +1,6 @@
-﻿using TowerDefense.Api.Contracts.Turn;
-using TowerDefense.Api.GameLogic.GameState;
+﻿using TowerDefense.Api.GameLogic.GameState;
+using TowerDefense.Api.GameLogic.Player;
 using TowerDefense.Api.Hubs;
-using TowerDefense.Api.Models.Player;
 
 namespace TowerDefense.Api.GameLogic.Handlers
 {
@@ -13,13 +12,11 @@ namespace TowerDefense.Api.GameLogic.Handlers
 
     class GameHandler : IGameHandler
     {
-        private INotificationHub _notificationHub;
-        private readonly State _gameState;
+        private readonly INotificationHub _notificationHub;
 
         public GameHandler(INotificationHub notificationHub)
         {
             _notificationHub = notificationHub;
-            _gameState = GameOriginator.GameState;
         }
 
         public async Task ResetGame()
@@ -34,7 +31,7 @@ namespace TowerDefense.Api.GameLogic.Handlers
             ClearGameState();
         }
 
-        private void ClearGameState()
+        private static void ClearGameState()
         {
             GameOriginator.GameState = new State();
         }
