@@ -297,7 +297,7 @@ For most of the logic on how the battle is happening the `BattleHandler` class i
 
 `HandleEndTurn` method is responsible for handling how the game plays out after players have ended their turns. It calculates how the game tiles are being affected, whether they attacked and how many health does the player have after the turn.
 
-## Notes on backend
+### Notes on backend
 
 Be aware that no security measures were implemented for the backend. So if you are playing against an enemy and he decides to do something in your name - he is able to send requests with your playername to the backend and they will get executed!
 
