@@ -309,7 +309,7 @@ Front end is written in React TypeScript and Redux for state management. Redux i
 ### Graphics
 
 Everything in the project is made up of a 64px x 64px rectangle which is called 'tile'. All of the images (and more!) used in the game are in the `/assets` directory. So what would you need to do to add another type of tile into the game. First of all you would need to add another value to `TileType.ts` enum
-```
+```ts
 enum TileType {
   Rockets,
   Shield,
@@ -330,7 +330,7 @@ export default TileType;
 ```
 
 Then you would need to go to the backend and find `ItemTytpe.cs` enum and update it as well
-```
+```csharp
 namespace TowerDefense.Api.GameLogic.Items
 {
     public enum ItemType
