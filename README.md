@@ -37,11 +37,14 @@ In order to start the solution you will need following prerequisites:
 And you should see the following screen.
 ![image](https://user-images.githubusercontent.com/54746064/208295156-49e8591c-2638-4bc1-9020-3c05935ecc48.png)
 Make sure you note what IP address is being used by the API. In our case we can see `https://localhost:7042`:exclamation:
-It should be the same for you if the 7042 port is not being used by any other application. The IP Address is based on your `launchSettings.json` that can be found under `Properties` directory.
+It should be the same for you if the 7042 port is not being used by any other application.
+The IP Address is based on your `launchSettings.json` that can be found under `Properties` directory.
 3. Open `src\towerdefense-app` directory using your favourite code editor. In our case we prefer to use Visual Studio Code.
 4. Open .env file and make sure the right IP Address is being used. The same one the API is listening to :exclamation:
 Don't forget to add /api at the end.
+
 ![image](https://user-images.githubusercontent.com/54746064/208295369-550e708a-5efb-45b8-8730-0bd6b4374131.png)
+
 5. Open `src\towerdefense-app` directory in terminal and run `npm install`. It will install all of the required modules.
 6. In the terminal run `npm start`. And the game should start.
 ![image](https://user-images.githubusercontent.com/54746064/208295627-f582cd05-a423-45b4-85e1-d33b42adee98.png)
