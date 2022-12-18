@@ -302,8 +302,158 @@ For most of the logic on how the battle is happening the `BattleHandler` class i
 Be aware that no security measures were implemented for the backend. So if you are playing against an enemy and he decides to do something in your name - he is able to send requests with your playername to the backend and they will get executed!
 
 
+## FrontEnd
 
+Front end is written in React TypeScript and Redux for state management. Redux is just a simple way to store your state in a global store. For more info you can read about Redux in https://redux.js.org/
 
+### Graphics
+
+Everything in the project is a 64px x 64px rectangle. So it can be easily replaced by any other image that you would like that is 64x64. All of the images (and more!) used in the game are in the `/assets` directory. So feel free to check it out and use it in the game yourself.
+
+### State
+
+As mentioned before Redux is being used to manage the state of the react application. Which includes storing player names, arena grid, money, shop and etc, throughout the whole time the game is played. The state store is configured in `/src/app/store.ts` file.
+
+```ts
+const persistConfig = {
+	key: 'root',
+	storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, playerReducer);
+
+export const store = configureStore({
+	reducer: {
+		player: persistedReducer,
+		enemy: enemyReducer,
+		shop: shopReducer,
+		inventory: inventoryReducer,
+		grid: gridReducer,
+		perkStorage: perkStorageReducer
+	},
+	devTools: process.env.NODE_ENV !== 'production',
+});
+
+export const persistor = persistStore(store);
+
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+```
+
+As you can see the store is made up of reducers, so if you would want to insert another component that required the state - be sure to add an additional reducer.
+Let's take a look on how the shop reducer is done. Down below part of the code from file `ShopSlice.ts` is specified.
+
+```ts
+const shopSlice = createSlice({
+	name: 'shop',
+	initialState,
+	reducers: {
+		setShopToInitial(state, action: PayloadAction) {
+			state.selectedItem = initialState.selectedItem;
+			state.shopItems = initialState.shopItems;
+		},
+		setSelectedItem(state, action: PayloadAction<string>) {
+			state.selectedItem = action.payload;
+		},
+		setShopItems(state, action: PayloadAction<ShopItem[]>) {
+			state.shopItems = action.payload;
+		},
+	},
+	extraReducers: (builder) => {
+		builder.addCase(getShopItems.fulfilled, (state, action: PayloadAction<ShopItem[]>) => {
+			state.shopItems = action.payload;
+		});
+		builder.addCase(getShopItems.rejected, () => {
+			console.error('Failed to get shop from api!');
+		});
+	},
+});
+
+export const { setSelectedItem, setShopItems, setShopToInitial } = shopSlice.actions;
+export default shopSlice.reducer;
+```
+We explicitly define what actions can be called on the shop. In this case `setSelectedItem`, `setShopItems` and `setShopToInitial`. They specify how you can interact with the redux state.
+
+### Features
+
+We will start off with the available routes in the front end. In the main `App.tsx` file you can see all of the defined routes in the game
+
+```ts
+const App: React.FC = () => {
+	useEffect(() => {
+		document.title = 'Tower Defense';
+	}, []);
+
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route index element={<Home />} />
+				<Route path='game-arena' element={<GameArena/>} />
+				<Route path='game-finished' element={<EndGame/>} />
+			</Routes>
+		</BrowserRouter>
+	);
+};
+```
+
+We can see that `/game-arena` route gives us `GameArena` component and `/game-finished` route provides us the `EndGame` component.
+
+Every component is inside its feature which means that
+everything in the project is split up to features.
+![image](https://user-images.githubusercontent.com/54746064/208299650-c9b6609c-0102-48aa-a060-ec5d3b15254b.png)
+
+Features contains everything starting from the logic, including css and finally even the assets (image files).
+
+Components such as `Home` and `EndGame` is for literally displayed the start game and end game screen. The root component for everything else is `GameArena` ❗
+
+### Communication
+
+As hinted in the previous sections we use REST and SignalR to communicate. We introduced how it is being done from the back end perspective. Now let's take a look on how it is done from the front-end side.
+
+#### REST communication
+
+In order for the REST communication to work we need to have frontend and backend contracts alligned. In the frontend we store contracts in `/src/contracts` directory.
+
+![image](https://user-images.githubusercontent.com/54746064/208300395-3f61f0b6-e960-4f96-9ea2-3f777ce0f833.png)
+
+They should contain the same properties (or less) as in the backend defined contracts.
+To do a request we usually use `axios` package. Let's take a look at `ShopSlice.ts` again.
+
+```ts
+export const getShopItems = createAsyncThunk<ShopItem[]>('shop/getShop', async () => {
+	const reduxStore = store.getState();
+	const response = await axios.get(`${API_URL}/shop/${reduxStore.player.name}`);
+	return response.data.items;
+});
+```
+We use `createAsyncThunk` method to create a reducer (It helps to specify how we interact with the state). And inside of it we use `axios` to send a `GET` request, using an already specified player name from the store.
+
+#### SignalR communication
+
+In our case we use SignalR to specify only the parts of the game which need to be realtime. For example to start the game.
+
+Looking into the file `GameArena.tsx` we can see that SignalR is used there. 
+
+```ts
+const SIGNALR_URL = `${process.env.REACT_APP_BACKEND}/gameHub`;
+
+		if (connection) {
+			connection
+				.start()
+				.then(() => {
+					console.log('Connected!');
+					connection.invoke('JoinGame', player.name);
+
+					connection.on('EnemyInfo', (message) => {
+						dispatch(setEnemyName(message.name));
+						dispatch(getEnemyGridItems());
+					});
+   }
+```
+We can see that whenever we get the `EnemyInfo` method identifier, from the `/gameHub` SignalR endpoint we do some operations. In this case we dispatch `setEnemyName` and `getEnemyGridItems` reducers. So they could do the specified operations to the state. So if you want to add another listening method for SignalR, just add another `connection.on()` method. 
+
+To send info to the backend using SingalR you can use `connection.invoke()` method. In our case we send player name to `JoinGame` endpoint. 
+(Take a look at the BackEnd Hubs section to see where it gets captured if you feel confused).
 
 
 
