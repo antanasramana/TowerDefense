@@ -68,4 +68,126 @@ If everything worked fine you should see the arena grid, player names, money, he
 
 <img src="https://user-images.githubusercontent.com/54746064/208295778-e56241e1-41f0-4201-9860-76e1bddd1966.png" width="600">
 
+### Troubleshoot
+* If you experience CORS errors on the front end. Make sure you take a look at the API's `Program.cs` file where you will find CORS policy. Make sure the origin is the same as your frontend IP Address!
+```Csharp
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(Policy.DevelopmentCors, builder =>
+    {
+        builder.WithOrigins("https://localhost:3000")
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .SetIsOriginAllowed((x) => true)
+               .AllowCredentials();
+    });
+});
+```
+
+
+
+## Back-End
+### Architecture
+The solution is seperated into different directories according to the responsibility of the classes inside them.
+There are six different directories which are responsible for one particular thing.
+
+![image](https://user-images.githubusercontent.com/54746064/208297102-50e28cc1-1ad7-477e-8267-a1ff54c9bfa2.png)
+
+We will dive into each one of them.
+
+### Contracts
+
+Let's start off with contracts directory. It is used to store the contracts that are used to communicate between FrontEnd and BackEnd. Those are also known as Data Transfer Objects (DTO). 
+Contracts directory is seperated into several different directories according to the area that they specify a contract on. The paradigm on this is that we don't want our application to be dependant on outside contact and we don't want to expose our inner objects to the outside. Therefore contracts are being used only in communication purposes. These contracts should be in sync with the contracts defined in the frontend so the communication works as expected. But FrontEnd is going to be presented later.
+
+![image](https://user-images.githubusercontent.com/54746064/208297581-868c8456-00a0-4b5c-934c-151981f41ca7.png)
+
+
+### Bootstrap
+
+Bootstrap contains everything that is needed in order to start the application, including AutoMapper profiles as well as dependency injection features. Class diagram is provided down below.
+
+![image](https://user-images.githubusercontent.com/54746064/208297551-dbe0d6e9-20f7-4095-8404-5b0aa2fb2c9a.png)
+
+
+Throughout the solution we use dependency injection to inject certain objects. If you feel that you don't have enough knowledge about dependency injection you can read more about it in https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-7.0 .
+To give you an example where dependency injection is used we have `BattleHandler` class:
+```Csharp
+    public class BattleHandler : IBattleHandler
+    {
+        private readonly State _gameState;
+        private readonly IAttackHandler _attackHandler;
+        private readonly INotificationHub _notificationHub;
+        private readonly IGameHandler _gameHandler;
+
+        public BattleHandler(IAttackHandler attackHandler, IGameHandler gameHandler, INotificationHub notificationHub)
+        {
+            _gameState = GameOriginator.GameState;
+            _attackHandler = attackHandler;
+            _gameHandler = gameHandler;
+            _notificationHub = notificationHub;
+        }
+    }
+```
+We can see that the `BattleHandler` class needs dependencies such as `IAttackHandler`, `IGameHandler`, `INotificationHub`. In order not to couple the classes we used dependency injection so it automatically provides us the implementations through constructor. But we need to register those implementations before the start of the application. Therefore in the bootstrap directory we can see `GameEngineSetup` class which is responsible for that. If you want to add another dependency, and inject it into the constructor simply add another line in the `GameEngineSetup` class and you will be good to go.
+```Csharp
+    public static class GameEngineSetup
+    {
+        public static void SetupGameEngine(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddTransient<INotificationHub, NotificationHub>();
+            serviceCollection.AddTransient<IShopHandler, ShopHandler>();
+            serviceCollection.AddTransient<ITurnHandler, TurnHandler>();
+            serviceCollection.AddTransient<IBattleHandler, BattleHandler>();
+            serviceCollection.AddTransient<IInitialGameSetupHandler, InitialGameSetupHandler>();
+            serviceCollection.AddTransient<IInventoryHandler, InventoryHandler>();
+            serviceCollection.AddTransient<IGridHandler, GridHandler>();
+            serviceCollection.AddTransient<IPlayerHandler, PlayerHandler>();
+            serviceCollection.AddTransient<IAttackHandler, AttackHandler>();
+            serviceCollection.AddTransient<IGameHandler, GameHandler>();
+            serviceCollection.AddTransient<IPerkHandler, PerkHandler>();
+        }
+    }
+```
+
+Also for the sake of time saving we used AutoMapper which maps the domain objects (the objects that we use inside oru application) to our contracts. It just simply copies the values of the properties from one object to another. You can read more about it on https://automapper.org/
+In order for the automapper to work we need to specify the mapping profiles for each of the object. We do that in bootstrap as well, under the `AutoMapper` directory.
+
+![image](https://user-images.githubusercontent.com/54746064/208298090-82f3f3ca-f12a-4199-b11a-761cc021d2fc.png)
+
+In the AutoMapperSetup we just register the object mapping profiles.
+```Csharp
+    public static class AutoMapperSetup
+    {
+        public static void SetupAutoMapper(this IServiceCollection serviceCollection)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new InventoryMapProfile());
+                cfg.AddProfile(new ShopMapProfile());
+                cfg.AddProfile(new ArenaGridMapProfile());
+                cfg.AddProfile(new PlayerMapProfile());
+                cfg.AddProfile(new PerkStorageProfile());
+            });
+            serviceCollection.AddSingleton(config.CreateMapper());
+        }
+    }
+```
+In the profile itself we specify how the object and the contract should be mapped. As of example we have `IPlayer` interface which is used in the solution domain and `GetPlayerInfoResponse` contract and we want to create a map for it. We simply inherit the Profile class and we define in the constructor how the mapping should be done. By default Automapper automatically maps properties if their name match, but if they don't we have to specify it explicitly. As can be seen down below we are mapping from `Name` in the domain object to `PlayerName` in the contract object. You will see the usage of this in the controllers later on in the documentation.
+
+```Csharp
+    public class PlayerMapProfile : Profile
+    {
+        public PlayerMapProfile()
+        {
+            CreateMap<IPlayer, AddNewPlayerResponse>()
+                .ForMember(dest => dest.PlayerName, opt => opt.MapFrom(src => src.Name));
+            CreateMap<IPlayer, GetPlayerInfoResponse>()
+                .ForMember(dest => dest.PlayerName, opt => opt.MapFrom(src => src.Name));
+        }
+    }
+```
+
+
+
 
