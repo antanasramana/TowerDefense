@@ -41,7 +41,9 @@ And you should see the following screen.
 Make sure you note what IP address is being used by the API. In our case we can see `https://localhost:7042`:exclamation:
 It should be the same for you if the 7042 port is not being used by any other application.
 The IP Address is based on your `launchSettings.json` that can be found under `Properties` directory.
+
 3. Open `src\towerdefense-app` directory using your favourite code editor. In our case we prefer to use Visual Studio Code.
+ 
 4. Open .env file and make sure the right IP Address is being used. The same one the API is listening to :exclamation:
 Don't forget to add /api at the end.
 
