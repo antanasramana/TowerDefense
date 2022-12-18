@@ -2,6 +2,7 @@
 Tower defense game skeleton for design pattern implementation
 
 <img src="https://user-images.githubusercontent.com/54746064/208293825-01607f01-89f1-4fec-9c14-6268abc9a8cd.png" width="600">
+
 ## About
 
 This is a skeleton project specially crafted for design pattern implementation. It has React + Redux frontend togheter with .NET 6 API in the backend.
