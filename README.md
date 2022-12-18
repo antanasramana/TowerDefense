@@ -34,8 +34,10 @@ In order to start the solution you will need following prerequisites:
 ![image](https://user-images.githubusercontent.com/54746064/208294888-d5519996-7881-477c-a93b-b3709e1138dd.png)
 2. Start the API.
 ![image](https://user-images.githubusercontent.com/54746064/208294919-b156cfde-1445-4057-a2ec-aa1b3ba03411.png)
+
 And you should see the following screen.
 ![image](https://user-images.githubusercontent.com/54746064/208295156-49e8591c-2638-4bc1-9020-3c05935ecc48.png)
+
 Make sure you note what IP address is being used by the API. In our case we can see `https://localhost:7042`:exclamation:
 It should be the same for you if the 7042 port is not being used by any other application.
 The IP Address is based on your `launchSettings.json` that can be found under `Properties` directory.
@@ -47,12 +49,15 @@ Don't forget to add /api at the end.
 
 5. Open `src\towerdefense-app` directory in terminal and run `npm install`. It will install all of the required modules.
 6. In the terminal run `npm start`. And the game should start.
+
 ![image](https://user-images.githubusercontent.com/54746064/208295627-f582cd05-a423-45b4-85e1-d33b42adee98.png)
 
 To start the game simply open up two tabs and navigate to the site. Input two usernames and start the game.
+
 ![image](https://user-images.githubusercontent.com/54746064/208295734-faf82256-27b9-4c7e-9bde-27729d1a1397.png)
 
 If everything worked fine you should see the arena grid, player names, money, health.
+
 ![image](https://user-images.githubusercontent.com/54746064/208295778-e56241e1-41f0-4201-9860-76e1bddd1966.png)
 
 
